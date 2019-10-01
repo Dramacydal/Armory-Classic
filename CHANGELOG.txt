@@ -1,0 +1,7 @@
+﻿Armory has been released into the public domain on November 2007.
+The project page can be found on http://wow.curseforge.com/addons/armory/.
+The Armory archive can be found on http://www.wow-neighbours.com/.
+
+Thanks for using Armory. You can show your appreciation and support future development by donating!
+
+==== v1.0.0 ====

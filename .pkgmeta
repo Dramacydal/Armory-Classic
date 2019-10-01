@@ -35,7 +35,7 @@ move-folders:
     Parent/Locales: Locales
 
 ignore:
-    Parent
+    - Parent
 
 manual-changelog:
     filename: CHANGELOG.txt

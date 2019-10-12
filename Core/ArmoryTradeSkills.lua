@@ -443,33 +443,40 @@ local function GetProfessionLineValue(index)
     end
 end
 
-local function PreserveTradeSkillsState()
-    local subClasses = {_G.GetTradeSkillSubClasses()};
-    local invSlots = {_G.GetTradeSkillInvSlots()};
-    local state = { subClassFilter=0, invSlotFilter=0, index=_G.GetTradeSkillSelectionIndex() };
+local function PreserveTradeSkillsState(isCraft)
+    local state = { subClassFilter=0, invSlotFilter=0, index=isCraft and _G.GetCraftSelectionIndex() or _G.GetTradeSkillSelectionIndex() };
 
-    for i = 0, #subClasses do
-        if ( _G.GetTradeSkillSubClassFilter(i) ) then
-            state.subClassFilter = i;
-            break;
+    if ( not isCraft ) then
+        local subClasses = { _G.GetTradeSkillSubClasses() };
+        local invSlots = { _G.GetTradeSkillInvSlots() };
+        for i = 0, #subClasses do
+            if ( _G.GetTradeSkillSubClassFilter(i) ) then
+                state.subClassFilter = i;
+                break;
+            end
         end
-    end
-    for i = 0, #invSlots do
-        if ( _G.GetTradeSkillInvSlotFilter(i) ) then
-            state.invSlotFilter = i;
-            break;
+        for i = 0, #invSlots do
+            if ( _G.GetTradeSkillInvSlotFilter(i) ) then
+                state.invSlotFilter = i;
+                break;
+            end
         end
-    end
 
-    _G.SetTradeSkillSubClassFilter(0, 1, 1);
-    _G.SetTradeSkillInvSlotFilter(0, 1, 1);
+        _G.SetTradeSkillSubClassFilter(0, 1, 1);
+        _G.SetTradeSkillInvSlotFilter(0, 1, 1);
+    end
 
     return state;
 end
 
-local function RestoreTradeSkillsState(state)
-    _G.SetTradeSkillSubClassFilter(state.subClassFilter, 1, 1);
-    _G.SetTradeSkillInvSlotFilter(state.invSlotFilter, 1, 1);
+local function RestoreTradeSkillsState(state, isCraft)
+    if ( isCraft ) then
+        _G.SelectCraft(state.index);
+    else
+        _G.SetTradeSkillSubClassFilter(state.subClassFilter, 1, 1);
+        _G.SetTradeSkillInvSlotFilter(state.invSlotFilter, 1, 1);
+        _G.SelectTradeSkill(state.index);
+    end
 end
 
 
@@ -537,26 +544,42 @@ local function GetInvSlot(invType, ...)
     return NONEQUIPSLOT;
 end
 
-local function StoreTradeSkillInfo(dbEntry, index, id)
+local function StoreTradeSkillInfo(dbEntry, index, id, isCraft)
     local recipe = dbEntry:SelectContainer(itemContainer, index);
     local reagents = Armory.sharedDbEntry:SelectContainer(container, reagentContainer);
 
     id = id or index;
 
-    recipe.Icon = _G.GetTradeSkillIcon(id);
-    recipe.NumMade = _G.GetTradeSkillNumMade(id);
-    recipe.Tools = _G.GetTradeSkillTools(id);
-    recipe.ItemLink = _G.GetTradeSkillItemLink(id);
+    recipe.Icon = isCraft and _G.GetCraftIcon(id) or _G.GetTradeSkillIcon(id);
+    recipe.ItemLink = isCraft and _G.GetCraftItemLink(id) or _G.GetTradeSkillItemLink(id);
+    
+    if ( isCraft ) then
+        recipe.SpellFocus = _G.GetCraftSpellFocus(id);
+    else
+        local invType = recipe.ItemLink and select(4, _G.GetItemInfoInstant(recipe.ItemLink)) or nil;
+        recipe.InvSlot = GetInvSlot(invType, _G.GetTradeSkillInvSlots());
+        recipe.NumMade = _G.GetTradeSkillNumMade(id);
+        recipe.Tools = _G.GetTradeSkillTools(id);
 
-    local invType = recipe.ItemLink and select(4, _G.GetItemInfoInstant(recipe.ItemLink)) or nil;
-    recipe.InvSlot = GetInvSlot(invType, _G.GetTradeSkillInvSlots());
+        local cooldown = _G.GetTradeSkillCooldown(id);
+        if ( (cooldown and cooldown > 0) ) then
+            dbEntry:SetValue(3, itemContainer, index, "Cooldown", cooldown, time());
+        else
+            dbEntry:SetValue(3, itemContainer, index, "Cooldown", nil);
+        end
+    end
 
-    local numReagents = _G.GetTradeSkillNumReagents(id);
+    local numReagents = isCraft and _G.GetCraftNumReagents(id) or _G.GetTradeSkillNumReagents(id);
     if ( numReagents > 0 ) then
         recipe.Reagents = {};
         for i = 1, numReagents do
-            local reagentName, reagentTexture, reagentCount, playerReagentCount = _G.GetTradeSkillReagentInfo(id, i);
-            local link = _G.GetTradeSkillReagentItemLink(id, i);
+            local reagentName, reagentTexture, reagentCount;
+            if ( isCraft ) then
+                reagentName, reagentTexture, reagentCount = _G.GetCraftReagentInfo(id, i);
+            else
+                reagentName, reagentTexture, reagentCount = _G.GetTradeSkillReagentInfo(id, i);
+            end
+            local link = isCraft and _G.GetCraftReagentItemLink(id, i) or _G.GetTradeSkillReagentItemLink(id, i);
             if ( reagentName and link ) then
                 local _, id = Armory:GetLinkId(link);
                 reagents[id] = dbEntry.Save(reagentName, reagentTexture, link);
@@ -567,33 +590,37 @@ local function StoreTradeSkillInfo(dbEntry, index, id)
         end
     end
 
-    local cooldown =_G.GetTradeSkillCooldown(id);
-    
-    if ( (cooldown and cooldown > 0) ) then
-        dbEntry:SetValue(3, itemContainer, index, "Cooldown", cooldown, time());
-    else
-        dbEntry:SetValue(3, itemContainer, index, "Cooldown", nil);
-    end
-
     SetItemCache(dbEntry, nil, recipe.ItemLink);
        
     return recipe;
 end
 
-local function UpdateTradeSkillExtended(dbEntry)
-    local funcNumLines = _G.GetNumTradeSkills;
-    local funcGetLineInfo = _G.GetTradeSkillInfo;
+local function GetSkillInfo(id, isCraft)
+    local skillName, subName, skillType, numAvailable, isExpanded;
+    if ( isCraft ) then
+        skillName, subName, skillType, numAvailable, isExpanded = _G.GetCraftInfo(id);
+    else
+        skillName, skillType, numAvailable, isExpanded = _G.GetTradeSkillInfo(id);
+    end
+    return skillName, skillType, numAvailable, isExpanded
+end
+
+local function UpdateTradeSkillExtended(dbEntry, isCraft)
+    local funcNumLines = isCraft and _G.GetNumCrafts or _G.GetNumTradeSkills;
+    local funcGetLineInfo = function(index)
+        return GetSkillInfo(index, isCraft);
+    end;
     local funcGetLineState = function(index)
-        local _, skillType, _, isExpanded = _G.GetTradeSkillInfo(index);
+        local _, skillType, _, isExpanded = GetSkillInfo(index, isCraft);
         local isHeader = not IsRecipe(skillType);
         return isHeader, isExpanded;
     end;
-    local funcExpand = _G.ExpandTradeSkillSubClass;
-    local funcCollapse = _G.CollapseTradeSkillSubClass;
+    local funcExpand = isCraft and _G.ExpandCraftSkillLine or _G.ExpandTradeSkillSubClass;
+    local funcCollapse = isCraft and _G.CollapseCraftSkillLine or _G.CollapseTradeSkillSubClass;
     local funcAdditionalInfo = function(index)
-        local _, skillType = _G.GetTradeSkillInfo(index);
+        local _, skillType = GetSkillInfo(index, isCraft);
         if ( IsRecipe(skillType) ) then
-            StoreTradeSkillInfo(dbEntry, index);
+            StoreTradeSkillInfo(dbEntry, index, nil, isCraft);
         end
     end
 
@@ -603,25 +630,42 @@ local function UpdateTradeSkillExtended(dbEntry)
     dbEntry:SetExpandableListValues(itemContainer, funcNumLines, funcGetLineState, funcGetLineInfo, funcExpand, funcCollapse, funcAdditionalInfo);
 end
 
-local function UpdateTradeSkillSimple(dbEntry)
+local function UpdateTradeSkillSimple(dbEntry, isCraft)
     dbEntry:ClearContainer(itemContainer);
 
     ClearItemCache(dbEntry);
 
     local id = 1;
     local index = 1;
-    while ( _G.GetTradeSkillInfo(id) ) do
-        local _, skillType = _G.GetTradeSkillInfo(id);
+    while ( GetSkillInfo(id, isCraft) ) do
+        local skillName, skillType, numAvailable, isExpanded = GetSkillInfo(id, isCraft);
         if ( IsRecipe(skillType) ) then
-            dbEntry:SetValue(3, itemContainer, index, "Info", _G.GetTradeSkillInfo(id));
-            StoreTradeSkillInfo(dbEntry, index, id);
+            dbEntry:SetValue(3, itemContainer, index, "Info", skillName, skillType, numAvailable, isExpanded);
+            StoreTradeSkillInfo(dbEntry, index, id, isCraft);
             index = index + 1;
         end
         id = id + 1;
     end
 end
 
-function Armory:UpdateTradeSkill()
+function Armory:PullTradeSkillItems(isCraft)
+    if ( self:HasTradeSkills() ) then
+        local id = 1;
+        while ( GetSkillInfo(id, isCraft) ) do
+            local _, skillType = GetSkillInfo(id, isCraft);
+            if ( IsRecipe(skillType) ) then
+                _G.GetItemInfo(isCraft and _G.GetCraftItemLink(id) or _G.GetTradeSkillItemLink(id));
+                local numReagents = isCraft and _G.GetCraftNumReagents(id) or _G.GetTradeSkillNumReagents(id);
+                for i = 1, numReagents do
+                    _G.GetItemInfo(isCraft and _G.GetCraftReagentItemLink(id, i) or _G.GetTradeSkillReagentItemLink(id, i));
+                end
+            end
+            id = id + 1;
+        end
+    end
+end
+
+function Armory:UpdateTradeSkill(isCraft)
     local name, rank, maxRank;
     local modeChanged;
     local warned;
@@ -633,7 +677,11 @@ function Armory:UpdateTradeSkill()
         return;
     end
 
-    name, rank, maxRank = _G.GetTradeSkillLine();
+    if ( isCraft ) then
+        name, rank, maxRank = _G.GetCraftDisplaySkillLine();
+    else
+        name, rank, maxRank = _G.GetTradeSkillLine();
+    end
 
     if ( name and name ~= "UNKNOWN" ) then
         if ( not IsTradeSkill(name) ) then
@@ -651,18 +699,20 @@ function Armory:UpdateTradeSkill()
             local success;
 
             if ( self:GetConfigExtendedTradeSkills() ) then
-                SetProfessionValue(name, "SubClasses", _G.GetTradeSkillSubClasses());
-                SetProfessionValue(name, "InvSlots", _G.GetTradeSkillInvSlots());
-                local state = PreserveTradeSkillsState();
-                if ( _G.GetNumTradeSkills() == 0 ) then
+                if ( not isCraft ) then
+                    SetProfessionValue(name, "SubClasses", _G.GetTradeSkillSubClasses());
+                    SetProfessionValue(name, "InvSlots", _G.GetTradeSkillInvSlots());
+                end
+                local state = PreserveTradeSkillsState(isCraft);
+                if ( (isCraft and _G.GetNumCrafts() or _G.GetNumTradeSkills()) == 0 ) then
                     extended = true;
                 else
-                    UpdateTradeSkillExtended(dbEntry);
+                    UpdateTradeSkillExtended(dbEntry, isCraft);
                 end
-                RestoreTradeSkillsState(state);
+                RestoreTradeSkillsState(state, isCraft);
                 modeChanged = not extended;
             else
-                UpdateTradeSkillSimple(dbEntry);
+                UpdateTradeSkillSimple(dbEntry, isCraft);
                 modeChanged = extended;
             end
 
@@ -954,6 +1004,10 @@ end
 
 function Armory:GetTradeSkillItemLink(index)
     return GetRecipeValue(index, "ItemLink");
+end
+
+function Armory:GetTradeSkillSpellFocus(index)
+    return GetRecipeValue(index, "SpellFocus");
 end
 
 function Armory:GetTradeSkillReagentInfo(index, id)

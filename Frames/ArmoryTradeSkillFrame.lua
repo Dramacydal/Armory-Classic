@@ -64,38 +64,40 @@ function ArmoryTradeSkillFrameMixin:OnLoad()
 
     self:RegisterEvent("TRADE_SKILL_SHOW");
     self:RegisterEvent("TRADE_SKILL_CLOSE");
-    self:RegisterEvent("SKILL_LINES_CHANGED");
-
-    ArmoryDropDownMenu_Initialize(self.FilterDropDown, function(...) self:InitFilterMenu(...) end, "MENU");
+    self:RegisterEvent("CRAFT_SHOW");
+    self:RegisterEvent("CRAFT_CLOSE");
 end
 
 function ArmoryTradeSkillFrameMixin:OnEvent(event, ...)
+    local isCraft = event:sub(1, 4) == "CRAFT";
     if ( not Armory:CanHandleEvents() ) then
         return;
-    elseif ( event == "TRADE_SKILL_SHOW" ) then
+    elseif ( event == "TRADE_SKILL_SHOW" or event == "CRAFT_SHOW" ) then
         self.isOpen = true;
-    elseif ( event == "TRADE_SKILL_CLOSE" ) then
+        Armory:PullTradeSkillItems(isCraft);
+    elseif ( event == "TRADE_SKILL_CLOSE" or event == "CRAFT_CLOSE" ) then
         self.isOpen = false;
     end
 
     if ( not Armory:GetConfigExtendedTradeSkills() ) then
-        Armory:Execute(function() self:Update() end);
+        Armory:Execute(function() self:Update(isCraft) end);
     end
 end
 
 function ArmoryTradeSkillFrameMixin:OnShow()
-	PlaySound(SOUNDKIT.UI_PROFESSIONS_WINDOW_OPEN);
+    ArmoryDropDownMenu_Initialize(self.FilterDropDown, function(...) self:InitFilterMenu(...) end, "MENU");
+    PlaySound(SOUNDKIT.UI_PROFESSIONS_WINDOW_OPEN);
 end
 
 function ArmoryTradeSkillFrameMixin:OnHide()
 	PlaySound(SOUNDKIT.UI_PROFESSIONS_WINDOW_CLOSE);
 end
 
-function ArmoryTradeSkillFrameMixin:Update()
+function ArmoryTradeSkillFrameMixin:Update(isCraft)
     local currentSkill, modeChanged;
 
     Armory:UnregisterTradeSkillUpdateEvents();
-    currentSkill, modeChanged = Armory:UpdateTradeSkill();
+    currentSkill, modeChanged = Armory:UpdateTradeSkill(isCraft);
     Armory:RegisterTradeSkillUpdateEvents();
 
     if ( Armory.character == Armory.player ) then
@@ -305,15 +307,19 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 		info.keepShownOnClick = true;
 		info.hasArrow = true;	
 		
-		--[[ Filter recipes by inventory slot ]]--	
-		info.text = TRADESKILL_FILTER_SLOTS;
-		info.value = 1;
-		ArmoryDropDownMenu_AddButton(info, level);
-				
-		--[[ Filter recipes by parent category ]]--	
-		info.text = TRADESKILL_FILTER_CATEGORY;
-		info.value = 2;
-		ArmoryDropDownMenu_AddButton(info, level);
+        --[[ Filter recipes by inventory slot ]]--
+        if ( Armory:GetTradeSkillInvSlots() ) then
+            info.text = TRADESKILL_FILTER_SLOTS;
+            info.value = 1;
+            ArmoryDropDownMenu_AddButton(info, level);
+        end
+
+        --[[ Filter recipes by parent category ]]--	
+        if ( Armory:GetTradeSkillSubClasses() ) then
+            info.text = TRADESKILL_FILTER_CATEGORY;
+            info.value = 2;
+            ArmoryDropDownMenu_AddButton(info, level);
+        end
 	
 	elseif ( level == 2 ) then
 		--[[ Inventory slots ]]--	
@@ -772,17 +778,30 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
             self.Contents.ResultIcon.Count:SetText("");
         end
 
+        local hasRequirements;
         local requiredToolsString = Armory:GetTradeSkillTools(self.selectedRecipe);
         if ( requiredToolsString and requiredToolsString ~= "" ) then
+            self.Contents.RequirementText:SetText(BuildColoredListString(requiredToolsString));
+            hasRequirements = true;
+        else
+            local requiredTotems = Armory:GetTradeSkillSpellFocus(self.selectedRecipe);
+            if ( requiredTotems and requiredTotems ~= "" ) then
+    		    self.Contents.RequirementText:SetText(BuildColoredListString(requiredTotems));
+                hasRequirements = true;
+            elseif ( requiredLevel and requiredLevel > 0 ) then
+                self.Contents.RequirementText:SetFormattedText(TRAINER_REQ_LEVEL, requiredLevel);
+                hasRequirements = true;
+            end
+        end
+        if ( hasRequirements ) then
             self.Contents.RequirementLabel:Show();
-            self.Contents.RequirementText:SetText(requiredToolsString);
             self.Contents.RecipeCooldown:SetPoint("TOP", self.Contents.RequirementText, "BOTTOM", 0, -SPACING_BETWEEN_LINES);
         else
             self.Contents.RequirementLabel:Hide();
             self.Contents.RequirementText:SetText("");
             self.Contents.RecipeCooldown:SetPoint("TOP", self.Contents.RequirementText, "BOTTOM", 0, 0);
         end
-        
+
         self.Contents.ReagentLabel:SetPoint("TOPLEFT", self.Contents.RecipeCooldown, "BOTTOMLEFT", 0, -SPACING_BETWEEN_LINES);
         self.Contents.RecipeCooldown:SetTextColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b);
         if ( not recipeInfo.cooldown ) then
@@ -890,9 +909,7 @@ function ArmoryTradeSkillDetailsMixin:OnReagentClicked(reagentButton)
 end
 
 ----------------------------------------------------------
-
-local Orig_CloseTradeSkill = CloseTradeSkill;
-function CloseTradeSkill()
+local function UpdateWhenClosing(closeFunc, isCraft)
     if ( not ArmoryTradeSkillFrame.isOpen or ArmoryTradeSkillFrame.closing ) then
         return;
     end
@@ -900,13 +917,23 @@ function CloseTradeSkill()
     ArmoryTradeSkillFrame.closing = true;
     
     if ( Armory:GetConfigExtendedTradeSkills() ) then
-        ArmoryTradeSkillFrame:Update();
+        ArmoryTradeSkillFrame:Update(isCraft);
     end
 
-    Orig_CloseTradeSkill();
+    closeFunc();
 
     ArmoryTradeSkillFrame.closing = false;
     ArmoryTradeSkillFrame.isOpen = false;
+end
+
+local Orig_CloseCraft = CloseCraft;
+function CloseCraft()
+    UpdateWhenClosing(Orig_CloseCraft, true);
+end
+
+local Orig_CloseTradeSkill = CloseTradeSkill;
+function CloseTradeSkill()
+    UpdateWhenClosing(Orig_CloseTradeSkill, false);
 end
 
 function ArmoryTradeSkillFrame_Show()

@@ -847,6 +847,8 @@ function Armory:InitializeSummary(parent)
             columns = columns + 5;
         end
 
+        GameTooltip_SetBackdropStyle(GameTooltip, GAME_TOOLTIP_BACKDROP_STYLE_DEFAULT);
+
         self.summary = self.qtip:Acquire("ArmorySummary", columns);
         self.summary:SetScale(Armory:GetConfigFrameScale());
         self.summary:SmartAnchorTo(parent);

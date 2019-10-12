@@ -409,6 +409,8 @@ function ArmorySelectCharacter_OnClick(self)
         return;
     end
 
+    GameTooltip_SetBackdropStyle(GameTooltip, GAME_TOOLTIP_BACKDROP_STYLE_DEFAULT);
+
     self.characterList = Armory.qtip:Acquire("ArmoryCharacterList", 2);
     self.characterList:SetScale(Armory:GetConfigFrameScale());
     self.characterList:SetToplevel(1);

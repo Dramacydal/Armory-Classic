@@ -181,13 +181,6 @@ Armory.options = {
         disabled = function() return not Armory:HasTradeSkills(); end,
         default = true
     },
-    ARMORY_CMD_SET_SHOWQUESTALTS = {
-        type = "toggle",
-        set = function(value) Armory:SetConfigShowQuestAlts(value and value ~= "0"); end,
-        get = function() return Armory:GetConfigShowQuestAlts(); end,
-        disabled = function() return not Armory:HasQuestLog(); end,
-        default = true
-    },
     ARMORY_CMD_SET_EXPDAYS = {
         type = "range",
         set = function(value) Armory:SetConfigExpirationDays(value); end,
@@ -758,14 +751,6 @@ function Armory:GetConfigShowSecondaryTradeSkillRanks()
     return not self:Setting("General", "HideSecondaryTradeSkillRanks");
 end
 
-function Armory:SetConfigShowQuestAlts(on)
-    self:Setting("General", "HideQuestAlts", not on);
-end
-
-function Armory:GetConfigShowQuestAlts()
-    return not self:Setting("General", "HideQuestAlts");
-end
-
 function Armory:SetConfigPerCharacter(on)
     self:Setting("General", "PerCharacter", on);
 end
@@ -1078,18 +1063,6 @@ function Armory:GetConfigTradeSkillRankColor(default)
     local r, g, b = self:Setting("General", "TradeSkillRankColor");
     if ( default or not r ) then
         r, g, b = GetTableColor(NORMAL_FONT_COLOR);
-    end
-    return r, g, b;
-end
-
-function Armory:SetConfigQuestAltsColor(r, g, b)
-    self:Setting("General", "QuestAltsColor", r, g, b);
-end
-
-function Armory:GetConfigQuestAltsColor(default)
-    local r, g, b = self:Setting("General", "QuestAltsColor");
-    if ( default or not r ) then
-        r, g, b = GetTableColor(GREEN_FONT_COLOR);
     end
     return r, g, b;
 end

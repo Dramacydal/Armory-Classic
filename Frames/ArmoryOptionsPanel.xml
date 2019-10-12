@@ -1538,25 +1538,6 @@
           </OnLoad>
         </Scripts>
       </CheckButton>
-      <Frame name="$parentShowQuestAlts" inherits="ArmoryOptionsCheckBoxWithSwatchTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentShowSecondarySkillRank" relativePoint="BOTTOMLEFT">
-            <Offset>
-              <AbsDimension x="-16" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            local control = _G[self:GetName().."Check"];
-            control.type = CONTROLTYPE_CHECKBOX;
-            control.label = "ARMORY_CMD_SET_SHOWQUESTALTS";
-            control.colorSet = function(r, g, b) Armory:SetConfigQuestAltsColor(r, g, b); end;
-            control.colorGet = function(default) return Armory:GetConfigQuestAltsColor(default); end;
-            ArmoryOptionsPanel_RegisterControl(control, self:GetParent());
-          </OnLoad>
-        </Scripts>
-      </Frame>
 
     </Frames>
   </Frame>

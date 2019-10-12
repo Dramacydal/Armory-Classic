@@ -341,7 +341,6 @@ function Armory:InitializeMenu()
         Armory:MenuAddButton("ARMORY_CMD_SET_SHOWHASSKILL");
         Armory:MenuAddButton("ARMORY_CMD_SET_SHOWCANLEARN");
         Armory:MenuAddButton("ARMORY_CMD_SET_SHOWCRAFTERS");
-        Armory:MenuAddButton("ARMORY_CMD_SET_SHOWQUESTALTS");
         Armory:MenuAddButton("ARMORY_CMD_SET_SHOWSUMMARY");
         Armory:MenuAddButton("ARMORY_CMD_SET_PAUSEINCOMBAT");
         Armory:MenuAddButton("ARMORY_CMD_SET_USEFACTIONFILTER");
@@ -434,7 +433,6 @@ function Armory:Init()
         --self:SetCommand("ARMORY_CMD_SET_SHOWUNEQUIP", function(...) return Armory:SetConfig(...) end);
         --self:SetCommand("ARMORY_CMD_SET_SHOWEQCTOOLTIPS", function(...) return Armory:SetConfig(...) end);
         --self:SetCommand("ARMORY_CMD_SET_SHOWITEMCOUNT", function(...) return Armory:SetConfig(...) end);
-        --self:SetCommand("ARMORY_CMD_SET_SHOWQUESTALTS", function(...) return Armory:SetConfig(...) end);
         self:SetCommand("ARMORY_CMD_RESET_FRAME", function(...) return Armory:Reset(...) end);
         self:SetCommand("ARMORY_CMD_RESET_SETTINGS", function(...) return Armory:Reset(...) end);
         self:SetCommand("ARMORY_CMD_CHECK", function(...) Armory:CheckMailItems(nil, ...) end);
@@ -590,8 +588,6 @@ function Armory:SetConfig(what, arg1, arg2)
                 entry = self.options.ARMORY_CMD_SET_SHOWEQCTOOLTIPS;
             elseif ( what == strlower(ARMORY_CMD_SET_SHOWITEMCOUNT) ) then
                 entry = self.options.ARMORY_CMD_SET_SHOWITEMCOUNT;
-            elseif ( what == strlower(ARMORY_CMD_SET_SHOWQUESTALTS) ) then
-                entry = self.options.ARMORY_CMD_SET_SHOWQUESTALTS;
             elseif ( what == strlower(ARMORY_CMD_SET_PERCHARACTER) ) then
                 entry = self.options.ARMORY_CMD_SET_PERCHARACTER;
             end

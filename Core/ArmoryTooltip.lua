@@ -348,35 +348,6 @@ local function EnhanceRecipeTooltip(tooltip, id, link)
     return 1;
 end
 
-local function EnhanceQuestTooltip(tooltip, id, link)
-    if ( not (Armory:HasQuestLog() and Armory:GetConfigShowQuestAlts()) ) then
-        return;
-    end
-
-    local currentProfile = Armory:CurrentProfile();
-
-    table.wipe(tooltipLines);
-
-    for _, character in ipairs(Armory:CharacterList(Armory.playerRealm)) do
-        Armory:LoadProfile(Armory.playerRealm, character);
-
-        if ( Armory:IsOnQuest(id) ) then
-            table.insert(tooltipLines, character);
-        end
-    end
-    Armory:SelectProfile(currentProfile);
-    
-    if ( #tooltipLines > 0 ) then
-        AddSpacer(tooltip);
-        local r, g, b = Armory:GetConfigQuestAltsColor();
-        tooltip:AddLine(ARMORY_QUEST_TOOLTIP_LABEL);
-        tooltip:AddLine(table.concat(tooltipLines, ", "), r, g, b, true);
-        tooltip:Show();
-    end
-    
-    return 1;
-end
-
 local function EnhanceSpellTooltip(tooltip, id, link)
     local name = Armory:GetNameFromLink(link);
     if ( name ) then
@@ -570,7 +541,6 @@ end
 function Armory:RegisterTooltipHooks(tooltip)
     RegisterTooltipHook(tooltip, "item", EnhanceItemTooltip);
     RegisterTooltipHook(tooltip, "enchant", EnhanceRecipeTooltip);
-    RegisterTooltipHook(tooltip, "quest", EnhanceQuestTooltip);
     RegisterTooltipHook(tooltip, "spell", EnhanceSpellTooltip);
 end
 

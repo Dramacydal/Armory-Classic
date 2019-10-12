@@ -28,13 +28,15 @@
 
 local Armory, _ = Armory;
 
+ARMORY_NUM_PET_SLOTS = 4;
+
 function ArmoryPetSlot_OnClick(self, button)
     local pets = Armory:GetPets();
     if ( pets[self:GetID()] ) then
-        ArmoryPetFrameCurrentPet:SetChecked(false);
-        ArmoryPetFrameStablePet1:SetChecked(false);
-        ArmoryPetFrameStablePet2:SetChecked(false);
-        
+        for i = 1, ARMORY_NUM_PET_SLOTS do
+            _G["ArmoryPetFramePet"..i]:SetChecked(false);
+        end
+
         self:SetChecked(true);
         Armory.selectedPet = pets[self:GetID()];
 
@@ -115,7 +117,7 @@ function ArmoryPetFrame_OnHide(self)
 end
 
 function ArmoryPetFrame_InitPets()
-    for i =    1, NUM_PET_STABLE_SLOTS do
+    for i = 1, NUM_PET_STABLE_SLOTS do
         local icon, name, level, family, loyalty = GetStablePetInfo(i);
         if ( name and not Armory:PetExists(name) ) then
             Armory:SetPetValue(name, "Name", name);
@@ -164,22 +166,16 @@ function ArmoryPetFrame_Update(petChanged)
         end
     end
 
-    setButton(ArmoryPetFrameStablePet1, nil);
-    setButton(ArmoryPetFrameStablePet2, nil);
-
     local pets = Armory:GetPets();
-    local index = 1;
-    for i = 1, #pets do
-        local button;
-        Armory.selectedPet = pets[i];
-        if ( Armory:GetPetRealName() == Armory:UnitName("pet") ) then
-            button = ArmoryPetFrameCurrentPet;
+    for i = 1, ARMORY_NUM_PET_SLOTS do
+        local button = _G["ArmoryPetFramePet"..i];
+        if ( i <= #pets ) then
+            Armory.selectedPet = pets[i];
+            button:SetID(i);
+            setButton(button, Armory.selectedPet);
         else
-            button = _G["ArmoryPetFrameStablePet"..index];
-            index = index + 1;
+            setButton(button, nil);
         end
-        button:SetID(i);
-        setButton(button, Armory.selectedPet);
     end
     Armory.selectedPet = currentPet;
     ArmoryPetFrame.selectedPet = currentPet;
@@ -207,8 +203,9 @@ function ArmoryPetFrame_SetSelectedPetInfo()
     ArmoryPetFrame_SetHappiness();
     ArmoryPetFrameLoyaltyText:SetText(Armory:GetPetLoyalty());
 
-    local totalPoints, spent = Armory:GetPetTrainingPoints();
-    if ( totalPoints ) then
+    local _, canGainXP = Armory:HasPetUI();
+    if ( canGainXP ) then
+        local totalPoints, spent = Armory:GetPetTrainingPoints();
         ArmoryPetFrameTrainingPointText:SetText(totalPoints - spent);
         ArmoryPetFrameTrainingPointText:Show();
         ArmoryPetFrameTrainingPointLabel:Show();

@@ -548,44 +548,34 @@
         </Frames>
       </Frame>
 
-      
-      <CheckButton name="ArmoryPetFrameCurrentPet" inherits="ArmoryPetSlotTemplate">
+      <CheckButton name="ArmoryPetFramePet1" inherits="ArmoryPetSlotTemplate" id="1">
         <Anchors>
-          <Anchor point="BOTTOMLEFT" x="95" y="136"/>
+          <Anchor point="BOTTOMLEFT" x="72" y="136"/>
         </Anchors>
-        <Layers>
-            <Layer level="BACKGROUND">
-                <FontString inherits="GameFontNormalSmall" text="CURRENT_PET">
-                    <Anchors>
-                        <Anchor point="BOTTOM" relativePoint="TOP" x="0" y="6"/>
-                    </Anchors>
-                </FontString>
-            </Layer>
-        </Layers>
       </CheckButton>
-      <CheckButton name="ArmoryPetFrameStablePet1" inherits="ArmoryPetSlotTemplate">
+      <CheckButton name="ArmoryPetFramePet2" inherits="ArmoryPetSlotTemplate" id="2">
         <Anchors>
-          <Anchor point="LEFT" relativeTo="ArmoryPetFrameCurrentPet" relativePoint="RIGHT">
+          <Anchor point="LEFT" relativeTo="ArmoryPetFramePet1" relativePoint="RIGHT">
             <Offset>
-              <AbsDimension x="53" y="0"/>
+              <AbsDimension x="22" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
-        <Layers>
-            <Layer level="BACKGROUND">
-                <FontString inherits="GameFontNormalSmall" text="STABLED_PETS">
-                    <Anchors>
-                        <Anchor point="BOTTOM" relativePoint="TOP" x="24" y="6"/>
-                    </Anchors>
-                </FontString>
-            </Layer>
-        </Layers>
       </CheckButton>
-      <CheckButton name="ArmoryPetFrameStablePet2" inherits="ArmoryPetSlotTemplate">
+      <CheckButton name="ArmoryPetFramePet3" inherits="ArmoryPetSlotTemplate" id="3">
         <Anchors>
-          <Anchor point="LEFT" relativeTo="ArmoryPetFrameStablePet1" relativePoint="RIGHT">
+          <Anchor point="LEFT" relativeTo="ArmoryPetFramePet2" relativePoint="RIGHT">
             <Offset>
-              <AbsDimension x="15" y="0"/>
+              <AbsDimension x="22" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+      </CheckButton>
+      <CheckButton name="ArmoryPetFramePet4" inherits="ArmoryPetSlotTemplate" id="4">
+        <Anchors>
+          <Anchor point="LEFT" relativeTo="ArmoryPetFramePet3" relativePoint="RIGHT">
+            <Offset>
+              <AbsDimension x="22" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>

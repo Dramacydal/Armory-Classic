@@ -852,6 +852,7 @@ function Armory:InitializeSummary(parent)
         self.summary = self.qtip:Acquire("ArmorySummary", columns);
         self.summary:SetScale(Armory:GetConfigFrameScale());
         self.summary:SmartAnchorTo(parent);
+        self.summary:SetFrameLevel(parent:GetFrameLevel() + 1);
         self.summary.parent = parent;
 
         self.summary:SetScript("OnMouseDown", function (self, button)

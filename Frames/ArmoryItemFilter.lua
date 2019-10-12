@@ -80,7 +80,7 @@ end
 function ArmoryItemFilter_InitQuality()
     table.insert(Armory.itemFilter.options, { text = QUALITY, header = true });
     
-    for i = 0, #ITEM_QUALITY_COLORS - 2  do
+    for i = 0, #ITEM_QUALITY_COLORS - 4  do
         table.insert(Armory.itemFilter.options, 
             { text = _G["ITEM_QUALITY"..i.."_DESC"],
               type = "quality",

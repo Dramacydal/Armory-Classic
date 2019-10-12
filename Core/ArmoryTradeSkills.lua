@@ -1153,7 +1153,7 @@ function Armory:GetRecipeAltInfo(name, link, profession, reqProfession, reqRank,
             
             local known;
             for i = 1, dbEntry:GetNumValues(container, profession, itemContainer) do
-                skillItemID = self:GetItemId(dbEntry:GetValue(container, profession, itemContainer, i, "ItemLink"));
+                skillItemID = tonumber(self:GetItemId(dbEntry:GetValue(container, profession, itemContainer, i, "ItemLink")));
                 if ( skillItemID ) then
                     if ( itemID ) then
                         known = itemID == skillItemID;

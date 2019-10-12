@@ -30,7 +30,7 @@
     ArmoryOtherFrame_OpenSubFrame(1);
   </Binding>
   <Binding name="ARMORY_RAID" category="ADDONS">
-    ArmoryOtherFrame_OpenSubFrame(2);
+    ArmoryOtherFrame_OpenSubFrame(3);
   </Binding>
   <Binding name="ARMORY_INVENTORY" category="ADDONS">
     ArmoryFrame_OpenSideFrame(ArmoryInventoryFrame);

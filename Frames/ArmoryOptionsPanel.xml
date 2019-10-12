@@ -1502,42 +1502,6 @@
           </OnLoad>
         </Scripts>
       </Frame>
-      <Frame name="$parentShowSkillRank" inherits="ArmoryOptionsCheckBoxWithSwatchTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentShowCrafters" relativePoint="BOTTOMLEFT">
-            <Offset>
-              <AbsDimension x="0" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            local control = _G[self:GetName().."Check"];
-            control.type = CONTROLTYPE_CHECKBOX;
-            control.label = "ARMORY_CMD_SET_SHOWSKILLRANK";
-            control.colorSet = function(r, g, b) Armory:SetConfigTradeSkillRankColor(r, g, b); end;
-            control.colorGet = function(default) return Armory:GetConfigTradeSkillRankColor(default); end;
-            ArmoryOptionsPanel_RegisterControl(control, self:GetParent());
-          </OnLoad>
-        </Scripts>
-      </Frame>
-      <CheckButton name="$parentShowSecondarySkillRank" inherits="ArmoryOptionsWideCheckButtonTemplate">
-        <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentShowSkillRank" relativePoint="BOTTOMLEFT">
-            <Offset>
-              <AbsDimension x="16" y="0"/>
-            </Offset>
-          </Anchor>
-        </Anchors>
-        <Scripts>
-          <OnLoad>
-            self.type = CONTROLTYPE_CHECKBOX;
-            self.label = "ARMORY_CMD_SET_SHOW2NDSKILLRANK";
-            ArmoryOptionsPanel_RegisterControl(self, self:GetParent());
-            ArmoryOptionsPanel_SetupDependentControl(ArmoryOptionsTooltipPanelShowSkillRankCheck, self);
-          </OnLoad>
-        </Scripts>
-      </CheckButton>
 
     </Frames>
   </Frame>

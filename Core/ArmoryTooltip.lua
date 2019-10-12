@@ -348,60 +348,6 @@ local function EnhanceRecipeTooltip(tooltip, id, link)
     return 1;
 end
 
-local function EnhanceSpellTooltip(tooltip, id, link)
-    local name = Armory:GetNameFromLink(link);
-    if ( name ) then
-        if ( not (Armory:HasTradeSkills() and Armory:GetConfigShowTradeSkillRanks()) ) then
-            return;
-        end
-        
-        -- Smelting
-        if ( id == "2656" ) then
-            name = ARMORY_TRADE_MINING;
-        end
-        
-        local currentProfile = Armory:CurrentProfile();
-
-        table.wipe(tooltipLines);
-
-        for _, profile in ipairs(Armory:GetConnectedProfiles()) do
-            Armory:SelectProfile(profile);
-            
-            local rank, maxRank;
-            local tradeSkillLink = select(2, _G.GetSpellLink(id));
-
-            if ( Armory:GetConfigShowSecondaryTradeSkillRanks() ) then
-                rank, maxRank = Armory:GetTradeSkillRank(name);
-            else
-                for _, v in ipairs(Armory:GetPrimaryTradeSkills()) do
-                    if ( v[1] == name ) then
-                        rank = v[2];
-                        maxRank = v[3];
-                        break;
-                    end
-                end
-            end
-
-            if ( rank and maxRank ) then
-                   local character = Armory:GetQualifiedCharacterName();
-                table.insert(tooltipLines, {name=character, rank=rank, maxRank=maxRank});
-            end
-        end
-        Armory:SelectProfile(currentProfile);
-        
-        if ( #tooltipLines > 0 ) then
-            table.sort(tooltipLines, function(a, b) return a.rank > b.rank; end);
-            AddSpacer(tooltip);
-            local r, g, b = Armory:GetConfigTradeSkillRankColor();
-            for _, v in ipairs(tooltipLines) do
-                tooltip:AddDoubleLine(v.name, v.rank.."/"..v.maxRank, r, g, b, r, g, b);
-            end
-            tooltip:Show();
-        end
-    end
-
-    return 1;
-end
 
 ----------------------------------------------------------
 -- Tooltip Internals
@@ -541,7 +487,6 @@ end
 function Armory:RegisterTooltipHooks(tooltip)
     RegisterTooltipHook(tooltip, "item", EnhanceItemTooltip);
     RegisterTooltipHook(tooltip, "enchant", EnhanceRecipeTooltip);
-    RegisterTooltipHook(tooltip, "spell", EnhanceSpellTooltip);
 end
 
 function Armory:ResetTooltipHook()

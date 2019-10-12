@@ -167,20 +167,6 @@ Armory.options = {
         disabled = function() return not Armory:HasTradeSkills(); end,
         default = true
     },
-    ARMORY_CMD_SET_SHOWSKILLRANK = {
-        type = "toggle",
-        set = function(value) Armory:SetConfigShowTradeSkillRanks(value and value ~= "0"); end,
-        get = function() return Armory:GetConfigShowTradeSkillRanks(); end,
-        disabled = function() return not Armory:HasTradeSkills(); end,
-        default = true
-    },
-    ARMORY_CMD_SET_SHOW2NDSKILLRANK = {
-        type = "toggle",
-        set = function(value) Armory:SetConfigShowSecondaryTradeSkillRanks(value and value ~= "0"); end,
-        get = function() return Armory:GetConfigShowSecondaryTradeSkillRanks(); end,
-        disabled = function() return not Armory:HasTradeSkills(); end,
-        default = true
-    },
     ARMORY_CMD_SET_EXPDAYS = {
         type = "range",
         set = function(value) Armory:SetConfigExpirationDays(value); end,
@@ -735,22 +721,6 @@ function Armory:GetConfigShowCrafters()
     return not self:Setting("General", "HideCrafters");
 end
 
-function Armory:SetConfigShowTradeSkillRanks(on)
-    self:Setting("General", "HideTradeSkillRanks", not on);
-end
-
-function Armory:GetConfigShowTradeSkillRanks()
-    return not self:Setting("General", "HideTradeSkillRanks");
-end
-
-function Armory:SetConfigShowSecondaryTradeSkillRanks(on)
-    self:Setting("General", "HideSecondaryTradeSkillRanks", not on);
-end
-
-function Armory:GetConfigShowSecondaryTradeSkillRanks()
-    return not self:Setting("General", "HideSecondaryTradeSkillRanks");
-end
-
 function Armory:SetConfigPerCharacter(on)
     self:Setting("General", "PerCharacter", on);
 end
@@ -1049,18 +1019,6 @@ end
 
 function Armory:GetConfigCraftersColor(default)
     local r, g, b = self:Setting("General", "CraftersColor");
-    if ( default or not r ) then
-        r, g, b = GetTableColor(NORMAL_FONT_COLOR);
-    end
-    return r, g, b;
-end
-
-function Armory:SetConfigTradeSkillRankColor(r, g, b)
-    self:Setting("General", "TradeSkillRankColor", r, g, b);
-end
-
-function Armory:GetConfigTradeSkillRankColor(default)
-    local r, g, b = self:Setting("General", "TradeSkillRankColor");
     if ( default or not r ) then
         r, g, b = GetTableColor(NORMAL_FONT_COLOR);
     end

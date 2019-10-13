@@ -36,6 +36,7 @@ move-folders:
 
 ignore:
     - Parent
+    - Libs/LibRecipes-2.0
 
 manual-changelog:
     filename: CHANGELOG.txt

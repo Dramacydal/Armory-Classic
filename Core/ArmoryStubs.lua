@@ -27,6 +27,7 @@
 --]]
 
 local Armory, _ = Armory;
+local BCT = LibStub("LibBabble-CreatureType-3.0"):GetReverseLookupTable();
 
 function Armory:GetCurrentPet()
     local pets = self:GetPets();
@@ -109,7 +110,7 @@ function Armory:GetPetIcon()
     end
 
     local _, className = self:UnitClass("player");
-    local creatureFamily = self:UnitCreatureFamily("pet");
+    local creatureFamily = BCT[self:UnitCreatureFamily("pet")];
     if ( className == "DEATHKNIGHT" ) then
         return "Interface\\Icons\\Spell_Shadow_RaiseDead"; --Spell_Shadow_AnimateDead";
     elseif ( className == "MAGE" ) then

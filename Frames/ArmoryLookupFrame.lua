@@ -39,11 +39,10 @@ ARMORY_LOOKUP_SKILLS = {
     ARMORY_TRADE_ENGINEERING = "EG",
     ARMORY_TRADE_FIRST_AID = "FA",
     ARMORY_TRADE_LEATHERWORKING = "LW",
-    ARMORY_TRADE_POISONS = "PO", 
     ARMORY_TRADE_TAILORING = "TA",
 };
 
-ARMORY_LOOKUP_TYPE = { LOOKUP_RECIPE = "R", LOOKUP_QUEST = "Q", LOOKUP_CHARACTER = "C", LOOKUP_DOWNLOAD = "D", LOOKUP_ITEM = "I" };
+ARMORY_LOOKUP_TYPE = { LOOKUP_RECIPE = "R", LOOKUP_QUEST = "Q", LOOKUP_CHARACTER = "C", LOOKUP_ITEM = "I" };
 
 function ArmoryLookupFrame_Toggle()
     if ( ArmoryLookupFrame:IsShown() ) then
@@ -590,7 +589,8 @@ function ArmoryLookupFrame_SendRequest()
     local search = ArmoryLookupFrameEditBox:GetText();
     local exact = 0;
     local id = ArmoryLookupFrame.type;
-    local version, message;
+    local version = "c1";
+    local message;
 
     if ( ArmoryLookupFrameSearchExactCheckButton:GetChecked() ) then
         exact = 1;
@@ -604,16 +604,12 @@ function ArmoryLookupFrame_SendRequest()
     
     if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
         local skill = ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupTradeSkillDropDown);
-        version = "2";
         message = strjoin(ARMORY_LOOKUP_SEPARATOR, ARMORY_LOOKUP_SKILLS[skill], exact, search);
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_QUEST ) then
-        version = "2";
         message = strjoin(ARMORY_LOOKUP_SEPARATOR, exact, search, ArmoryDropDownMenu_GetSelectedID(ArmoryLookupQuestDropDown));
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_CHARACTER ) then
-        version = "5";
         message = search;
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
-        version = "1";
         message = strjoin(ARMORY_LOOKUP_SEPARATOR, exact, search);
     else
         return;
@@ -625,22 +621,13 @@ function ArmoryLookupFrame_SendRequest()
     ArmoryAddonMessageFrame_CreateRequest(id, version, message, channel);
 end
 
-function ArmoryLookupFrame_SendDownloadRequest(guild)
-    local id = ARMORY_LOOKUP_TYPE.LOOKUP_DOWNLOAD;
-    local version = AgrInfo.dbVersion;
-    local message = guild;
-    local channel = "GUILD";
-
-    ArmoryAddonMessageFrame_CreateRequest(id, version, message, channel);
-end
-
 function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sender, channel)
     local findFunc, arg1, arg2;
     local exact, search 
 
     if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_SKILL);
-        if ( version ~= "2" ) then
+        if ( version ~= "c1" ) then
             Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
             return;
         end
@@ -653,7 +640,7 @@ function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sende
        
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_QUEST ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_QUEST);
-        if ( version ~= "2" ) then
+        if ( version ~= "c1" ) then
             Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
             return;
         end
@@ -663,7 +650,7 @@ function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sende
 
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_CHARACTER ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_CHARACTER);
-        if ( version ~= "5" ) then
+        if ( version ~= "c1" ) then
             Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
             return;
         end
@@ -671,21 +658,9 @@ function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sende
         findFunc = ArmoryLookupFrame_InspectCharacter;
         search = message; --character name
 
-    elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_DOWNLOAD ) then
-        Armory:PrintCommunication(ARMORY_LOOKUP_SKILL);
-        if ( version == "4" ) then
-            arg2 = 1;
-        elseif ( version ~= "3" ) then
-            Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
-            return;
-        end
-
-        findFunc = ArmoryLookupFrame_DownloadRecipes;
-        search = message; --guild
-
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_ITEM);
-        if ( version ~= "1" ) then
+        if ( version ~= "c1" ) then
             Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
             return;
         end
@@ -768,73 +743,31 @@ function ArmoryLookupFrame_CanShare(profile, channel)
     end
 end
 
-function ArmoryLookupFrame_FindRecipe(exact, search, arg1, arg2)
+function ArmoryLookupFrame_FindRecipe(exact, search, arg1)
     local dbEntry = Armory.selectedDbBaseEntry;
-    local dbShared;
-    local skillName, skillType, ref, link, listLink, id, itemId, texture, numMade; 
-    local refType = "enchant";
+    local skillName, skillType, link, ref; 
     local result = {};
 
     if ( Armory:GetConfigShareProfessions() and dbEntry and dbEntry:Contains("Professions", arg1) ) then
-        listLink = dbEntry:GetValue("Professions", arg1, "ListLink");
-        if ( search == "*" ) then
-            table.insert(result, "*");
-        else
-            dbEntry = ArmoryDbEntry:new(dbEntry:GetValue("Professions", arg1));
+        dbEntry = ArmoryDbEntry:new(dbEntry:GetValue("Professions", arg1));
 
-            local container = "SkillLines";
-            local numEntries = dbEntry:GetNumValues(container);
-            for i = 1, numEntries do
-                skillName, skillType = dbEntry:GetValue(container, i, "Info");
-                if ( skillType ~= "header" and ArmoryLookupFrame_IsMatch(skillName, search, exact) ) then
-                    dbShared = ArmoryDbEntry:new(Armory:GetSharedValue("Professions", "Recipes", dbEntry:GetValue(container, i, "Data")));
-                    if ( dbShared ) then
-                        link = dbShared:GetValue("RecipeLink");
-                        if ( link ) then
-                            ref = link:match("|H"..refType..":(%d+)|h");
-                            if ( ref ) then
-                                if ( arg2 ) then
-                                    itemId = Armory:GetItemId(dbShared:GetValue("ItemLink"));
-                                    texture = dbShared:GetValue("Icon");
-                                    if ( texture and not tonumber(texture) ) then
-                                        texture = table.remove({strsplit("\\", texture)});
-                                    end
-                                    numMade = dbShared:GetValue("NumMade");
-                                    if ( numMade == 1 ) then
-                                        numMade = nil;
-                                    end
-                                    ref = strjoin(";", ref, itemId or "", texture or "", numMade or "");
-                                    
-                                end
-                                table.insert(result, ref);
-                            end
-                        end
-                    end
-                elseif ( arg2 and skillType == "header" ) then
-                    table.insert(result, skillName);
+        local container = "SkillLines";
+        local numEntries = dbEntry:GetNumValues(container);
+        for i = 1, numEntries do
+            skillName, skillType = dbEntry:GetValue(container, i, "Info");
+            if ( skillType ~= "header" and ArmoryLookupFrame_IsMatch(skillName, search, exact) ) then
+                link = dbEntry:GetValue(container, i, "ItemLink");
+                if ( link ) then
+                    ref = link;
+                else
+                    ref = skillName;
                 end
+                table.insert(result, ref);
             end
         end
     end
 
-    if ( #result > 0 ) then
-        if ( listLink and search ~= "" ) then
-            table.insert(result, 1, refType..ARMORY_LOOKUP_CONTENT_SEPARATOR..listLink:match("|H(.-)|h"));
-        else
-            table.insert(result, 1, refType);
-        end
-    end
-
     return result;
-end
-
-local function AddRef(result, link, refType)
-    if ( link ) then
-        local ref = link:match("|H"..refType..":([-%d:]+)|h");
-        if ( ref ) then
-            table.insert(result, ref);
-        end
-    end
 end
 
 function ArmoryLookupFrame_FindQuest(exact, search, arg1)
@@ -842,7 +775,6 @@ function ArmoryLookupFrame_FindQuest(exact, search, arg1)
     local container = "Quests";
 
     local name, isHeader, id;
-    local refType = "quest";
     local result = {};
 
     arg1 = arg1 or "1";
@@ -859,89 +791,67 @@ function ArmoryLookupFrame_FindQuest(exact, search, arg1)
                         questIndex = questIndex + 1;
                         name, _, _, isHeader = dbEntry:GetValue(container, questIndex, "Info");
                         if ( not isHeader ) then
-                            id = dbEntry:GetValue(container, questIndex, "Data");
-                            AddRef(result, dbEntry:GetValue(container, id, "Link"), refType);
+                            table.insert(result, name);
                         end
                     until ( isHeader or questIndex > numEntries )
                     questIndex = questIndex - 1;
                 end
             elseif ( not isHeader and ArmoryLookupFrame_IsMatch(name, search, exact) ) then
                 -- name
-                id = dbEntry:GetValue(container, questIndex, "Data");
-                AddRef(result, dbEntry:GetValue(container, id, "Link"), refType);
+                table.insert(result, name);
             end
             questIndex = questIndex + 1;
         end
-    end
-
-    if ( #result > 0 ) then
-        table.insert(result, 1, refType);
     end
 
     return result;
 end
 
 local info = {};
-local specs = {};
+local tab = {};
 function ArmoryLookupFrame_InspectCharacter(exact, search, arg1)
     local result = {};
     local link, ref;
 
     if ( Armory:GetConfigShareCharacter() and strlower(Armory.character) == strlower(search) ) then
         table.wipe(info);
-        
-        info[1] = "";
-        
+
         for i = EQUIPPED_FIRST, EQUIPPED_LAST do
             link = Armory:GetInventoryItemLink("player", i);
             if ( link ) then
                 ref = link:match("|Hitem:([-%d:]+)|h");
             end
             if ( link and ref ) then
-                info[i + 1] = ref;
+                info[i] = ref;
             else
-                info[i + 1] = "";
+                info[i] = "";
             end
         end
         table.insert(result, table.concat(info, ARMORY_LOOKUP_CONTENT_SEPARATOR));
 
-        table.wipe(specs);
-
-	    local numTalentGroups = Armory:GetNumSpecGroups();
-        for talentGroup = 1, numTalentGroups do
-            local primaryTree = Armory:GetSpecialization(false, false, talentGroup);
-            local role = Armory:GetSpecializationRole(primaryTree);
-            local active;
-            if ( talentGroup == Armory:GetActiveSpecGroup() ) then
-                active = 1;
-            end
-
-            table.wipe(info);
-  			for tier = 1, MAX_TALENT_TIERS do
-				for column = 1, NUM_TALENT_COLUMNS do
-       				local id, _, texture, selected = Armory:GetTalentInfo(tier, column, talentGroup);
-					if ( selected ) then
-					    if ( not tonumber(texture) ) then
-						    texture = table.remove({strsplit("\\", texture)});
-						end
-						table.insert(info, Armory:Join(";", id, texture));
-					end
-				end
-			end
-            if ( #info > 0 ) then
-                table.insert(info, 1, Armory:Join(";", role, active));
-                table.insert(specs, table.concat(info, "|"));
+        table.wipe(info);
+        table.wipe(tab);
+        for i = 1, Armory:GetNumTalentTabs(true) do
+            local name, _, pointsSpent = Armory:GetTalentTabInfo(i, true);
+            tab[i] = name..":"..pointsSpent;
+            for j = 1, Armory:GetNumTalents(i, true) do
+                local name, texture, _, _, rank, maxRank = Armory:GetTalentInfo(i, j, true);
+                if ( not tonumber(texture) ) then
+                    texture = table.remove({strsplit("\\", texture)});
+                end
+                if ( rank and rank > 0 ) then
+                    table.insert(info, strjoin(";", name, texture, rank, maxRank));
+                end
             end
         end
-        
-        if ( #specs > 0 ) then
-            table.insert(result, table.concat(specs, ARMORY_LOOKUP_CONTENT_SEPARATOR));
-        else
-            table.insert(result, "");
+
+        if ( #info > 0 ) then
+            table.insert(info, 1, table.concat(tab, " "));
         end
+        table.insert(result, table.concat(info, ARMORY_LOOKUP_CONTENT_SEPARATOR));
         
         table.wipe(info);
-        table.wipe(specs);
+        table.wipe(tab);
     end
     
     return result;
@@ -982,47 +892,6 @@ function ArmoryLookupFrame_FindItem(exact, search)
     return result;
 end
 
-function ArmoryLookupFrame_DownloadRecipes(exact, search, arg1, arg2)
-    local dbEntry = Armory.selectedDbBaseEntry;
-    local result = {};
-
-    if ( search == Armory:GetGuildInfo("player") and dbEntry and dbEntry:Contains("Professions") ) then
-        for profession in pairs(dbEntry:GetValue("Professions")) do
-            local skill, recipes;
-
-            if ( profession == ARMORY_TRADE_ALCHEMY ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_ALCHEMY;
-            elseif ( profession == ARMORY_TRADE_BLACKSMITHING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_BLACKSMITHING;
-            elseif ( profession == ARMORY_TRADE_COOKING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_COOKING;
-            elseif ( profession == ARMORY_TRADE_ENCHANTING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_ENCHANTING;
-            elseif ( profession == ARMORY_TRADE_ENGINEERING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_ENGINEERING;
-            elseif ( profession == ARMORY_TRADE_FIRST_AID ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_FIRST_AID;
-            elseif ( profession == ARMORY_TRADE_LEATHERWORKING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_LEATHERWORKING;
-            elseif ( profession == ARMORY_TRADE_POISONS ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_POISONS;
-            elseif ( profession == ARMORY_TRADE_TAILORING ) then
-                skill = ARMORY_LOOKUP_SKILLS.ARMORY_TRADE_TAILORING;
-            end
-
-            if ( skill ) then
-                recipes = ArmoryLookupFrame_FindRecipe(nil, "", profession, arg2);
-                if ( #recipes > 0 ) then
-                    table.insert(recipes, 1, skill);
-                    table.insert(result, table.concat(recipes, ARMORY_LOOKUP_CONTENT_SEPARATOR));
-                end
-            end
-        end
-    end
-
-    return result;
-end
-
 function ArmoryLookupFrame_CheckResponse()
     for _, id in pairs(ARMORY_LOOKUP_TYPE) do
         ArmoryLookupFrame_ProcessResponse(id);
@@ -1046,49 +915,33 @@ function ArmoryLookupFrame_ProcessResponse(id)
     local module = ArmoryAddonMessageFrame_GetModule(id);
     local data = ArmoryLookupFrame.data;
     local ownerData = ArmoryLookupFrame.ownerData;
-    local sets, version, fields, values, owner, name, ref, index, link, refType;
-    local sort, update, isMine, characterName, isExpanded;
+    local sets, version, fields, values, owner, name, ref, index, link, kind, refId;
+    local sort, update, isMine, characterName;
     local count;
 
     for sender, reply in pairs(module.replies) do
-        sets = Armory:StringSplit(ARMORY_LOOKUP_SEPARATOR, ArmoryAddonMessageFrame_Decompress(reply.message));
-        for _, set in ipairs(sets) do
-            fields = Armory:StringSplit(ARMORY_LOOKUP_FIELD_SEPARATOR, set);
-            if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_DOWNLOAD ) then
-                -- proto3: owner\nAL\fenchant\f1234\f3264\f5353\nEN\fenchant\f8262\f7265
-                -- proto4: owner\nAL\fenchant\finvslot\fid;item;icon;count\fid;item;icon;count
-                if ( tonumber(reply.version) >= 3 and ArmoryGuildRecipes_ProcessResponse ) then
-                    for i = 2, #fields do
-                        ArmoryGuildRecipes_ProcessResponse(sender, fields[1], Armory:StringSplit(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields[i]));
-                    end
-                end
+        if ( reply.version == "c1" ) then
+            sets = Armory:StringSplit(ARMORY_LOOKUP_SEPARATOR, ArmoryAddonMessageFrame_Decompress(reply.message));
+            for _, set in ipairs(sets) do
+                fields = Armory:StringSplit(ARMORY_LOOKUP_FIELD_SEPARATOR, set);
 
-            elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_CHARACTER ) then
-                if ( reply.version == "5" ) then
+                if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_CHARACTER ) then
                     -- owner\n(1)\n(2)
                     owner = fields[1];
 
                     local retry;
 
-                    -- (1) (19 items) iLvl\f18821:0:0:0:0:0:0:0\f31333:0:0:0:0:0:0:1443794188
+                    -- (1) (19 items) 18821:0:0:0:0:0:0:0\f31333:0:0:0:0:0:0:1443794188
                     name, values = ArmoryLookupFrame_ParseCharacterEquipment(owner, fields[2]);
                     if ( name == nil ) then
                         retry = true;
                     else
                         table.insert(data, {name=name, values=values});
 
-                        -- (2) (talents) role1;active|19354;icon|19364;icon\f;role2;active|19365;icon|19360;icon
-                        local specs = Armory:StringSplit(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields[3]);
-                        for i = 1, #specs do
-                            if ( specs[i] ~= "" ) then
-                                name, values = ArmoryLookupFrame_ParseCharacterTalents(owner, i, specs[i]);
-                                if ( name == nil ) then
-                                    retry = true;
-                                    break;
-                                elseif ( #values > 0 ) then
-                                    table.insert(data, {name=name, values=values});
-                                end
-                            end
+                        -- (2) (talents) tab1 (1) / tab2 (20) / tab3 (40)\fname;icon;rank;maxRank\fname;icon;rank;maxRank
+                        name, values = ArmoryLookupFrame_ParseCharacterTalents(owner, fields[3]);
+                        if ( #values > 0 ) then
+                            table.insert(data, {name=name, values=values});
                         end
                     end
                     
@@ -1097,64 +950,19 @@ function ArmoryLookupFrame_ProcessResponse(id)
                     end
                     
                     update = true;
-                end
-                
-            elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
-                -- owner\nS:24478\fN:3\nS:35624\fN:1 (item, count)
-                owner = fields[1];
-                characterName, isMine = ArmoryLookupFrame_GetCharacterName(owner, sender);
-                for i = 2, #fields do
-                    ref, count = Armory:Split(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields[i]);
-                    name, link = Armory:GetInfoFromId("item", ref);
-                    name = name ~= "" and name or RETRIEVING_ITEM_INFO;
-                    index = ArmoryLookupFrame_GetData(ref);
-                    if ( not index ) then
-                        if ( name ) then
-                            table.insert(data, {id=ref, name=name, display=name.." "..count.."x", count=count, link=link, isMine=isMine, values={{name=characterName, display=characterName.." "..count.."x", owner=owner, source=sender}}});
-                            sort = true;
-                        else
-                            Armory:PrintDebug("couldn't determine name", ref, characterName);
-                        end
-                    else
-                        if ( isMine ) then
-                            data[index].isMine = true;
-                        end
-                        data[index].count = data[index].count + count;
-                        data[index].display = data[index].name.." "..data[index].count.."x";
-                        table.insert(data[index].values, {name=characterName, display=characterName.." "..count.."x", owner=owner, source=sender});
-                        table.sort(data[index].values, function(a, b) return a.name < b.name end);
-                    end
-                    update = true;
-
-                end
-
-            elseif ( reply.version == "2" ) then
-                -- owner\nenchant\ftrade:51296:409:450:1F6C481:Bp>PZygS{{iGCy{u=Fj{{?<<\\Da>\n1234\n3264\n5353
-                -- owner\nquest\n2323:70\n2432:70
-                owner = fields[1];
-                characterName, isMine = ArmoryLookupFrame_GetCharacterName(owner, sender);
-                refType, link = strsplit(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields[2]);
-                if ( link ) then
-                    if ( not ownerData[owner] ) then
-                        ownerData[owner] = {};
-                    end
-                    ownerData[owner].recipeList = link;
-                end
-                for i = 3, #fields do
-                    ref = fields[i];
-                    if ( ref ) then
+                    
+                elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
+                    -- owner\nS:24478\fN:3\nS:35624\fN:1 (item, count)
+                    owner = fields[1];
+                    characterName, isMine = ArmoryLookupFrame_GetCharacterName(owner, sender);
+                    for i = 2, #fields do
+                        ref, count = Armory:Split(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields[i]);
+                        name, link = Armory:GetInfoFromId("item", ref);
+                        name = name ~= "" and name or RETRIEVING_ITEM_INFO;
                         index = ArmoryLookupFrame_GetData(ref);
                         if ( not index ) then
-                            if ( ref == "*" ) then
-                                name = _G[ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupTradeSkillDropDown)];
-                                link = nil;
-                                isExpanded = true;
-                            else
-                                name, link = Armory:GetInfoFromId(refType, ref);
-                                isExpanded = false;
-                            end
                             if ( name ) then
-                                table.insert(data, {id=ref, name=name, link=link, isMine=isMine, isExpanded=isExpanded, values={{name=characterName, owner=owner, source=sender}}});
+                                table.insert(data, {id=ref, name=name, display=name.." "..count.."x", count=count, link=link, isMine=isMine, values={{name=characterName, display=characterName.." "..count.."x", owner=owner, source=sender}}});
                                 sort = true;
                             else
                                 Armory:PrintDebug("couldn't determine name", ref, characterName);
@@ -1163,13 +971,66 @@ function ArmoryLookupFrame_ProcessResponse(id)
                             if ( isMine ) then
                                 data[index].isMine = true;
                             end
+                            data[index].count = data[index].count + count;
+                            data[index].display = data[index].name.." "..data[index].count.."x";
+                            table.insert(data[index].values, {name=characterName, display=characterName.." "..count.."x", owner=owner, source=sender});
+                            table.sort(data[index].values, function(a, b) return a.name < b.name end);
+                        end
+                        update = true;
+
+                    end
+
+                elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_QUEST ) then
+                    -- owner\nA New Plague\nA Putrid Task
+                    owner = fields[1];
+                    characterName, isMine = ArmoryLookupFrame_GetCharacterName(owner, sender);
+                    for i = 2, #fields do
+                        ref = fields[i];
+                        if ( ref ) then
+                            name = ref;
+                            index = ArmoryLookupFrame_GetData(ref);
+                            if ( not index ) then
+                                table.insert(data, {id=ref, name=name, isMine=isMine, values={{name=characterName, owner=owner, source=sender}}});
+                                sort = true;
+                            else
+                                if ( isMine ) then
+                                    data[index].isMine = true;
+                                end
+                                table.insert(data[index].values, {name=characterName, owner=owner, source=sender});
+                                table.sort(data[index].values, function(a, b) return a.name < b.name end);
+                            end
+                        end
+                    end
+                    update = true;
+                    
+                elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
+                    -- owner\n|cffffffff|Hitem:6888::::::::6::::1:3524:::|h[Herb Baked Egg]|h|r\n|cffffffff|Henchant:7428|h[Enchant Bracer - Minor Deflect]|h|r
+                    owner = fields[1];
+                    characterName, isMine = ArmoryLookupFrame_GetCharacterName(owner, sender);
+                    for i = 2, #fields do
+                        ref = fields[i];
+                        index = ArmoryLookupFrame_GetData(ref);
+                        if ( not index ) then
+                            name = Armory:GetNameFromLink(ref);
+                            if ( name ) then
+                                link = ref;
+                            else
+                                name = ref;
+                                link = nil;
+                            end
+                            table.insert(data, {id=ref, name=name, link=link, isMine=isMine, values={{name=characterName, owner=owner, source=sender}}});
+                            sort = true;
+                        else
+                            if ( isMine ) then
+                                data[index].isMine = true;
+                            end
                             table.insert(data[index].values, {name=characterName, owner=owner, source=sender});
                             table.sort(data[index].values, function(a, b) return a.name < b.name end);
                         end
                     end
-                end
-                update = true;
+                    update = true;
 
+                end
             end
         end
         ArmoryAddonMessageFrame_RemoveReply(module, sender);
@@ -1188,17 +1049,11 @@ end
 function ArmoryLookupFrame_ParseCharacterEquipment(owner, fields)
     local values = Armory:StringSplit(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields);
     local result = {};
-    local itemLevel = values[1];
     local name = ARMORY_EQUIPMENT;
     local missing;
-    
-    if ( itemLevel ~= "" ) then
-        name = name.." ("..ITEM_LEVEL_ABBR.." "..itemLevel..")";
-    end
 
-    for i = 2, #values do
+    for i = 1, #values do
         local name, link = Armory:GetInfoFromId("item", values[i]);
-        local slot = i - 1;
         local texture;
         if ( (name or "") ~= "" ) then
             if ( link ) then
@@ -1212,7 +1067,7 @@ function ArmoryLookupFrame_ParseCharacterEquipment(owner, fields)
                     _, _, _, _, _, _, _, _, _, texture = GetItemInfo(link);
                 end
             end
-            table.insert(result, {id=values[i], name=name.." "..GRAY_FONT_COLOR_CODE..ARMORY_SLOT[slot], link=link, icon=texture});
+            table.insert(result, {id=values[i], name=name.." "..GRAY_FONT_COLOR_CODE..ARMORY_SLOT[i], link=link, icon=texture});
         elseif ( (values[i] or "") ~= "" ) then
             missing = true;
         end
@@ -1223,41 +1078,17 @@ function ArmoryLookupFrame_ParseCharacterEquipment(owner, fields)
     end
 end
 
-function ArmoryLookupFrame_ParseCharacterTalents(owner, talentGroup, fields)
-    local values = Armory:StringSplit("|", fields);
-    local role, active = Armory:Split(";", values[1]);
+function ArmoryLookupFrame_ParseCharacterTalents(owner, fields)
+    local values = Armory:StringSplit(ARMORY_LOOKUP_CONTENT_SEPARATOR, fields);
+    local build = values[1];
     local result = {};
-    local name;
-    local missing;
-    
-    if ( talentGroup == 1 ) then
-        if ( active ) then
-            name = SPECIALIZATION_PRIMARY_ACTIVE;
-        else
-            name = SPECIALIZATION_PRIMARY;
-        end
-    else
-        if ( active ) then
-            name = SPECIALIZATION_SECONDARY_ACTIVE;
-        else
-            name = SPECIALIZATION_SECONDARY;
-        end
-    end
-    name = name.." (".._G[role]..")";
 
     for i = 2, #values do
-        local ref, texture = Armory:Split(";", values[i]);
-        local name, link = Armory:GetInfoFromId("talent", ref);
-        if ( (name or "") ~= "" ) then
-            table.insert(result, {id=ref, name=name, link=link, icon=tonumber(texture) or "Interface\\Icons\\"..texture});
-        elseif ( (ref or "") ~= "" ) then
-            missing = true;
-        end
+        local name, texture, rank, maxRank = strsplit(";", values[i]);
+        table.insert(result, {id=name, name=string.format("%s (%s/%s)", name, rank, maxRank), icon=tonumber(texture) or "Interface\\Icons\\"..texture});
     end
 
-    if ( not missing ) then    
-        return name, result;
-    end
+    return build, result;
 end
 
 function ArmoryLookupFrame_GetData(id)
@@ -1273,23 +1104,4 @@ function ArmoryLookupFrame_IsMatch(name, search, exact)
         return Armory:FindTextParts(name, search);
     end
     return Armory:FindTextParts(name, strsplit(" ", search));
-end
-
-function ArmoryLookupFrame_StartDownload(...)
-    local loaded = IsAddOnLoaded(ARMORY_SHARE_DOWNLOAD_ADDON);
-    local reason;
-
-    if ( not loaded ) then
-        loaded, reason = LoadAddOn(ARMORY_SHARE_DOWNLOAD_ADDON);
-        --if ( not loaded and reason == "DISABLED" ) then
-            --EnableAddOn(ARMORY_SHARE_DOWNLOAD_ADDON);
-            --loaded, reason = LoadAddOn(ARMORY_SHARE_DOWNLOAD_ADDON);
-        --end
-    end
-
-    if ( loaded ) then
-        ArmoryGuildRecipes_Prepare(ArmoryLookupFrame_SendDownloadRequest);
-    elseif ( reason ) then
-        Armory:PrintError(string.format(ARMORY_SHARE_DOWNLOAD_LOADERROR, ARMORY_SHARE_DOWNLOAD_ADDON, _G["ADDON_"..reason]));
-    end
 end

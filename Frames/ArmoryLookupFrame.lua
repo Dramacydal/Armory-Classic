@@ -262,7 +262,7 @@ function ArmoryLookupChannelDropDown_Initialize()
     local checked;
 
     local channels = {
-        --CHANNEL = function() return Armory.channel end,
+        CHANNEL = function() return Armory.channel end,
         TARGET = ArmoryLookupFrame_IsTargetSelected,
         GUILD = function() return IsInGuild() end,
         RAID = function() return IsInRaid() end,

@@ -1143,7 +1143,7 @@ function Armory:GetRecipeAltInfo(name, link, profession, reqProfession, reqRank,
         local skillItemID, skillName, dbEntry, character;
 
         local recipeID = self:GetItemId(link);
-        local _, itemID = LR:GetRecipeInfo(recipeID);
+        local spellID, itemID = LR:GetRecipeInfo(recipeID); itemID = itemID or spellID;
         local warn = not itemID;
 
         for _, profile in ipairs(self:GetConnectedProfiles()) do
@@ -1153,7 +1153,7 @@ function Armory:GetRecipeAltInfo(name, link, profession, reqProfession, reqRank,
             
             local known;
             for i = 1, dbEntry:GetNumValues(container, profession, itemContainer) do
-                skillItemID = tonumber(self:GetItemId(dbEntry:GetValue(container, profession, itemContainer, i, "ItemLink")));
+                skillItemID = tonumber(select(2, self:GetLinkId(dbEntry:GetValue(container, profession, itemContainer, i, "ItemLink"))));
                 if ( skillItemID ) then
                     if ( itemID ) then
                         known = itemID == skillItemID;

@@ -4,7 +4,7 @@
 ## Title-esES: Armory [Armería]
 ## Title-koKR: Armory [케릭터 정보 열람]
 ## Title-ruRU: Armory [Оружейная]
-## Version: 1.0.0
+## Version: @project-version@
 ## Notes: Provides an overview of equipment, stats, inventory, professions, quests, spells and more for all your characters
 ## Notes-deDE: Ermöglicht einen Überblick über Ausrüstung, Werte, Inventar, Berufe, Quests, Zauber und viel mehr für alle deine Charaktere
 ## Notes-frFR: Donne un aperçu de l'équipement, stats, sacs, métiers, quêtes, sorts et plus encore pour tous vos personnages

@@ -108,11 +108,14 @@ end
 local function GetProfessionInfo(index)
     local skillName, _, _, skillRank, _, skillModifier, skillMaxRank = _G.GetSkillLineInfo(index);
     local _, _, _, numSpells = _G.GetSpellTabInfo(1);
-    local smelting = 2656;
+
     for i = 1, numSpells do
         local spellName, _, spellID = _G.GetSpellBookItemName(i, BOOKTYPE_SPELL);
-        if ( spellID == smelting ) then
+        if ( spellID == 2656 ) then
             local texture = "Interface\\Icons\\"..tradeIcons[ARMORY_TRADE_MINING];
+            return skillName, texture, skillRank, skillMaxRank, skillModifier;
+        elseif ( spellID == 2383 ) then
+            local texture = "Interface\\Icons\\"..tradeIcons[ARMORY_TRADE_HERBALISM];
             return skillName, texture, skillRank, skillMaxRank, skillModifier;
         elseif ( spellName == skillName ) then
             local texture = _G.GetSpellBookItemTexture(i, BOOKTYPE_SPELL);

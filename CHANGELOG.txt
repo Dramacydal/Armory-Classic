@@ -5,6 +5,7 @@ Thanks for using Armory. You can show your appreciation and support future devel
 
 ==== v1.1.0 ====
 Contains fix for enchants not being found in LibRecipes.
+Contains a fix for hunter pets with an unknown number of training points.
 
 ==== v1.0.0 ====
 Initial release

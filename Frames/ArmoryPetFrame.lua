@@ -206,9 +206,14 @@ function ArmoryPetFrame_SetSelectedPetInfo()
     local _, canGainXP = Armory:HasPetUI();
     if ( canGainXP ) then
         local totalPoints, spent = Armory:GetPetTrainingPoints();
-        ArmoryPetFrameTrainingPointText:SetText(totalPoints - spent);
-        ArmoryPetFrameTrainingPointText:Show();
-        ArmoryPetFrameTrainingPointLabel:Show();
+        if ( totalPoints ) then
+            ArmoryPetFrameTrainingPointText:SetText(totalPoints - spent);
+            ArmoryPetFrameTrainingPointText:Show();
+            ArmoryPetFrameTrainingPointLabel:Show();
+        else
+            ArmoryPetFrameTrainingPointText:Hide();
+            ArmoryPetFrameTrainingPointLabel:Hide();
+        end
     else
         ArmoryPetFrameTrainingPointText:Hide();
         ArmoryPetFrameTrainingPointLabel:Hide();

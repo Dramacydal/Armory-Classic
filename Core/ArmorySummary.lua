@@ -696,19 +696,17 @@ function Armory:BuildSummary()
 			if ( self:GetConfigSummaryRaidInfo() and self:RaidEnabled() ) then
 				local savedInstances = self:GetNumSavedInstances();
 				local raidInfo = {};
-				local id, index;
-				local instanceName, instanceID, instanceReset;
+				local instanceName, instanceReset;
 				local count = 0;
 				for i = 1, savedInstances do
-					index = i;
-                    if ( index <= savedInstances ) then
-						index = savedDungeons;
-						id = self:GetInstanceLineId(index);
-						instanceName, _, instanceReset = self:GetSavedInstanceInfo(id);
-
+                    instanceName, _, instanceReset = self:GetSavedInstanceInfo(i);
+                    if ( instanceReset > 0 ) then
+                        instanceReset = SecondsToTime(instanceReset, true, nil, 3);
+                        count = count + 1;
+                    else
                         instanceReset = format("|cff808080%s|r", RAID_INSTANCE_EXPIRES_EXPIRED);
-						instanceName = format("|cff808080%s|r", instanceName);
-					end
+                        instanceName = format("|cff808080%s|r", instanceName);
+                    end
 					table.insert(raidInfo, {
 						Name = instanceName,
 						Reset = instanceReset

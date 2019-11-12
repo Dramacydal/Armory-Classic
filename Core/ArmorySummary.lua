@@ -348,8 +348,8 @@ local function OnRaidInfoEnter(self, characterInfo)
     tooltip:AddSeparator(2);
     for _, raidInfo in ipairs(characterInfo.RaidInfo) do
         index, column = tooltip:AddLine();
-        myColumn = column; index, column = tooltip:SetCell(index, myColumn, NORMAL_FONT_COLOR_CODE..raidInfo.Name..FONT_COLOR_CODE_CLOSE.."\n  "..raidInfo.Difficulty);
-        myColumn = column; index, column = tooltip:SetCell(index, myColumn, raidInfo.Reset.."\n ");
+        myColumn = column; index, column = tooltip:SetCell(index, myColumn, NORMAL_FONT_COLOR_CODE..raidInfo.Name..FONT_COLOR_CODE_CLOSE);
+        myColumn = column; index, column = tooltip:SetCell(index, myColumn, raidInfo.Reset);
         tooltip:AddSeparator(2);
     end
 

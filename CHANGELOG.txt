@@ -3,6 +3,9 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.4 ====
+Contains a fix for raid info throwing another error in the summary sheet.
+
 ==== v1.3 ====
 Contains a fix for raid info throwing an error in the summary sheet.
 

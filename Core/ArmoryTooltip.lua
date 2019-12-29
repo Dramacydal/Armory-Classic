@@ -436,7 +436,11 @@ local function RegisterTooltipHook(tooltip, idType, hook, reset)
         SetTooltipHook(tooltip, "SetHyperlink", function(link)
             return link;
         end);
-        
+
+        SetTooltipHook(tooltip, "SetCraftItem", function(index, reagentIndex)
+            return _G.GetCraftReagentItemLink(index, reagentIndex);
+        end);
+
         SetTooltipHook(tooltip, "OnTooltipSetItem", function(self)
             return select(2, Armory:GetItemFromTooltip(self));
         end);

@@ -5,6 +5,7 @@ Thanks for using Armory. You can show your appreciation and support future devel
 
 ==== v1.5 ====
 Contains a fix for counts not showing for craft reagents.
+Adds some sanity checks to paperdoll calculations.
 
 ==== v1.4 ====
 Contains a fix for raid info throwing another error in the summary sheet.

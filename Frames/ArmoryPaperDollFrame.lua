@@ -524,7 +524,10 @@ function ArmoryPaperDollFrame_SetArmor(unit, prefix)
 		armor = effectiveArmor;
 		posBuff = 0;
 		negBuff = 0;
-	end
+    end
+    if ( not base ) then
+        return;
+    end
 
 	local totalBufs = posBuff + negBuff;
 
@@ -549,7 +552,10 @@ function ArmoryPaperDollFrame_SetAttackBothHands(unit, prefix)
 		prefix = "";
 	end
 
-	local mainHandAttackBase, mainHandAttackMod = Armory:UnitAttackBothHands(unit);
+    local mainHandAttackBase, mainHandAttackMod = Armory:UnitAttackBothHands(unit);
+    if ( not mainHandAttackBase ) then
+        return;
+    end
 
 	local frame = _G["Armory"..prefix.."AttackFrame"];
 	local text = _G["Armory"..prefix.."AttackFrameStatText"];
@@ -576,7 +582,10 @@ function ArmoryPaperDollFrame_SetAttackPower(unit, prefix)
 		prefix = "";
 	end
 	
-	local base, posBuff, negBuff = Armory:UnitAttackPower(unit);
+    local base, posBuff, negBuff = Armory:UnitAttackPower(unit);
+    if ( not base ) then
+        return;
+    end
 
 	local frame = _G["Armory"..prefix.."AttackPowerFrame"]; 
 	local text = _G["Armory"..prefix.."AttackPowerFrameStatText"];
@@ -596,7 +605,7 @@ function ArmoryPaperDollFrame_SetDamage(unit, prefix)
 	local damageText = _G["Armory"..prefix.."DamageFrameStatText"];
 	local damageFrame = _G["Armory"..prefix.."DamageFrame"];
 
-	local speed, offhandSpeed = Armory:UnitAttackSpeed(unit);
+    local speed, offhandSpeed = Armory:UnitAttackSpeed(unit);
 	
 	local minDamage;
 	local maxDamage; 
@@ -605,7 +614,10 @@ function ArmoryPaperDollFrame_SetDamage(unit, prefix)
 	local physicalBonusPos;
 	local physicalBonusNeg;
 	local percent;
-	minDamage, maxDamage, minOffHandDamage, maxOffHandDamage, physicalBonusPos, physicalBonusNeg, percent = Armory:UnitDamage(unit);
+    minDamage, maxDamage, minOffHandDamage, maxOffHandDamage, physicalBonusPos, physicalBonusNeg, percent = Armory:UnitDamage(unit);
+    if ( not minDamage ) then
+        return;
+    end
 	local displayMin = max(floor(minDamage),1);
 	local displayMax = max(ceil(maxDamage),1);
 
@@ -696,7 +708,11 @@ function ArmoryPaperDollFrame_SetRangedAttack(unit, prefix)
 
 	local hasRelic = Armory:UnitHasRelicSlot(unit);
 
-	local rangedAttackBase, rangedAttackMod = Armory:UnitRangedAttack(unit);
+    local rangedAttackBase, rangedAttackMod = Armory:UnitRangedAttack(unit);
+    if ( not rangedAttackBase ) then
+        return;
+    end
+
 	local frame = _G["Armory"..prefix.."RangedAttackFrame"]; 
 	local text = _G["Armory"..prefix.."RangedAttackFrameStatText"];
 
@@ -777,7 +793,10 @@ function ArmoryPaperDollFrame_SetRangedDamage(unit, prefix)
 		return;
 	end
 
-	local rangedAttackSpeed, minDamage, maxDamage, physicalBonusPos, physicalBonusNeg, percent = Armory:UnitRangedDamage(unit);
+    local rangedAttackSpeed, minDamage, maxDamage, physicalBonusPos, physicalBonusNeg, percent = Armory:UnitRangedDamage(unit);
+    if ( not rangedAttackSpeed ) then
+        return;
+    end
 	local displayMin = max(floor(minDamage),1);
 	local displayMax = max(ceil(maxDamage),1);
 
@@ -835,7 +854,10 @@ function ArmoryPaperDollFrame_SetDefense(unit, prefix)
 	if ( not prefix ) then
 		prefix = "";
 	end
-	local base, modifier = Armory:UnitDefense(unit);
+    local base, modifier = Armory:UnitDefense(unit);
+    if ( not base ) then
+        return;
+    end
 
 	local frame = _G["Armory"..prefix.."DefenseFrame"];
 	local text = _G["Armory"..prefix.."DefenseFrameStatText"];

@@ -44,6 +44,7 @@ ARMORY_SLOTINFO = {
 	INVTYPE_LEGS = "LegsSlot",
 	INVTYPE_NECK = "NeckSlot",
 	INVTYPE_RANGED = "RangedSlot",
+	INVTYPE_RANGEDRIGHT = "RangedSlot",
 	INVTYPE_RELIC = "RangedSlot",
 	INVTYPE_ROBE = "ChestSlot",
 	INVTYPE_SHIELD = "SecondaryHandSlot",

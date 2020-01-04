@@ -3,6 +3,9 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.6 ===
+Adds support for wildcard (*) lookup of quests and items when using a private channel.
+
 ==== v1.5 ====
 Contains a fix for counts not showing for craft reagents.
 Adds some sanity checks to paperdoll calculations.

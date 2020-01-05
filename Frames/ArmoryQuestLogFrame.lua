@@ -208,7 +208,7 @@ function ArmoryQuestLog_Update()
             questLogTitle:Show();
 
             -- Place the highlight and lock the highlight state
-            if ( ArmoryQuestLogFrame.selectedButtonID and Armory:GetQuestLogSelection() == questIndex ) then
+            if ( ArmoryQuestLogFrame.selectedButtonID and Armory:GetQuestLogSelection() == questIndex and not isHeader ) then
                 ArmoryQuestLogHighlightFrame:SetPoint("TOPLEFT", "ArmoryQuestLogTitle"..i, "TOPLEFT", 0, 0);
                 ArmoryQuestLogSkillHighlight:SetVertexColor(questLogTitle.r, questLogTitle.g, questLogTitle.b);
                 ArmoryQuestLogHighlightFrame:Show();
@@ -262,15 +262,14 @@ function ArmoryQuestLog_SetSelection(questID)
     local titleButtonTag = _G["ArmoryQuestLogTitle"..id.."Tag"];
     local questLogTitleText, level, questTag, isHeader, isCollapsed = Armory:GetQuestLogTitle(questID);
     if ( isHeader ) then
+        ArmoryQuestLogHighlightFrame:Hide();
         if ( isCollapsed ) then
             Armory:ExpandQuestHeader(questID);
         else
             Armory:CollapseQuestHeader(questID);
         end
-        if ( not ArmoryQuestLogFrame.selectedButtonID ) then
-            questID = ArmoryQuestLog_GetFirstSelectableQuest();
-            ArmoryQuestLog_SetSelection(questID);
-        end
+        questIndex = ArmoryQuestLog_GetFirstSelectableQuest();
+        ArmoryQuestLog_SetSelection(questIndex);
         return;
     else
         -- Set newly selected quest and highlight it
@@ -279,7 +278,7 @@ function ArmoryQuestLog_SetSelection(questID)
         if ( questID > scrollFrameOffset and questID <= (scrollFrameOffset + ARMORY_QUESTS_DISPLAYED) and questID <= Armory:GetNumQuestLogEntries() ) then
             titleButton:LockHighlight();
             titleButtonTag:SetTextColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-            --QuestLogSkillHighlight:SetVertexColor(titleButton.r, titleButton.g, titleButton.b);
+            ArmoryQuestLogSkillHighlight:SetVertexColor(titleButton.r, titleButton.g, titleButton.b);
             ArmoryQuestLogHighlightFrame:SetPoint("TOPLEFT", "ArmoryQuestLogTitle"..id, "TOPLEFT", 5, 0);
             ArmoryQuestLogHighlightFrame:Show();
         end
@@ -406,6 +405,8 @@ function ArmoryQuestLogCollapseAllButton_OnClick(self)
         ArmoryQuestLogListScrollFrameScrollBar:SetValue(0);
         Armory:CollapseQuestHeader(0);
     end
+    local questIndex = ArmoryQuestLog_GetFirstSelectableQuest();
+    ArmoryQuestLog_SetSelection(questIndex);
     ArmoryQuestLog_Update();
 end
 

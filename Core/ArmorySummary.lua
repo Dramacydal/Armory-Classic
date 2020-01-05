@@ -384,14 +384,6 @@ local function DisplayQuests(tooltip, characterInfo)
  	if ( characterInfo.NumQuests > 0 ) then
         index, column = tooltip:AddLine();
 
-        myColumn = column; index, column = tooltip:SetCell(index, myColumn, format("Interface\\Buttons\\UI-%sButton-Up", questHeaderState.Quests and "Plus" or "Minus"), iconProvider); 
-        tooltip:SetCellScript(index, myColumn, "OnMouseDown", function (self) 
-			questHeaderState.Quests = not questHeaderState.Quests; 
-			DisplayQuests(tooltip, characterInfo); 
-		end);
-
-        myColumn = column; index, column = tooltip:SetCell(index, myColumn, CURRENT_QUESTS, headerFont, "LEFT", 3); 
-        
         if ( not questHeaderState.Quests ) then
 			numEntries = Armory:GetNumQuestLogEntries();
 			for i = 1, numEntries do

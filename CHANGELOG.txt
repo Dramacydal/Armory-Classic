@@ -9,6 +9,7 @@ Contains a possible for an occasional taint error.
 Contains a fix for "SendWho" failing when shift-clicking a player in the lookup frame.
 Contains a fix for demon pet spells (need to summon each once to update). 
 Contains a fix for friends not being shown.
+Contains a fix for requesting a full recipe list when doing a lookup.
 Fixes some minor UI issues.
 
 ==== v1.5 ====

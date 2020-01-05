@@ -749,20 +749,24 @@ function ArmoryLookupFrame_FindRecipe(exact, search, arg1)
     local result = {};
 
     if ( Armory:GetConfigShareProfessions() and dbEntry and dbEntry:Contains("Professions", arg1) ) then
-        dbEntry = ArmoryDbEntry:new(dbEntry:GetValue("Professions", arg1));
+        if ( search == "*" ) then
+            table.insert(result, "*");
+        else
+            dbEntry = ArmoryDbEntry:new(dbEntry:GetValue("Professions", arg1));
 
-        local container = "SkillLines";
-        local numEntries = dbEntry:GetNumValues(container);
-        for i = 1, numEntries do
-            skillName, skillType = dbEntry:GetValue(container, i, "Info");
-            if ( skillType ~= "header" and ArmoryLookupFrame_IsMatch(skillName, search, exact) ) then
-                link = dbEntry:GetValue(container, i, "ItemLink");
-                if ( link ) then
-                    ref = link;
-                else
-                    ref = skillName;
+            local container = "SkillLines";
+            local numEntries = dbEntry:GetNumValues(container);
+            for i = 1, numEntries do
+                skillName, skillType = dbEntry:GetValue(container, i, "Info");
+                if ( skillType ~= "header" and ArmoryLookupFrame_IsMatch(skillName, search, exact) ) then
+                    link = dbEntry:GetValue(container, i, "ItemLink");
+                    if ( link ) then
+                        ref = link;
+                    else
+                        ref = skillName;
+                    end
+                    table.insert(result, ref);
                 end
-                table.insert(result, ref);
             end
         end
     end
@@ -1013,14 +1017,21 @@ function ArmoryLookupFrame_ProcessResponse(id)
                         ref = fields[i];
                         index = ArmoryLookupFrame_GetData(ref);
                         if ( not index ) then
-                            name = Armory:GetNameFromLink(ref);
-                            if ( name ) then
-                                link = ref;
-                            else
-                                name = ref;
+                            if ( ref == "*" ) then
+                                name = _G[ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupTradeSkillDropDown)];
                                 link = nil;
+                                isExpanded = true;
+                            else
+                                name = Armory:GetNameFromLink(ref);
+                                isExpanded = false;
+                                if ( name ) then
+                                    link = ref;
+                                else
+                                    name = ref;
+                                    link = nil;
+                                end
                             end
-                            table.insert(data, {id=ref, name=name, link=link, isMine=isMine, values={{name=characterName, owner=owner, source=sender}}});
+                            table.insert(data, {id=ref, name=name, link=link, isMine=isMine, isExpanded=isExpanded, values={{name=characterName, owner=owner, source=sender}}});
                             sort = true;
                         else
                             if ( isMine ) then

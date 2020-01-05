@@ -36,7 +36,7 @@ function Armory:GetCurrentPet()
         self.selectedPet = pet;
     end
     if ( not self:PetExists(self.selectedPet) ) then
-        if ( #pets > 0 ) then
+        if ( pet == UNKNOWN and #pets > 0 ) then
             self.selectedPet = pets[1];
         else
             self.selectedPet = pet;

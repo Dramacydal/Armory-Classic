@@ -147,6 +147,7 @@ function ArmoryPetFrame_Update(petChanged)
             button.PetName:SetText(Armory:GetPetRealName());
             button.Background:SetVertexColor(1.0, 1.0, 1.0);
             button:Enable();
+            button:SetChecked(pet == currentPet);
             local icon = Armory:GetPetIcon();
             SetItemButtonTexture(button, icon);
             if ( icon ) then
@@ -163,6 +164,7 @@ function ArmoryPetFrame_Update(petChanged)
             SetItemButtonTexture(button, "");
             button.Background:SetVertexColor(1.0, 0.1, 0.1);
             button:Disable();
+            button:SetChecked(false);
         end
     end
 

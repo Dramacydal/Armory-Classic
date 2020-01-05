@@ -5,6 +5,7 @@ Thanks for using Armory. You can show your appreciation and support future devel
 
 ==== v1.6 ===
 Adds support for wildcard (*) lookup of quests and items when using a private channel.
+Contains a possible for an occasional taint error.
 
 ==== v1.5 ====
 Contains a fix for counts not showing for craft reagents.

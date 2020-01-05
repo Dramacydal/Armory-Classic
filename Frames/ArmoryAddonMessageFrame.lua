@@ -90,9 +90,6 @@ function ArmoryAddonMessageFrame_OnUpdate(self, elapsed)
 
     local version = Armory.version:match("^v?([%d%.]+)");
     if ( version ) then
-        if ( Armory.channel ) then
-            ArmoryAddonMessageFrame_SendMessage(version, "CHANNEL");
-        end
         if ( IsInGuild() ) then
             ArmoryAddonMessageFrame_SendMessage(version, "GUILD");
         end

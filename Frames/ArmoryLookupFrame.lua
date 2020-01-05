@@ -196,7 +196,7 @@ function ArmoryLookupFrameButton_OnClick(self, button)
         ChatFrame_SendTell(self.player);
 
     elseif ( self.player and IsShiftKeyDown() ) then
-        SendWho(WHO_TAG_NAME..self.player);
+        C_FriendList.SendWho(WHO_TAG_NAME..self.player);
 
     elseif ( self.owner and ArmoryLookupFrame.ownerData[self.owner] ) then
         local link = ArmoryLookupFrame.ownerData[self.owner].recipeList;

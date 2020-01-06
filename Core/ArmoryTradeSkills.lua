@@ -183,13 +183,13 @@ local function CanCraftFromInventory(dbEntry, index)
         return false;
     end
 
-    local numReagents = dbEntry:GetNumValues(itemContainer, index, "Reagents");
+    local numReagents = GetNumReagents(index);
     if ( (numReagents or 0) == 0 ) then
         return false;
     end
     
     for i = 1, numReagents do
-        local _, _, count, link = dbEntry:GetValue(itemContainer, index, "Reagents", i);
+        local _, _, count, link = GetRecentInfo(index, i);
         if ( (count or 0) > 0 and Armory:ScanInventory(link, true) < count ) then
             return false;
         end
@@ -230,10 +230,10 @@ local function GetProfessionLines()
                         subgroup = { index=i, expanded=isExpanded, items={} };
                         table.insert(group.items, subgroup);
                     else
-                        numReagents = dbEntry:GetNumValues(itemContainer, i, "Reagents");
+                        numReagents = GetNumReagents(i);
                         names = name or "";
                         for index = 1, numReagents do
-                            names = names.."\t"..(dbEntry:GetValue(itemContainer, i, "Reagents", index) or "");
+                            names = names.."\t"..(GetReagentInfo(i, index) or "");
                         end
 
                         if ( tradeSkillInvSlotFilter ) then

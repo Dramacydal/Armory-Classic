@@ -351,14 +351,8 @@ end
 
 function ArmoryTradeSkillFrameMixin:UpdateLayout()
    if ( self.RecipeList.extended ) then
-        self.TopLeftTexture:SetTexture("Interface\\ClassTrainerFrame\\UI-ClassTrainer-TopLeft");
-        self.TopRightTexture:SetTexture("Interface\\ClassTrainerFrame\\UI-ClassTrainer-TopRight");
-        
         self.ExpandButtonFrame:Show();
     else
-        self.TopLeftTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopLeft");
-        self.TopRightTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopRight");
-
         self.ExpandButtonFrame:Hide();
     end
 end
@@ -548,25 +542,18 @@ function ArmoryTradeSkillRecipeListMixin:UpdateSkillButtonIndent()
 end
 
 function ArmoryTradeSkillRecipeListMixin:UpdateLayout()
-    if ( self.extended ) then
-        if ( self.filtered ) then
-            self.FilterBar:SetPoint("TOPLEFT", "ArmoryTradeSkillFrame", "TOPLEFT", 22, -96);
-            self.FilterBar:Show();
-            
-            self:SetHeight(LIST_FULL_HEIGHT - ROW_HEIGHT);
-            self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96 - ROW_HEIGHT);
-            self.scrollBar:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, -14 + ROW_HEIGHT);
-        else
-            self.FilterBar:Hide();
-
-            self:SetHeight(LIST_FULL_HEIGHT);
-            self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96);
-            self.scrollBar:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, -14);
-        end
+    if ( self.filtered ) then
+        self.FilterBar:SetPoint("TOPLEFT", "ArmoryTradeSkillFrame", "TOPLEFT", 22, -96);
+        self.FilterBar:Show();
+        
+        self:SetHeight(LIST_FULL_HEIGHT - ROW_HEIGHT);
+        self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96 - ROW_HEIGHT);
+        self.scrollBar:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, -14 + ROW_HEIGHT);
     else
         self.FilterBar:Hide();
-        self:SetHeight(LIST_FULL_HEIGHT + ROW_HEIGHT);
-        self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96 + ROW_HEIGHT + 3);
+
+        self:SetHeight(LIST_FULL_HEIGHT);
+        self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96);
         self.scrollBar:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, -14);
     end
 end

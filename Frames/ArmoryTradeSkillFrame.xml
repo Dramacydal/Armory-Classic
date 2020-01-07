@@ -165,13 +165,13 @@
         </Texture>
       </Layer>
       <Layer level="BORDER">
-        <Texture parentKey="TopLeftTexture" file="Interface\PaperDollInfoFrame\UI-Character-General-TopLeft">
+        <Texture file="Interface\ClassTrainerFrame\UI-ClassTrainer-TopLeft">
           <Size x="256" y="256"/>
           <Anchors>
             <Anchor point="TOPLEFT"/>
           </Anchors>
         </Texture>
-        <Texture parentKey="TopRightTexture" name="ArmoryTradeSkillFrameTopRightTexture" file="Interface\PaperDollInfoFrame\UI-Character-General-TopRight">
+        <Texture name="ArmoryTradeSkillFrameTopRightTexture" file="Interface\ClassTrainerFrame\UI-ClassTrainer-TopRight">
           <Size x="128" y="256"/>
           <Anchors>
             <Anchor point="TOPRIGHT"/>

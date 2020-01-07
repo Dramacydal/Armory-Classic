@@ -3,6 +3,9 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.6.1 ===
+TOC Update
+
 ==== v1.6 ===
 Adds support for wildcard (*) lookup of quests and items when using a private channel.
 Contains a possible fix for an occasional taint error.

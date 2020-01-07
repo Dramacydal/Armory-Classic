@@ -355,15 +355,11 @@ function ArmoryTradeSkillFrameMixin:UpdateLayout()
         self.TopRightTexture:SetTexture("Interface\\ClassTrainerFrame\\UI-ClassTrainer-TopRight");
         
         self.ExpandButtonFrame:Show();
-        self.FilterButton:Show();
-        self.FilterDropDown:Show();
     else
         self.TopLeftTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopLeft");
         self.TopRightTexture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopRight");
 
         self.ExpandButtonFrame:Hide();
-        self.FilterButton:Hide();
-        self.FilterDropDown:Hide();
     end
 end
 

@@ -246,10 +246,40 @@
         <BarColor r="0.25" g="0.25" b="0.75" />
       </StatusBar>
  
+      <Button parentKey="FilterButton" inherits="UIMenuButtonStretchTemplate" text="FILTER">
+        <Size x="70" y="22"/>
+        <Anchors>
+          <Anchor point="TOPRIGHT" relativeKey="$parent.RankFrame" relativePoint="BOTTOMRIGHT" x="2" y="0"/>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK">
+            <Texture parentKey="Icon" file="Interface\ChatFrame\ChatFrameExpandArrow">
+              <Size x="10" y="12"/>
+              <Anchors>
+                <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="RIGHT" x="-5"/>
+              </Anchors>
+            </Texture>
+          </Layer>
+        </Layers>
+        <Scripts>
+          <OnClick>
+            ArmoryToggleDropDownMenu(1, nil, self:GetParent().FilterDropDown, self, 74, 15);
+          </OnClick>
+        </Scripts>
+      </Button>
+      <Frame name="ArmoryTradeSkillFilterDropDown" parentKey="FilterDropDown" inherits="ArmoryDropDownMenuTemplate">
+        <Scripts>
+          <OnLoad>
+            self.Text:SetJustifyH("CENTER");
+            self.Button:Show();
+          </OnLoad>
+        </Scripts>
+      </Frame>
+
       <EditBox parentKey="SearchBox" name="$parentEditBox" inherits="SearchBoxTemplate" autoFocus="false">
         <Size x="128" y="20"/>
         <Anchors>
-          <Anchor point="TOPRIGHT" relativeKey="$parent.RankFrame" relativePoint="BOTTOMRIGHT" x="2" y="-1"/>
+          <Anchor point="RIGHT" relativeKey="$parent.FilterButton" relativePoint="LEFT" x="-4" y="0"/>
         </Anchors>
         <Scripts>
           <OnTextChanged>
@@ -345,36 +375,6 @@
             </Scripts>
           </Button>
         </Frames>
-      </Frame>
-
-      <Button parentKey="FilterButton" inherits="UIMenuButtonStretchTemplate" text="FILTER">
-        <Size x="70" y="22"/>
-        <Anchors>
-          <Anchor point="TOPRIGHT" relativeKey="$parent.SearchBox" relativePoint="BOTTOMRIGHT" x="0" y="0"/>
-        </Anchors>
-        <Layers>
-          <Layer level="ARTWORK">
-            <Texture parentKey="Icon" file="Interface\ChatFrame\ChatFrameExpandArrow">
-              <Size x="10" y="12"/>
-              <Anchors>
-                <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="RIGHT" x="-5"/>
-              </Anchors>
-            </Texture>
-          </Layer>
-        </Layers>
-        <Scripts>
-          <OnClick>
-            ArmoryToggleDropDownMenu(1, nil, self:GetParent().FilterDropDown, self, 74, 15);
-          </OnClick>
-        </Scripts>
-      </Button>
-      <Frame name="ArmoryTradeSkillFilterDropDown" parentKey="FilterDropDown" inherits="ArmoryDropDownMenuTemplate">
-        <Scripts>
-          <OnLoad>
-            self.Text:SetJustifyH("CENTER");
-            self.Button:Show();
-          </OnLoad>
-        </Scripts>
       </Frame>
 
       <ScrollFrame parentKey="RecipeList" mixin="ArmoryTradeSkillRecipeListMixin" inherits="HybridScrollFrameTemplate">

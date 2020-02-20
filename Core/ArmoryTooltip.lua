@@ -417,6 +417,13 @@ local function RegisterTooltipHook(tooltip, idType, hook, reset)
         SetTooltipHook(tooltip, "SetMerchantItem", _G.GetMerchantItemLink);
         SetTooltipHook(tooltip, "SetAuctionItem", _G.GetAuctionItemLink);
         
+        SetTooltipHook(tooltip, "SetAction", function(action)
+            local actionType, actionID = _G.GetActionInfo(action);
+            if ( actionType == "item" ) then
+                return select(2, _G.GetItemInfo(actionID));
+            end
+        end);
+        
         SetTooltipHook(tooltip, "SetInboxItem", function(messageIndex, attachIndex)
             if ( messageIndex and attachIndex ) then
                 return _G.GetInboxItemLink(messageIndex, attachIndex);

@@ -3,6 +3,11 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.7.1 ===
+TOC update
+Adds sanity check to skill bar display
+Contains a fix for Egan's Blaster ranged DPS calculation
+
 ==== v1.7.0 ===
 Adds counts to action tooltips.
 

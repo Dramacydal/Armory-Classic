@@ -976,6 +976,10 @@ local function UpdateSkillFrame(skillFrame, values)
         skillFrame:Hide();
     else
         local skillName, skillRank, skillMaxRank = unpack(values);
+        if ( not (skillName and skillRank and skillMaxRank) ) then
+            skillFrame:Hide();
+            return;
+        end
 
         SetPortraitToTexture(icon, Armory:GetProfessionTexture(skillName));
         label:SetText(strupper(skillName));

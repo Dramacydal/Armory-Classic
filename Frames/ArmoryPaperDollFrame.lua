@@ -807,7 +807,14 @@ function ArmoryPaperDollFrame_SetRangedDamage(unit, prefix)
 	local baseDamage = (minDamage + maxDamage) * 0.5;
 	local fullDamage = (baseDamage + physicalBonusPos + physicalBonusNeg) * percent;
 	local totalBonus = (fullDamage - baseDamage);
-	local damagePerSecond = (max(fullDamage,1) / rangedAttackSpeed);
+    local damagePerSecond;
+	if ( rangedAttackSpeed == 0 ) then
+		-- Egan's Blaster!!!
+		damagePerSecond = math.huge;
+	else
+		damagePerSecond = (max(fullDamage,1) / rangedAttackSpeed);
+	end
+
 	local tooltip = max(floor(minDamage),1).." - "..max(ceil(maxDamage),1);
 
 	if ( totalBonus == 0 ) then

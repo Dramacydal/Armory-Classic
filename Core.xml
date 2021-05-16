@@ -10,6 +10,7 @@
   <Script file="Core\ArmoryConfig.lua"/>
   <Script file="Core\ArmoryStubs.lua"/>
   <Script file="Core\ArmoryFactions.lua"/>
+  <Script file="Core\ArmoryArena.lua"/>
   <Script file="Core\ArmoryInventory.lua"/>
   <Script file="Core\ArmoryQuests.lua"/>
   <Script file="Core\ArmoryRaid.lua"/>

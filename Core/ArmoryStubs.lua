@@ -29,6 +29,11 @@
 local Armory, _ = Armory;
 local BCT = LibStub("LibBabble-CreatureType-3.0"):GetReverseLookupTable();
 
+function Armory:GetArenaCurrency()
+	local arenaCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo(Constants.CurrencyConsts.CLASSIC_ARENA_POINTS_CURRENCY_ID);
+    return self:SetGetCharacterValue("ArenaCurrency", arenaCurrencyInfo.quantity);
+end
+
 function Armory:GetArmorPenetration()
     return self:SetGetCharacterValue("ArmorPenetration", _G.GetArmorPenetration());
 end
@@ -117,6 +122,11 @@ end
 
 function Armory:GetGuildInfo(unit)
     return self:SetGetCharacterValue("Guild", _G.GetGuildInfo("player"));
+end
+
+function Armory:GetHonorCurrency()
+    local honorCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo(Constants.CurrencyConsts.CLASSIC_HONOR_CURRENCY_ID);
+    return self:SetGetCharacterValue("HonorCurrency", honorCurrencyInfo.quantity);
 end
 
 function Armory:GetInventoryItemCount(unit, index)

@@ -1,5 +1,4 @@
 <!-- Revision: @file-revision@ @file-date-iso@ -->
-<!-- Revision: @file-revision@ @file-date-iso@ -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\..\FrameXML\UI.xsd">
   <Script file="ArmoryPetFrame.lua"/>
@@ -9,7 +8,7 @@
     </Size>
     <Layers>
       <Layer level="BORDER">
-          <Texture name="$parentIconTexture"/>
+        <Texture name="$parentIconTexture"/>
       </Layer>
       <Layer level="BACKGROUND">
         <Texture name="$parentBackground" file="Interface\Buttons\UI-EmptySlot" parentKey="Background">
@@ -90,65 +89,65 @@
         </FontString>
       </Layer>
       <Layer level="ARTWORK">
-          <Texture file="Interface\PetStableFrame\UI-PetStable-TopLeft">
-              <Size>
-                  <AbsDimension x="256" y="256"/>
-              </Size>
-              <Anchors>
-                  <Anchor point="TOPLEFT"/>
-              </Anchors>
-          </Texture>
-          <Texture file="Interface\PetStableFrame\UI-PetStable-TopRight">
-              <Size>
-                  <AbsDimension x="128" y="256"/>
-              </Size>
-              <Anchors>
-                  <Anchor point="TOPRIGHT"/>
-              </Anchors>
-          </Texture>
-          <Texture name="$parentBottomLeft" file="Interface\PetStableFrame\UI-PetStable-BottomLeft">
-              <Size>
-                  <AbsDimension x="256" y="256"/>
-              </Size>
-              <Anchors>
-                  <Anchor point="BOTTOMLEFT"/>
-              </Anchors>
-          </Texture>
-          <Texture name="$parentBottomRight" file="Interface\PetStableFrame\UI-PetStable-BottomRight">
-              <Size>
-                  <AbsDimension x="128" y="256"/>
-              </Size>
-              <Anchors>
-                  <Anchor point="BOTTOMRIGHT"/>
-              </Anchors>
-          </Texture>
+        <Texture file="Interface\PetStableFrame\UI-PetStable-TopLeft">
+          <Size>
+            <AbsDimension x="256" y="256"/>
+          </Size>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+        </Texture>
+        <Texture file="Interface\PetStableFrame\UI-PetStable-TopRight">
+          <Size>
+            <AbsDimension x="128" y="256"/>
+          </Size>
+          <Anchors>
+            <Anchor point="TOPRIGHT"/>
+          </Anchors>
+        </Texture>
+        <Texture name="$parentBottomLeft" file="Interface\PetStableFrame\UI-PetStable-BottomLeft">
+          <Size>
+            <AbsDimension x="256" y="256"/>
+          </Size>
+          <Anchors>
+            <Anchor point="BOTTOMLEFT"/>
+          </Anchors>
+        </Texture>
+        <Texture name="$parentBottomRight" file="Interface\PetStableFrame\UI-PetStable-BottomRight">
+          <Size>
+            <AbsDimension x="128" y="256"/>
+          </Size>
+          <Anchors>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+        </Texture>
       </Layer>
       <Layer level="OVERLAY">
         <FontString name="$parentTitleText" inherits="GameFontHighlight" text="" parentKey="TitleText" wordwrap="false">
-					<Anchors>
-						<Anchor point="TOP" x="0" y="-18"/>
-						<Anchor point="LEFT" x="62"/>
-						<Anchor point="RIGHT" x="-40"/>
-					</Anchors>
-				</FontString>
-          <FontString name="$parentLevelText" inherits="GameFontNormalSmall" text="">
-              <Anchors>
-                  <Anchor point="TOP" relativeTo="$parentTitleText" relativePoint="BOTTOM">
-                      <Offset>
-                          <AbsDimension x="0" y="-8"/>
-                      </Offset>
-                  </Anchor>
-              </Anchors>
-          </FontString>
-          <FontString name="$parentLoyaltyText" inherits="GameFontNormalSmall" text="">
-              <Anchors>
-                  <Anchor point="TOP" relativeTo="$parentLevelText" relativePoint="BOTTOM">
-                      <Offset>
-                          <AbsDimension x="0" y="-1"/>
-                      </Offset>
-                  </Anchor>
-              </Anchors>
-          </FontString>
+          <Anchors>
+            <Anchor point="TOP" x="0" y="-18"/>
+            <Anchor point="LEFT" x="62"/>
+            <Anchor point="RIGHT" x="-40"/>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentLevelText" inherits="GameFontNormalSmall" text="">
+          <Anchors>
+            <Anchor point="TOP" relativeTo="$parentTitleText" relativePoint="BOTTOM">
+              <Offset>
+                <AbsDimension x="0" y="-8"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+        <FontString name="$parentLoyaltyText" inherits="GameFontNormalSmall" text="">
+          <Anchors>
+            <Anchor point="TOP" relativeTo="$parentLevelText" relativePoint="BOTTOM">
+              <Offset>
+                <AbsDimension x="0" y="-1"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
       </Layer>
     </Layers>
     <Frames>
@@ -172,7 +171,7 @@
                   </Offset>
                 </Anchor>
               </Anchors>
-              </FontString>
+            </FontString>
           </Layer>
         </Layers>
         <Frames>
@@ -225,11 +224,11 @@
           <Frame name="ArmoryPetTalents">
             <Size>
               <AbsDimension x="30" y="30"/>
-            </Size> 
+            </Size>
             <Anchors>
               <Anchor point="BOTTOMLEFT" x="0" y="-125"/>
             </Anchors>
-           </Frame>
+          </Frame>
         </Frames>
       </Frame>
 
@@ -279,12 +278,6 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(SPELL_STAT1_NAME..":");
-            self.stat = "STRENGTH";
-              </OnLoad>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetStatFrame2" inherits="ArmoryAttributeFrameTemplate" id="2">
             <Anchors>
@@ -294,12 +287,6 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(SPELL_STAT2_NAME..":");
-            self.stat = "AGILITY";
-              </OnLoad>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetStatFrame3" inherits="ArmoryAttributeFrameTemplate" id="3">
             <Anchors>
@@ -309,12 +296,6 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(SPELL_STAT3_NAME..":");
-            self.stat = "STAMINA";
-              </OnLoad>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetStatFrame4" inherits="ArmoryAttributeFrameTemplate" id="4">
             <Anchors>
@@ -324,12 +305,6 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(SPELL_STAT4_NAME..":");
-            self.stat = "INTELLECT";
-              </OnLoad>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetStatFrame5" inherits="ArmoryAttributeFrameTemplate" id="5">
             <Anchors>
@@ -339,14 +314,8 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(SPELL_STAT5_NAME..":");
-            self.stat = "SPIRIT";
-              </OnLoad>
-            </Scripts>
           </Frame>
-          <Frame name="ArmoryPetAttackFrame" inherits="StatFrameTemplate">
+          <Frame name="ArmoryPetAttackPowerFrame" inherits="StatFrameTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ArmoryPetAttributesFrame" relativePoint="TOPLEFT">
                 <Offset>
@@ -354,31 +323,6 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(ATTACK_COLON);
-              </OnLoad>
-              <OnEnter>
-                <!-- The 1.12.0 PetAttackFrame doesn't have a description in its tooltip. This recreates that. -->
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(ATTACK_TOOLTIP, 1.0, 1.0, 1.0);
-            GameTooltip:Show();
-              </OnEnter>
-            </Scripts>
-          </Frame>
-          <Frame name="ArmoryPetAttackPowerFrame" inherits="StatFrameTemplate">
-            <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="ArmoryPetAttackFrame" relativePoint="BOTTOMLEFT">
-                <Offset>
-                  <AbsDimension x="0" y="-1"/>
-                </Offset>
-              </Anchor>
-            </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(ATTACK_POWER_COLON);
-              </OnLoad>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetDamageFrame" inherits="StatFrameTemplate">
             <Anchors>
@@ -389,15 +333,12 @@
               </Anchor>
             </Anchors>
             <Scripts>
-              <OnLoad>
-            self.Label:SetText(DAMAGE_COLON);
-              </OnLoad>
               <OnEnter>
-            CharacterDamageFrame_OnEnter(self);
+                CharacterDamageFrame_OnEnter(self);
               </OnEnter>
             </Scripts>
           </Frame>
-          <Frame name="ArmoryPetDefenseFrame" inherits="StatFrameTemplate">
+          <Frame name="ArmoryPetSpellDamageFrame" inherits="StatFrameTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="ArmoryPetDamageFrame" relativePoint="BOTTOMLEFT">
                 <Offset>
@@ -405,30 +346,15 @@
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(DEFENSE_COLON);
-              </OnLoad>
-              <OnEnter>
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
-            GameTooltip:SetText(DEFENSE_TOOLTIP, 1.0, 1.0, 1.0);
-            GameTooltip:Show();
-              </OnEnter>
-            </Scripts>
           </Frame>
           <Frame name="ArmoryPetArmorFrame" inherits="StatFrameTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="ArmoryPetDefenseFrame" relativePoint="BOTTOMLEFT">
+              <Anchor point="TOPLEFT" relativeTo="ArmoryPetSpellDamageFrame" relativePoint="BOTTOMLEFT">
                 <Offset>
                   <AbsDimension x="0" y="-1"/>
                 </Offset>
               </Anchor>
             </Anchors>
-            <Scripts>
-              <OnLoad>
-            self.Label:SetText(ARMOR_COLON);
-              </OnLoad>
-            </Scripts>
           </Frame>
         </Frames>
       </Frame>

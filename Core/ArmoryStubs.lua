@@ -29,6 +29,57 @@
 local Armory, _ = Armory;
 local BCT = LibStub("LibBabble-CreatureType-3.0"):GetReverseLookupTable();
 
+function Armory:GetArmorPenetration()
+    return self:SetGetCharacterValue("ArmorPenetration", _G.GetArmorPenetration());
+end
+
+function Armory:GetBlockChance()
+    return self:SetGetCharacterValue("BlockChance", _G.GetBlockChance());
+end
+
+function Armory:ComputePetBonus(stat, value)
+    local _, unitClass = Armory:UnitClass("player");
+    unitClass = strupper(unitClass);
+    if( unitClass == "WARLOCK" ) then
+        if( WARLOCK_PET_BONUS[stat] ) then
+            return value * WARLOCK_PET_BONUS[stat];
+        else
+            return 0;
+        end
+    elseif( unitClass == "HUNTER" ) then
+        if( HUNTER_PET_BONUS[stat] ) then
+            return value * HUNTER_PET_BONUS[stat];
+        else
+            return 0;
+        end
+    end
+
+    return 0;
+end
+
+function Armory:GetCombatRating(index)
+    if ( index ) then
+        return self:SetGetCharacterValue("CombatRating"..index, _G.GetCombatRating(index)) or 0;
+    end
+end
+
+function Armory:GetCombatRatingBonus(index)
+    if ( index ) then
+        return self:SetGetCharacterValue("CombatRatingBonus"..index, _G.GetCombatRatingBonus(index)) or 0;
+    end
+end
+
+function Armory:GetCritChance()
+    return self:SetGetCharacterValue("CritChance", _G.GetCritChance());
+end
+
+function Armory:GetCritChanceFromAgility(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("CritChanceFromAgility", _G.GetCritChanceFromAgility(unit));
+    end
+    return self:SetGetCharacterValue("CritChanceFromAgility", _G.GetCritChanceFromAgility(unit));
+end
+
 function Armory:GetCurrentPet()
     local pets = self:GetPets();
     local pet = self:UnitName("pet") or UNKNOWN;
@@ -43,6 +94,25 @@ function Armory:GetCurrentPet()
         end
     end
     return self.selectedPet;
+end
+
+function Armory:GetDodgeBlockParryChanceFromDefense()
+    local base, modifier = Armory:UnitDefense("player");
+    local defensePercent = DODGE_PARRY_BLOCK_PERCENT_PER_DEFENSE * ((base + modifier) - (Armory:UnitLevel("player")*5));
+    defensePercent = max(defensePercent, 0);
+    return defensePercent;
+end
+
+function Armory:GetDodgeChance()
+    return self:SetGetCharacterValue("DodgeChance", _G.GetDodgeChance());
+end
+
+function Armory:GetExpertise()
+    return self:SetGetCharacterValue("Expertise", _G.GetExpertise());
+end
+
+function Armory:GetExpertisePercent()
+    return self:SetGetCharacterValue("ExpertisePercent", _G.GetExpertisePercent());
 end
 
 function Armory:GetGuildInfo(unit)
@@ -87,8 +157,16 @@ function Armory:GetLatestThreeSenders()
     return self:SetGetCharacterValue("LatestThreeSenders", _G.GetLatestThreeSenders());
 end
 
+function Armory:GetManaRegen()
+    return self:SetGetCharacterValue("ManaRegen", _G.GetManaRegen());
+end
+
 function Armory:GetMoney()
     return self:SetGetCharacterValue("Money", _G.GetMoney()) or 0;
+end
+
+function Armory:GetParryChance()
+    return self:SetGetCharacterValue("ParryChance", _G.GetParryChance());
 end
 
 function Armory:GetPetExperience()
@@ -114,7 +192,7 @@ function Armory:GetPetIcon()
     if ( className == "DEATHKNIGHT" ) then
         return "Interface\\Icons\\Spell_Shadow_RaiseDead"; --Spell_Shadow_AnimateDead";
     elseif ( className == "MAGE" ) then
-        return "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2"; 
+        return "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2";
     elseif ( creatureFamily ) then
         if ( creatureFamily == "Fel Imp" ) then
             return GetSpellTexture(112866);
@@ -147,8 +225,8 @@ local oldPets = {};
 function Armory:GetPets(unit)
     table.wipe(pets);
     table.wipe(oldPets);
-   
-    if ( self:PetsEnabled() ) then 
+
+    if ( self:PetsEnabled() ) then
         local dbEntry = self.selectedDbBaseEntry;
         if ( unit == "player" ) then
             dbEntry = self.playerDbBaseEntry;
@@ -223,7 +301,7 @@ function Armory:GetPVPYesterdayStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPYesterdayStats");
     end
-    
+
     if ( not (hk and self:IsToday(timestamp)) ) then
         hk = 0;
         cp = 0;
@@ -239,7 +317,7 @@ function Armory:GetPVPThisWeekStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPThisWeekStats");
     end
-    
+
     if ( not (hk and self:IsInWeek(timestamp)) ) then
         hk = 0;
         cp = 0;
@@ -255,7 +333,7 @@ function Armory:GetPVPLastWeekStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPLastWeekStats");
     end
-    
+
     if ( not (hk and self:IsInWeek(timestamp, -1)) ) then
         hk = 0;
         cp = 0;
@@ -264,12 +342,82 @@ function Armory:GetPVPLastWeekStats(update)
     return hk, cp;
 end
 
+function Armory:GetRangedCritChance()
+    return self:SetGetCharacterValue("RangedCritChance", _G.GetRangedCritChance());
+end
+
 function Armory:GetRestState()
     return self:SetGetCharacterValue("RestState", _G.GetRestState());
 end
 
+function Armory:GetShieldBlock()
+    return self:SetGetCharacterValue("ShieldBlock", _G.GetShieldBlock());
+end
+
+function Armory:GetSpellBonusDamage(holySchool)
+    if ( holySchool ) then
+        return self:SetGetCharacterValue("SpellBonusDamage"..holySchool, _G.GetSpellBonusDamage(holySchool));
+    end
+end
+
+function Armory:GetSpellBonusHealing()
+    return self:SetGetCharacterValue("SpellBonusHealing", _G.GetSpellBonusHealing());
+end
+
+function Armory:GetSpellCritChance(holySchool)
+    if ( holySchool ) then
+        return self:SetGetCharacterValue("SpellCritChance"..holySchool, _G.GetSpellCritChance(holySchool));
+    end
+end
+
+function Armory:GetSpellCritChanceFromIntellect(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("SpellCritChanceFromIntellect", _G.GetSpellCritChanceFromIntellect(unit));
+    end
+    return self:SetGetCharacterValue("SpellCritChanceFromIntellect", _G.GetSpellCritChanceFromIntellect(unit));
+end
+
+function Armory:GetSpellPenetration()
+    return self:SetGetCharacterValue("SpellPenetration", _G.GetSpellPenetration());
+end
+
 function Armory:GetSubZoneText()
     return self:SetGetCharacterValue("SubZone", _G.GetSubZoneText());
+end
+
+function Armory:GetUnitHealthModifier(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("HealthModifier", _G.GetUnitHealthModifier(unit));
+    end
+    return self:SetGetCharacterValue("HealthModifier", _G.GetUnitHealthModifier(unit));
+end
+
+function Armory:GetUnitHealthRegenRateFromSpirit(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("HealthRegenRateFromSpirit", _G.GetUnitHealthRegenRateFromSpirit(unit));
+    end
+    return self:SetGetCharacterValue("HealthRegenRateFromSpirit", _G.GetUnitHealthRegenRateFromSpirit(unit));
+end
+
+function Armory:GetUnitManaRegenRateFromSpirit(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("ManaRegenRateFromSpirit", _G.GetUnitManaRegenRateFromSpirit(unit));
+    end
+    return self:SetGetCharacterValue("ManaRegenRateFromSpirit", _G.GetUnitManaRegenRateFromSpirit(unit));
+end
+
+function Armory:GetUnitMaxHealthModifier(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("MaxHealthModifier", _G.GetUnitMaxHealthModifier(unit));
+    end
+    return self:SetGetCharacterValue("MaxHealthModifier", _G.GetUnitMaxHealthModifier(unit));
+end
+
+function Armory:GetUnitPowerModifier(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("PowerModifier", _G.GetUnitPowerModifier(unit));
+    end
+    return self:SetGetCharacterValue("PowerModifier", _G.GetUnitPowerModifier(unit));
 end
 
 function Armory:GetWeeklyResetTime()
@@ -337,7 +485,7 @@ function Armory:PetExists(pet, unit)
     if ( unit == "player" ) then
         dbEntry = self.playerDbBaseEntry;
     end
-    
+
     return dbEntry and dbEntry:Contains("Pets", pet);
 end
 
@@ -368,7 +516,7 @@ function Armory:SetBagItem(id, index)
                 if ( timeLeftScanned ~= "" ) then
                     timeLeftScanned = " "..string.format(GUILD_BANK_LOG_TIME, timeLeftScanned);
                 end
- 
+
             --local timeLeft, timestamp = self:GetInventoryContainerValue(id, "TimeLeft"..index);
             --if ( timeLeft ) then
                 --local timeLeftScanned = SecondsToTime(time() - timestamp, true);
@@ -385,7 +533,7 @@ function Armory:SetBagItem(id, index)
                 self:Table2Tooltip(GameTooltip, tooltipLines);
                 GameTooltip:Show();
             end
-        
+
         end
     end
 end
@@ -432,7 +580,7 @@ function Armory:SetInventoryItemInfo(index)
     local link = _G.GetInventoryItemLink("player", index);
     local hasItem, hasCooldown, repairCost;
     local invalid;
-    
+
     if ( link ) then
         local tooltip1 = self:AllocateTooltip();
         hasItem, hasCooldown, repairCost = tooltip1:SetInventoryItem("player", index);
@@ -441,7 +589,7 @@ function Armory:SetInventoryItemInfo(index)
         end
         self:ReleaseTooltip(tooltip1);
     end
-    
+
     if ( not invalid ) then
         self:SetCharacterValue("InventoryItem"..index, hasItem, hasCooldown, repairCost);
         self:SetCharacterValue("InventoryItemLink"..index, link);
@@ -583,6 +731,13 @@ end
 
 function Armory:UnitFactionGroup(unit)
     return self:SetGetCharacterValue("FactionGroup", _G.UnitFactionGroup("player"));
+end
+
+function Armory:UnitHasMana(unit)
+    if ( strlower(unit) == "pet" ) then
+        return self:SetGetPetValue("HasMana", _G.UnitHasMana(unit));
+    end
+    return self:SetGetCharacterValue("HasMana", _G.UnitHasMana(unit));
 end
 
 function Armory:UnitHasRelicSlot(unit)

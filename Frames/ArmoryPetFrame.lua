@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -72,7 +72,7 @@ end
 
 function ArmoryPetFrame_OnEvent(self, event, ...)
     local arg1 = ...;
-    
+
     if ( not Armory:CanHandleEvents() ) then
         return;
     elseif ( event == "PLAYER_ENTERING_WORLD" ) then
@@ -101,8 +101,13 @@ function ArmoryPetFrame_OnEvent(self, event, ...)
 end
 
 function ArmoryPetFrame_HasPetData()
-    local stat, effectiveStat = UnitStat("pet", 3);
-    return stat and effectiveStat;
+    for i = 1, NUM_PET_STATS do
+        local stat, effectiveStat = UnitStat("pet", i);
+        if ( not (stat and effectiveStat) ) then
+            return false;
+        end
+    end
+    return GetCritChanceFromAgility("pet") and GetUnitHealthModifier("pet") and GetUnitPowerModifier("pet") and GetUnitHealthRegenRateFromSpirit("pet");
 end
 
 function ArmoryPetFrame_OnShow(self)
@@ -138,7 +143,7 @@ function ArmoryPetFrame_Update(petChanged)
 
     local currentPet = Armory:GetCurrentPet();
     if ( not Armory:PetsEnabled() or (currentPet == UNKNOWN and not Armory:HasPetUI()) ) then
-        ArmoryFrameTab_Update(); 
+        ArmoryFrameTab_Update();
         return;
     end
 
@@ -181,7 +186,7 @@ function ArmoryPetFrame_Update(petChanged)
     end
     Armory.selectedPet = currentPet;
     ArmoryPetFrame.selectedPet = currentPet;
-        
+
     ArmoryPetFrame_SetSelectedPetInfo();
     ArmoryPetFrame_UpdateStats();
 
@@ -197,7 +202,7 @@ function ArmoryPetFrame_Update(petChanged)
         ArmoryPetFramePetInfo:Hide();
         ArmoryPetAttributesFrame:Hide();
         ArmoryPetResistanceFrame:Hide();
-    end  
+    end
 end
 
 function ArmoryPetFrame_SetSelectedPetInfo()
@@ -247,7 +252,7 @@ function ArmoryPetFrame_SetHappiness()
     local hasPetUI, isHunterPet = Armory:HasPetUI();
     if ( not happiness or not isHunterPet ) then
         ArmoryPetFrameDiet:Hide();
-        return;    
+        return;
     end
     ArmoryPetFrameDiet:Show();
     if ( happiness == 1 ) then
@@ -284,14 +289,14 @@ function ArmoryPetFrame_SetResistances()
         end
         text = _G["ArmoryPetMagicResText"..i];
         frame = _G["ArmoryPetMagicResFrame"..i];
-        
+
         base, resistance, positive, negative = Armory:UnitResistance("pet", frame:GetID());
         resistance = resistance or 0;
         positive = positive or 0;
         negative = negative or 0;
 
         frame.tooltip = _G["RESISTANCE"..frame:GetID().."_NAME"];
-    
+
         -- resistances can now be negative. Show Red if negative, Green if positive, white otherwise
         if( resistance < 0 ) then
             text:SetText(RED_FONT_COLOR_CODE..resistance..FONT_COLOR_CODE_CLOSE);
@@ -316,44 +321,115 @@ function ArmoryPetFrame_SetResistances()
 end
 
 function ArmoryPetFrame_SetStats()
-    for i = 1, NUM_PET_STATS, 1 do
-        local label = _G["ArmoryPetStatFrame"..i.."Label"];
-        local text = _G["ArmoryPetStatFrame"..i.."StatText"];
-        local frame = _G["ArmoryPetStatFrame"..i];
-        local stat;
-        local effectiveStat;
-        local posBuff;
-        local negBuff;
-        label:SetText(_G["SPELL_STAT"..(i).."_NAME"]..":");
+    for i = 1, NUM_PET_STATS do
+        local label = getglobal("ArmoryPetStatFrame"..i.."Label");
+        local text = getglobal("ArmoryPetStatFrame"..i.."StatText");
+        local frame = getglobal("ArmoryPetStatFrame"..i);
+        local stat, effectiveStat, posBuff, negBuff;
+        label:SetText(getglobal("SPELL_STAT"..i.."_NAME")..":");
         stat, effectiveStat, posBuff, negBuff = Armory:UnitStat("pet", i);
-        effectiveStat = effectiveStat or 0;
-
         -- Set the tooltip text
-        local tooltipText = HIGHLIGHT_FONT_COLOR_CODE.._G["SPELL_STAT"..(i).."_NAME"].." ";
-        -- Get class specific tooltip for that stat
-        local temp, classFileName = Armory:UnitClass("pet");
-        local classStatText = _G[strupper(classFileName).."_"..frame.stat.."_".."TOOLTIP"];
-        -- If can't find one use the default
-        if ( not classStatText ) then
-            classStatText = _G["DEFAULT".."_"..frame.stat.."_".."TOOLTIP"];
+        local tooltipText = HIGHLIGHT_FONT_COLOR_CODE..getglobal("SPELL_STAT"..i.."_NAME").." ";
+
+        if ( ( posBuff == 0 ) and ( negBuff == 0 ) ) then
+            text:SetText(effectiveStat);
+            frame.tooltip = tooltipText..effectiveStat..FONT_COLOR_CODE_CLOSE;
+        else
+            tooltipText = tooltipText..effectiveStat;
+            if ( posBuff > 0 or negBuff < 0 ) then
+                tooltipText = tooltipText.." ("..(stat - posBuff - negBuff)..FONT_COLOR_CODE_CLOSE;
+            end
+            if ( posBuff > 0 ) then
+                tooltipText = tooltipText..FONT_COLOR_CODE_CLOSE..GREEN_FONT_COLOR_CODE.."+"..posBuff..FONT_COLOR_CODE_CLOSE;
+            end
+            if ( negBuff < 0 ) then
+                tooltipText = tooltipText..RED_FONT_COLOR_CODE.." "..negBuff..FONT_COLOR_CODE_CLOSE;
+            end
+            if ( posBuff > 0 or negBuff < 0 ) then
+                tooltipText = tooltipText..HIGHLIGHT_FONT_COLOR_CODE..")"..FONT_COLOR_CODE_CLOSE;
+            end
+            frame.tooltip = tooltipText;
+
+            -- If there are any negative buffs then show the main number in red even if there are
+            -- positive buffs. Otherwise show in green.
+            if ( negBuff < 0 ) then
+                text:SetText(RED_FONT_COLOR_CODE..effectiveStat..FONT_COLOR_CODE_CLOSE);
+            else
+                text:SetText(GREEN_FONT_COLOR_CODE..effectiveStat..FONT_COLOR_CODE_CLOSE);
+            end
         end
 
-        --[[ In 1.12, UnitStat didn't report positive / negative buffs for units that weren't the active player.
-             To replicate this, we just won't include modifiers (e.g. green / red coloring) in the UI. ]]
-        text:SetText(effectiveStat);
-        frame.tooltip = tooltipText..effectiveStat..FONT_COLOR_CODE_CLOSE;
-        frame.tooltip2 = classStatText;
+        -- Second tooltip line
+        frame.tooltip2 = getglobal("DEFAULT_STAT"..i.."_TOOLTIP");
+        if ( i == 1 ) then
+            local attackPower = 2 * effectiveStat - 20;
+            frame.tooltip2 = format(frame.tooltip2, attackPower);
+        elseif ( i == 2 ) then
+            --local newLineIndex = strfind(frame.tooltip2, "\n");
+            local newLineIndex = strfind(frame.tooltip2, "|n");
+            frame.tooltip2 = strsub(frame.tooltip2, 1, newLineIndex - 1);
+            frame.tooltip2 = format(frame.tooltip2, Armory:GetCritChanceFromAgility("pet"));
+        elseif ( i == 3 ) then
+               local expectedHealthGain = (((stat - posBuff - negBuff) - 20) * 10 + 20) * Armory:GetUnitHealthModifier("pet");
+            local realHealthGain = ((effectiveStat - 20) * 10 + 20) * Armory:GetUnitHealthModifier("pet");
+            local healthGain = (realHealthGain - expectedHealthGain) * Armory:GetUnitMaxHealthModifier("pet");
+            frame.tooltip2 = format(frame.tooltip2, healthGain);
+        elseif ( i == 4 ) then
+            if ( Armory:UnitHasMana("pet") ) then
+                local manaGain = ((effectiveStat - 20) * 15 + 20) * Armory:GetUnitPowerModifier("pet");
+                frame.tooltip2 = format(frame.tooltip2, manaGain, Armory:GetSpellCritChanceFromIntellect("pet"));
+            else
+                local newLineIndex = strfind(frame.tooltip2, "|n") + 2;
+                frame.tooltip2 = strsub(frame.tooltip2, newLineIndex);
+                frame.tooltip2 = format(frame.tooltip2, Armory:GetSpellCritChanceFromIntellect("pet"));
+            end
+        elseif ( i == 5 ) then
+            frame.tooltip2 = format(frame.tooltip2, Armory:GetUnitHealthRegenRateFromSpirit("pet"));
+            if ( Armory:UnitHasMana("pet") ) then
+                frame.tooltip2 = frame.tooltip2.."\n"..format(MANA_REGEN_FROM_SPIRIT, Armory:GetUnitManaRegenRateFromSpirit("pet"));
+            end
+        end
     end
+end
+
+function ArmoryPetPaperDollFrame_SetSpellBonusDamage()
+    local _, unitClass = Armory:UnitClass("player");
+    unitClass = strupper(unitClass);
+    local spellDamageBonus = 0;
+    if( unitClass == "WARLOCK" ) then
+        local bonusFireDamage = Armory:GetSpellBonusDamage(3);
+        local bonusShadowDamage = Armory:GetSpellBonusDamage(6);
+        if ( bonusShadowDamage > bonusFireDamage ) then
+            spellDamageBonus = Armory:ComputePetBonus("PET_BONUS_SPELLDMG_TO_SPELLDMG", bonusShadowDamage);
+        else
+            spellDamageBonus = Armory:ComputePetBonus("PET_BONUS_SPELLDMG_TO_SPELLDMG", bonusFireDamage);
+        end
+    elseif( unitClass == "HUNTER" ) then
+        local base, posBuff, negBuff = Armory:UnitRangedAttackPower("player");
+        local totalAP = base + posBuff + negBuff;
+        spellDamageBonus = Armory:ComputePetBonus("PET_BONUS_RAP_TO_SPELLDMG", totalAP);
+    end
+    local spellDamageBonusText = format("%d", spellDamageBonus);
+
+    ArmoryPetSpellDamageFrameLabel:SetText(SPELL_BONUS_COLON);
+    if ( spellDamageBonus > 0 ) then
+        spellDamageBonusText = GREEN_FONT_COLOR_CODE.."+"..spellDamageBonusText..FONT_COLOR_CODE_CLOSE;
+    elseif( spellDamageBonus < 0 ) then
+        spellDamageBonusText = RED_FONT_COLOR_CODE..spellDamageBonusText..FONT_COLOR_CODE_CLOSE;
+    end
+
+    ArmoryPetSpellDamageFrameStatText:SetText(spellDamageBonusText);
+    ArmoryPetSpellDamageFrame.tooltip = HIGHLIGHT_FONT_COLOR_CODE..SPELL_BONUS..FONT_COLOR_CODE_CLOSE.." "..spellDamageBonusText;
+    ArmoryPetSpellDamageFrame.tooltip2 = DEFAULT_STATSPELLBONUS_TOOLTIP;
+
+    ArmoryPetSpellDamageFrame:Show();
 end
 
 function ArmoryPetFrame_UpdateStats()
     ArmoryPetFrame_SetResistances();
     ArmoryPetFrame_SetStats();
-    ArmoryPaperDollFrame_SetDamage("pet", "Pet");
-    ArmoryPaperDollFrame_SetRangedDamage("pet", "Pet");
-    ArmoryPaperDollFrame_SetAttackPower("pet", "Pet");
-    ArmoryPaperDollFrame_SetRangedAttackPower("pet", "Pet");
-    ArmoryPaperDollFrame_SetArmor("pet", "Pet");
-    ArmoryPaperDollFrame_SetAttackBothHands("pet", "Pet");
-    ArmoryPaperDollFrame_SetDefense("pet", "Pet");
+    ArmoryPaperDollFrame_SetDamage(ArmoryPetDamageFrame, "Pet");
+    ArmoryPaperDollFrame_SetArmor(ArmoryPetArmorFrame, "Pet");
+    ArmoryPaperDollFrame_SetAttackPower(ArmoryPetAttackPowerFrame, "Pet");
+    ArmoryPetPaperDollFrame_SetSpellBonusDamage();
 end

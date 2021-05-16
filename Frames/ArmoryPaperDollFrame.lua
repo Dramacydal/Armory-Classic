@@ -130,6 +130,7 @@ end
 function ArmoryPaperDollTradeSkillFrame_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
     self:RegisterEvent("TRADE_SKILL_UPDATE");
+    self:RegisterEvent("CRAFT_UPDATE");
 	self:RegisterEvent("UPDATE_TRADESKILL_RECAST");
 end
 

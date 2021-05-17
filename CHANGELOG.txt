@@ -5,6 +5,7 @@ Thanks for using Armory. You can show your appreciation and support future devel
 
 ==== v2.0.0 ===
 Supports Burning Crusade (patch 2.5.1)
+Doesn't show warning anymore for mailbox visits longer than 30 days ago
 
 ==== v1.7.1 ===
 TOC update

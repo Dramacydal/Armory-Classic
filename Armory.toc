@@ -1,4 +1,4 @@
-## Interface: 20501
+## Interface: 11305
 ## Title: Armory
 ## Title-frFR: Armory [Armurerie]
 ## Title-esES: Armory [Armería]

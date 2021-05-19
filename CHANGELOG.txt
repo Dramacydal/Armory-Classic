@@ -3,6 +3,11 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.8.0 ===
+TOC update
+Doesn't show warning anymore for mailbox visits longer than 30 days ago
+Contains a fix for enchanting not showing in character frame when it's the only profession
+
 ==== v1.7.1 ===
 TOC update
 Adds sanity check to skill bar display

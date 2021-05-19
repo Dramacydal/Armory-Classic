@@ -91,12 +91,12 @@
       <Anchor point="TOPLEFT"/>
     </Anchors>
   </Texture>
-
+  
   <Frame name="ArmoryTalentFrame" setAllPoints="true" useParentLevel="true" enableMouse="true" movable="true" parent="ArmoryFrame" hidden="true" id="3">
-    <Size x="384" y="512"/>
-    <Anchors>
-      <Anchor point="TOPLEFT" x="-14" y="14"/>
-    </Anchors>
+		<Size x="384" y="512"/>
+		<Anchors>
+			<Anchor point="TOPLEFT" x="-14" y="14"/>
+		</Anchors>
     <HitRectInsets>
       <AbsInset left="0" right="30" top="0" bottom="75"/>
     </HitRectInsets>
@@ -377,26 +377,6 @@
               <Button name="ArmoryTalentFrameTalent18" inherits="ArmoryTalentButtonTemplate" id="18"/>
               <Button name="ArmoryTalentFrameTalent19" inherits="ArmoryTalentButtonTemplate" id="19"/>
               <Button name="ArmoryTalentFrameTalent20" inherits="ArmoryTalentButtonTemplate" id="20"/>
-              <Button name="ArmoryTalentFrameTalent21" inherits="ArmoryTalentButtonTemplate" id="21"/>
-              <Button name="ArmoryTalentFrameTalent22" inherits="ArmoryTalentButtonTemplate" id="22"/>
-              <Button name="ArmoryTalentFrameTalent23" inherits="ArmoryTalentButtonTemplate" id="23"/>
-              <Button name="ArmoryTalentFrameTalent24" inherits="ArmoryTalentButtonTemplate" id="24"/>
-              <Button name="ArmoryTalentFrameTalent25" inherits="ArmoryTalentButtonTemplate" id="25"/>
-              <Button name="ArmoryTalentFrameTalent26" inherits="ArmoryTalentButtonTemplate" id="26"/>
-              <Button name="ArmoryTalentFrameTalent27" inherits="ArmoryTalentButtonTemplate" id="27"/>
-              <Button name="ArmoryTalentFrameTalent28" inherits="ArmoryTalentButtonTemplate" id="28"/>
-              <Button name="ArmoryTalentFrameTalent29" inherits="ArmoryTalentButtonTemplate" id="29"/>
-              <Button name="ArmoryTalentFrameTalent30" inherits="ArmoryTalentButtonTemplate" id="30"/>
-              <Button name="ArmoryTalentFrameTalent31" inherits="ArmoryTalentButtonTemplate" id="31"/>
-              <Button name="ArmoryTalentFrameTalent32" inherits="ArmoryTalentButtonTemplate" id="32"/>
-              <Button name="ArmoryTalentFrameTalent33" inherits="ArmoryTalentButtonTemplate" id="33"/>
-              <Button name="ArmoryTalentFrameTalent34" inherits="ArmoryTalentButtonTemplate" id="34"/>
-              <Button name="ArmoryTalentFrameTalent35" inherits="ArmoryTalentButtonTemplate" id="35"/>
-              <Button name="ArmoryTalentFrameTalent36" inherits="ArmoryTalentButtonTemplate" id="36"/>
-              <Button name="ArmoryTalentFrameTalent37" inherits="ArmoryTalentButtonTemplate" id="37"/>
-              <Button name="ArmoryTalentFrameTalent38" inherits="ArmoryTalentButtonTemplate" id="38"/>
-              <Button name="ArmoryTalentFrameTalent39" inherits="ArmoryTalentButtonTemplate" id="39"/>
-              <Button name="ArmoryTalentFrameTalent40" inherits="ArmoryTalentButtonTemplate" id="40"/>
               <Frame name="ArmoryTalentFrameArrowFrame" setAllPoints="true">
                 <Layers>
                   <Layer level="OVERLAY">
@@ -457,7 +437,7 @@
     </Frames>
     <Scripts>
       <OnShow>
-        ArmoryTalentFrame_OnShow(self);
+				ArmoryTalentFrame_OnShow(self);
       </OnShow>
       <OnLoad>
         ArmoryTalentFrame_OnLoad(self);

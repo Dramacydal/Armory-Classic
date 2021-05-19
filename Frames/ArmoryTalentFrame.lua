@@ -24,13 +24,13 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]]
+--]] 
 
 local Armory, _ = Armory;
 
 ARMORY_MAX_TALENT_TABS = 5;
-ARMORY_MAX_NUM_TALENTS = 40;
-ARMORY_MAX_NUM_TALENT_TIERS = 10;
+ARMORY_MAX_NUM_TALENTS = 20;
+ARMORY_MAX_NUM_TALENT_TIERS = 8;
 ARMORY_NUM_TALENT_COLUMNS = 4;
 ARMORY_TALENT_BRANCH_ARRAY = {};
 ARMORY_TALENT_BUTTON_SIZE = 32;
@@ -181,7 +181,7 @@ function ArmoryTalentFrame_Update()
 			tab:Hide();
 		end
 	end
-
+	
 	PanelTemplates_SetNumTabs(ArmoryTalentFrame, numTabs);
 	PanelTemplates_UpdateTabs(ArmoryTalentFrame);
 	PanelTemplates_ResizeTabsToFit(ArmoryTalentFrame, 285);
@@ -196,7 +196,7 @@ function ArmoryTalentFrame_Update()
 		-- temporary default for classes without talents poor guys
 		base = "Interface\\TalentFrame\\MageFire-";
 	end
-
+	
 	ArmoryTalentFrameBackgroundTopLeft:SetTexture(base.."TopLeft");
 	ArmoryTalentFrameBackgroundTopRight:SetTexture(base.."TopRight");
 	ArmoryTalentFrameBackgroundBottomLeft:SetTexture(base.."BottomLeft");
@@ -233,11 +233,11 @@ function ArmoryTalentFrame_Update()
 				tierUnlocked = nil;
 			end
 			SetItemButtonTexture(button, iconTexture);
-
+			
 			-- Talent must meet prereqs or the player must have no points to spend
 			if ( ArmoryTalentFrame_SetPrereqs(tier, column, forceDesaturated, tierUnlocked, Armory:GetTalentPrereqs(PanelTemplates_GetSelectedTab(ArmoryTalentFrame), i, false)) and meetsPrereq ) then
 				SetItemButtonDesaturated(button, nil);
-
+				
 				if ( rank < maxRank ) then
 					-- Rank is green if not maxed out
 					_G["ArmoryTalentFrameTalent"..i.."Slot"]:SetVertexColor(0.1, 1.0, 0.1);
@@ -259,13 +259,13 @@ function ArmoryTalentFrame_Update()
 					_G["ArmoryTalentFrameTalent"..i.."Rank"]:SetTextColor(GRAY_FONT_COLOR.r, GRAY_FONT_COLOR.g, GRAY_FONT_COLOR.b);
 				end
 			end
-
+			
 			button:Show();
-		else
+		else	
 			button:Hide();
 		end
 	end
-
+	
 	-- Draw the prerq branches
 	local node;
 	local textureIndex = 1;
@@ -278,11 +278,11 @@ function ArmoryTalentFrame_Update()
 	for i=1, ARMORY_MAX_NUM_TALENT_TIERS do
 		for j=1, ARMORY_NUM_TALENT_COLUMNS do
 			node = ARMORY_TALENT_BRANCH_ARRAY[i][j];
-
+			
 			-- Setup offsets
 			xOffset = ((j - 1) * 63) + ARMORY_INITIAL_TALENT_OFFSET_X + 2;
 			yOffset = -((i - 1) * 63) - ARMORY_INITIAL_TALENT_OFFSET_Y - 2;
-
+		
 			if ( node.id ) then
 				-- Has talent
 				if ( node.up ~= 0 ) then
@@ -300,13 +300,13 @@ function ArmoryTalentFrame_Update()
 				end
 				if ( node.right ~= 0 ) then
 					-- See if any connecting branches are gray and if so color them gray
-					tempNode = ARMORY_TALENT_BRANCH_ARRAY[i][j+1];
+					tempNode = ARMORY_TALENT_BRANCH_ARRAY[i][j+1];	
 					if ( tempNode.left ~= 0 and tempNode.down < 0 ) then
 						ArmoryTalentFrame_SetBranchTexture(i, j-1, ARMORY_TALENT_BRANCH_TEXTURECOORDS["right"][tempNode.down], xOffset + ARMORY_TALENT_BUTTON_SIZE, yOffset);
 					else
 						ArmoryTalentFrame_SetBranchTexture(i, j, ARMORY_TALENT_BRANCH_TEXTURECOORDS["right"][node.right], xOffset + ARMORY_TALENT_BUTTON_SIZE + 1, yOffset);
 					end
-
+					
 				end
 				-- Draw arrows
 				if ( node.rightArrow ~= 0 ) then
@@ -429,7 +429,7 @@ function ArmoryTalentFrame_DrawLines(buttonTier, buttonColumn, tier, column, req
 	else
 		requirementsMet = -1;
 	end
-
+	
 	-- Check to see if are in the same column
 	if ( buttonColumn == column ) then
 		-- Check for blocking talents
@@ -443,7 +443,7 @@ function ArmoryTalentFrame_DrawLines(buttonTier, buttonColumn, tier, column, req
 				end
 			end
 		end
-
+		
 		-- Draw the lines
 		for i=tier, buttonTier - 1 do
 			ARMORY_TALENT_BRANCH_ARRAY[i][buttonColumn].down = requirementsMet;
@@ -451,7 +451,7 @@ function ArmoryTalentFrame_DrawLines(buttonTier, buttonColumn, tier, column, req
 				ARMORY_TALENT_BRANCH_ARRAY[i + 1][buttonColumn].up = requirementsMet;
 			end
 		end
-
+		
 		-- Set the arrow
 		ARMORY_TALENT_BRANCH_ARRAY[buttonTier][buttonColumn].topArrow = requirementsMet;
 		return;
@@ -460,7 +460,7 @@ function ArmoryTalentFrame_DrawLines(buttonTier, buttonColumn, tier, column, req
 	if ( buttonTier == tier ) then
 		local left = min(buttonColumn, column);
 		local right = max(buttonColumn, column);
-
+		
 		-- See if the distance is greater than one space
 		if ( (right - left) > 1 ) then
 			-- Check for blocking talents
@@ -507,7 +507,7 @@ function ArmoryTalentFrame_DrawLines(buttonTier, buttonColumn, tier, column, req
 	if ( not blocked ) then
 		ARMORY_TALENT_BRANCH_ARRAY[tier][buttonColumn].down = requirementsMet;
 		ARMORY_TALENT_BRANCH_ARRAY[buttonTier][buttonColumn].up = requirementsMet;
-
+		
 		for i=tier, buttonTier - 1 do
 			ARMORY_TALENT_BRANCH_ARRAY[i][buttonColumn].down = requirementsMet;
 			ARMORY_TALENT_BRANCH_ARRAY[i + 1][buttonColumn].up = requirementsMet;

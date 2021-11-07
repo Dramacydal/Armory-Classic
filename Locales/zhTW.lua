@@ -13,68 +13,46 @@ end
 
 -- Armory
 L["ARMORY_ALTS"] = "分身"
---[[Translation missing --]]
-L["ARMORY_BAGS"] = "Bags"
+L["ARMORY_BAGS"] = "背包"
 L["ARMORY_BANK_CONTAINER_NAME"] = "銀行"
---[[Translation missing --]]
-L["ARMORY_BONUS_PATTERN"] = "(.+) Bonus"
+L["ARMORY_BONUS_PATTERN"] = "用Lua模式取得頭目的名字，例如 GetSpellInfo（132195）=“Blade Lord Tay'ak Bonus”"
 --[[Translation missing --]]
 L["ARMORY_BUZZ_WORDS"] = [=[of
 the]=]
---[[Translation missing --]]
-L["ARMORY_BY_DATE"] = "View by date"
---[[Translation missing --]]
-L["ARMORY_BY_GROUP"] = "View by group"
---[[Translation missing --]]
-L["ARMORY_CAN_LEARN"] = "Learnable by"
---[[Translation missing --]]
-L["ARMORY_CHECK_CD_NONE"] = "No cooldowns found"
+L["ARMORY_BY_DATE"] = "依資料檢視"
+L["ARMORY_BY_GROUP"] = "依群組檢視"
+L["ARMORY_CAN_LEARN"] = "可學習"
+L["ARMORY_CHECK_CD_NONE"] = "未發現冷卻"
 L["ARMORY_CHECK_MAIL_DISABLED"] = "信件過期檢查功能被關閉。"
 L["ARMORY_CHECK_MAIL_MESSAGE"] = "%1$s (%2$s) 信箱中的 '%3$s' 將在 %4$s 天後過期！"
 L["ARMORY_CHECK_MAIL_NONE"] = "信箱中沒有即將過期的物品。"
 L["ARMORY_CHECK_MAIL_POPUP"] = "信箱中有即將過期的物品，請使用 '/ar check' 來獲得更多資訊。"
---[[Translation missing --]]
-L["ARMORY_CMD_CHECK"] = "check"
---[[Translation missing --]]
-L["ARMORY_CMD_CHECK_INVALID"] = "Specify the number of days to check or none for default."
+L["ARMORY_CMD_CHECK"] = "檢查"
+L["ARMORY_CMD_CHECK_INVALID"] = "指定要檢查的天數，預設為無。"
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "檢查是否有過期信件"
 L["ARMORY_CMD_CHECK_TEXT"] = "檢查信箱中是否有即將過期的物品"
---[[Translation missing --]]
-L["ARMORY_CMD_CHECKCD"] = "cooldown|cd"
---[[Translation missing --]]
-L["ARMORY_CMD_CHECKCD_TEXT"] = "check tradeskill cooldowns"
---[[Translation missing --]]
-L["ARMORY_CMD_CONFIG"] = "config"
+L["ARMORY_CMD_CHECKCD"] = "冷卻|cd"
+L["ARMORY_CMD_CHECKCD_TEXT"] = "檢查專業技能冷卻期"
+L["ARMORY_CMD_CONFIG"] = "設置"
 L["ARMORY_CMD_CONFIG_TEXT"] = "打開設定介面"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE"] = "delete"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_ALL"] = "all"
-L["ARMORY_CMD_DELETE_ALL_MSG"] = "Armory資料庫已全部清空。"
+L["ARMORY_CMD_DELETE"] = "刪除"
+L["ARMORY_CMD_DELETE_ALL"] = "全部"
+L["ARMORY_CMD_DELETE_ALL_MSG"] = "英雄榜資料庫已全部清空。"
 L["ARMORY_CMD_DELETE_ALL_TEXT"] = "刪除整個資料庫"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_CHAR"] = "char"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_CHAR_MSG"] = "Armory entry for '%1$s' in realm '%2$s' has been removed."
+L["ARMORY_CMD_DELETE_CHAR"] = "角色"
+L["ARMORY_CMD_DELETE_CHAR_MSG"] = " '%2$s' 伺服器中 '%1$s' 的英雄榜角色已被刪除。"
 L["ARMORY_CMD_DELETE_CHAR_NOT_FOUND"] = "沒有找到在 '%2$s' 伺服器中的 '%1$s' 角色！"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_CHAR_PARAMS_TEXT"] = "[name] [realm]"
+L["ARMORY_CMD_DELETE_CHAR_PARAMS_TEXT"] = "[名字] [伺服器]"
 L["ARMORY_CMD_DELETE_CHAR_TEXT"] = "刪除一個角色"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_REALM"] = "realm"
-L["ARMORY_CMD_DELETE_REALM_MSG"] = "'%s' 伺服器已全部清空。"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_REALM_NOT_FOUND"] = "Armory realm '%s' not found!"
+L["ARMORY_CMD_DELETE_REALM"] = "伺服器"
+L["ARMORY_CMD_DELETE_REALM_MSG"] = "英雄榜 '%s' 伺服器已全部清空。"
+L["ARMORY_CMD_DELETE_REALM_NOT_FOUND"] = "找不到英雄榜 '%s' 伺服器!"
 L["ARMORY_CMD_DELETE_REALM_PARAMS_TEXT"] = "[名稱]"
---[[Translation missing --]]
-L["ARMORY_CMD_DELETE_REALM_TEXT"] = "delete all realm data"
---[[Translation missing --]]
-L["ARMORY_CMD_DOWNLOAD"] = "download"
+L["ARMORY_CMD_DELETE_REALM_TEXT"] = "刪除所有伺服器資料"
+L["ARMORY_CMD_DOWNLOAD"] = "下載"
 L["ARMORY_CMD_DOWNLOAD_TEXT"] = "向公會成員取得配方資訊"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND"] = "find"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_ALL"] = "all"
+L["ARMORY_CMD_FIND"] = "尋找"
+L["ARMORY_CMD_FIND_ALL"] = "全部"
 L["ARMORY_CMD_FIND_FOUND"] = "共發現： %d"
 --[[Translation missing --]]
 L["ARMORY_CMD_FIND_GLYPH"] = "glyph"
@@ -82,112 +60,86 @@ L["ARMORY_CMD_FIND_GLYPH"] = "glyph"
 L["ARMORY_CMD_FIND_GLYPH_TOOLTIP"] = "Use '?' or '%s' to find glyphs you haven't learned yet."
 --[[Translation missing --]]
 L["ARMORY_CMD_FIND_INVENTORY"] = "inventory"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_ITEM"] = "item"
+L["ARMORY_CMD_FIND_ITEM"] = "物品"
 L["ARMORY_CMD_FIND_MENUTEXT"] = "搜尋資料庫"
 L["ARMORY_CMD_FIND_NOT_FOUND"] = "未發現"
 L["ARMORY_CMD_FIND_PARAMS_TEXT"] = "[關鍵字]"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_QUEST"] = "quest"
+L["ARMORY_CMD_FIND_QUEST"] = "任務"
 L["ARMORY_CMD_FIND_QUEST_REWARD"] = "任務獎勵"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_SKILL"] = "skill"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_SPELL"] = "spell"
+L["ARMORY_CMD_FIND_SKILL"] = "技能"
+L["ARMORY_CMD_FIND_SPELL"] = "法術"
 L["ARMORY_CMD_FIND_TEXT"] = "在本地資料庫中搜尋"
---[[Translation missing --]]
-L["ARMORY_CMD_HELP"] = "help"
+L["ARMORY_CMD_HELP"] = "說明"
 L["ARMORY_CMD_HELP_TEXT"] = "顯示這個指令幫助清單"
---[[Translation missing --]]
-L["ARMORY_CMD_LOOKUP"] = "lookup"
---[[Translation missing --]]
-L["ARMORY_CMD_LOOKUP_MENUTEXT"] = "Lookup information"
+L["ARMORY_CMD_LOOKUP"] = "觀看"
+L["ARMORY_CMD_LOOKUP_MENUTEXT"] = "觀看資訊"
 L["ARMORY_CMD_LOOKUP_TEXT"] = "搜尋來自其他玩家的資訊"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET"] = "reset"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET_FRAME"] = "frames"
+L["ARMORY_CMD_RESET"] = "重置"
+L["ARMORY_CMD_RESET_FRAME"] = "框架"
 L["ARMORY_CMD_RESET_FRAME_MENUTEXT"] = "重置視窗位置"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET_FRAME_SUCCESS"] = "frames reset"
+L["ARMORY_CMD_RESET_FRAME_SUCCESS"] = "重置框架"
 L["ARMORY_CMD_RESET_FRAME_TEXT"] = "將視窗位置還原到原始位置"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET_SETTINGS"] = "settings"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET_SETTINGS_SUCCESS"] = "settings reset"
---[[Translation missing --]]
-L["ARMORY_CMD_RESET_SETTINGS_TEXT"] = "set all settings back to their defaults"
+L["ARMORY_CMD_RESET_SETTINGS"] = "設定"
+L["ARMORY_CMD_RESET_SETTINGS_SUCCESS"] = "重置設定"
+L["ARMORY_CMD_RESET_SETTINGS_TEXT"] = "將所有設定回復預設值"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_ALTCLICKSEARCH_MENUTEXT"] = "Search Alt-clicked link"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_ALTCLICKSEARCH_TEXT"] = "start a search when Alt-clicking a chat link"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_ALTCLICKSEARCH_TOOLTIP"] = "If enabled, the find command will be invoked while holding down the Alt key and clicking a searchable link in the chat frame."
+L["ARMORY_CMD_SET_ALTCLICKSEARCH_TOOLTIP"] = "如果啟用，則在按住 Alt 鍵並單擊聊天框架中的可搜索鏈接時，將使用 find 命令。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_CHECKBUTTON_MENUTEXT"] = "Hide Armory button"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_CHECKBUTTON_TEXT"] = "hide the Armory check button on the character frame"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_CHECKBUTTON_TOOLTIP"] = "If enabled, the Armory check button in the lower left corner of the character frame will not be shown."
+L["ARMORY_CMD_SET_CHECKBUTTON_TOOLTIP"] = "如果啟用，則不會顯示人物框架左下角的英雄榜檢查按鈕。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_CHECKCOOLDOWNS_MENUTEXT"] = "Check available cooldowns"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_CHECKCOOLDOWNS_TEXT"] = "check available cooldowns on startup"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_CHECKCOOLDOWNS_TOOLTIP"] = "If enabled, tradeskill cooldowns that became available while you were offline will be displayed when you log in."
+L["ARMORY_CMD_SET_CHECKCOOLDOWNS_TOOLTIP"] = "如果啟用，登入時將顯示離線狀態下可用的商業技能冷卻時間。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COLLAPSE_MENUTEXT"] = "Collapse character frame"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COLLAPSE_TEXT"] = "collapse the character frame"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_COLLAPSE_TOOLTIP"] = "If enabled, the character frame will be collapsed when Armory's layout is active."
+L["ARMORY_CMD_SET_COLLAPSE_TOOLTIP"] = "如果啟用，當英雄榜的佈局處於啟用狀態時，角色框架將折疊。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COOLDOWNEVENTS_MENUTEXT"] = "Include tradeskill cooldowns"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COOLDOWNEVENTS_TEXT"] = "include tradeskill cooldowns in event list"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_COOLDOWNEVENTS_TOOLTIP"] = "If enabled, tradeskill cooldowns will be included in Armory's event list."
+L["ARMORY_CMD_SET_COOLDOWNEVENTS_TOOLTIP"] = "如果啟用，商業技能的冷卻時間將包含在英雄榜的事件列表中。"
 L["ARMORY_CMD_SET_COUNTALL_MENUTEXT"] = "統計數字將包含所有伺服器"
 L["ARMORY_CMD_SET_COUNTALL_TEXT"] = "統計數字將包含所有伺服器"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_COUNTALL_TOOLTIP"] = "If enabled, totals are shown for all realms; otherwise only for the current and connected realms."
+L["ARMORY_CMD_SET_COUNTALL_TOOLTIP"] = "如果啟用，則顯示所有伺服器的總計； 否則，僅適用於當前和已連接的伺服器。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COUNTPERSLOT_MENUTEXT"] = "Totals per bag/bank slot"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COUNTPERSLOT_TEXT"] = "show item counts per bag/bank slot"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_COUNTPERSLOT_TOOLTIP"] = "If enabled, items counts are shown per bag or bank slot, where slot '0' represents the backpack or bank itself."
+L["ARMORY_CMD_SET_COUNTPERSLOT_TOOLTIP"] = "如果啟用，則按背包或銀行槽位顯示物品計數，其中槽位“ 0”代表背包或銀行本身。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COUNTXFACTION_MENUTEXT"] = "Include all factions in counts"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_COUNTXFACTION_TEXT"] = "include item counts for all factions"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_COUNTXFACTION_TOOLTIP"] = "If enabled, totals are shown for all factions; otherwise only for the current faction."
+L["ARMORY_CMD_SET_COUNTXFACTION_TOOLTIP"] = "如果啟用，將顯示所有陣營總數； 否則僅適用於當前陣營。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_DEFAULTSEARCH_MENUTEXT"] = "Default search domain"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_DEFAULTSEARCH_TEXT"] = "default domain"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_DEFAULTSEARCH_TOOLTIP"] = "The search domain to use when none is specified."
+L["ARMORY_CMD_SET_DEFAULTSEARCH_TOOLTIP"] = "未指定時使用的搜索區域。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_ENABLED_MENUTEXT"] = "Enable character"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_ENABLED_TEXT"] = "include this character in Armory"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_ENABLED_TOOLTIP"] = [=[If enabled, Armory will perform data collection for the current character.
-Note that changing this option will result in a UI reload.]=]
+L["ARMORY_CMD_SET_ENABLED_TOOLTIP"] = "如果啟用，英雄榜將為當前角色執行資料收集。 請注意，更改此選項將導致UI重新載入。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_EVENTLOCALTIME_MENUTEXT"] = "Use local time for events"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_EVENTLOCALTIME_TEXT"] = "use local time in event list"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_EVENTLOCALTIME_TOOLTIP"] = "If enabled, local time is used in the event list; otherwise the realm time."
+L["ARMORY_CMD_SET_EVENTLOCALTIME_TOOLTIP"] = "如果啟用，則在事件列表中使用本地時間。 否則是伺服器時間。"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_EVENTWARNINGS_MENUTEXT"] = "Event notifications"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_EVENTWARNINGS_TEXT"] = "enable event notifications"
---[[Translation missing --]]
-L["ARMORY_CMD_SET_EVENTWARNINGS_TOOLTIP"] = "If enabled, you will be warned about confirmed events of your characters that are about to become due."
+L["ARMORY_CMD_SET_EVENTWARNINGS_TOOLTIP"] = "如果啟用，將會警示您有關即將到期的角色已確認事件。"
 L["ARMORY_CMD_SET_EXPDAYS_INVALID"] = "%1$s 應該介於0(沒有警示)到 %2$d 天！"
 L["ARMORY_CMD_SET_EXPDAYS_PARAMS_TEXT"] = "天數"
 L["ARMORY_CMD_SET_EXPDAYS_TEXT"] = "物品過期的警示天數"
@@ -247,7 +199,7 @@ L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "If enabled, a warning will be show
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warn for unnoticed mail"
 --[[Translation missing --]]
-L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "include the last mailbox visit when checking for mail"
+L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "check the last time a mailbox has been opened"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TOOLTIP"] = "If enabled, a warning will be shown when a character's mailbox hasn't been opened for at least 30 minus expiration threshold number of days and therefore may contain mail without being noticed."
 --[[Translation missing --]]

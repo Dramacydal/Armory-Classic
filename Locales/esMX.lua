@@ -197,7 +197,7 @@ L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "If enabled, a warning will be show
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warn for unnoticed mail"
 --[[Translation missing --]]
-L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "include the last mailbox visit when checking for mail"
+L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "check the last time a mailbox has been opened"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TOOLTIP"] = "If enabled, a warning will be shown when a character's mailbox hasn't been opened for at least 30 minus expiration threshold number of days and therefore may contain mail without being noticed."
 --[[Translation missing --]]

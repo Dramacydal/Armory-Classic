@@ -659,7 +659,7 @@ function Armory:BuildSummary()
             if ( self:GetConfigSummaryXP() ) then
                 local xpText, tooltipText, chatText = self:GetXP();
                 characterInfo.XP = 0;
-                if ( self:UnitLevel(unit) ~= MAX_PLAYER_LEVEL ) then
+                if ( self:UnitLevel(unit) ~= GetMaxPlayerLevel() ) then
                     local currXP = self:UnitXP(unit);
                     local nextXP = self:UnitXPMax(unit);
                     if ( (nextXP or 0) > 0 ) then

@@ -198,8 +198,8 @@ local function EnhanceItemTooltip(tooltip, id, link)
 
         if ( not itemType ) then
             return;
-        
-        elseif ( itemType == LE_ITEM_CLASS_RECIPE ) then
+
+        elseif ( itemType == Enum.ItemClass.Recipe ) then
             local _, reqProfession, reqRank, reqReputation, reqStanding, reqSkill, _, _, reagents = GetRequirements(tooltip);
             -- Recipe tooltips are built in stages (last stage shows rank)
             if ( not reqRank ) then
@@ -208,10 +208,10 @@ local function EnhanceItemTooltip(tooltip, id, link)
             local recipeType, recipeName = name:match("^(.-): (.+)$");
 
             knownBy, hasSkill, canLearn = Armory:GetRecipeAltInfo(recipeName, link, subType or recipeType, reqProfession, reqRank, reqReputation, reqStanding, reqSkill);
-            
-        elseif ( itemType ~= LE_ITEM_CLASS_MISCELLANEOUS ) then
-            -- Note: can't do this for weapons or without class restriction 
-            if ( itemType == LE_ITEM_CLASS_ARMOR ) then
+
+        elseif ( itemType ~= Enum.ItemClass.Miscellaneous ) then
+            -- Note: can't do this for weapons or without class restriction
+            if ( itemType == Enum.ItemClass.Armor ) then
                 local _, _, _, _, _, _, _, reqClasses, _, accountBound = GetRequirements(tooltip);
                 if ( reqClasses and accountBound ) then
                     local slot = ARMORY_SLOTINFO[equipLoc];

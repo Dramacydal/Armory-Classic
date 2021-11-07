@@ -2208,7 +2208,7 @@ function Armory:GetXP()
     local level = self:UnitLevel(unit);
     local restTimeLeft = 0;
     local xpText, tooltipText, chatText;
-    if (  level ~= MAX_PLAYER_LEVEL ) then
+    if (  level ~= GetMaxPlayerLevel() ) then
         local currXP = self:UnitXP(unit);
         local nextXP = self:UnitXPMax(unit);
         local restXP, timestamp = self:GetXPExhaustion();

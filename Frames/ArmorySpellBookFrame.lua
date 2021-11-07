@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -40,7 +40,7 @@ function ArmoryToggleSpellBook(bookType)
     if ( isShown ) then
         ArmorySpellBookFrame.suppressCloseSound = true;
     end
-    
+
     HideUIPanel(ArmorySpellBookFrame);
     if ( (not isShown or (ArmorySpellBookFrame.bookType ~= bookType)) ) then
         ArmorySpellBookFrame.bookType = bookType;
@@ -48,7 +48,7 @@ function ArmoryToggleSpellBook(bookType)
         ShowUIPanel(ArmorySpellBookFrame);
     end
     ArmorySpellBookFrame_UpdatePages();
-    
+
     ArmorySpellBookFrame.suppressCloseSound = nil;
 end
 
@@ -120,7 +120,7 @@ function ArmorySpellBookFrame_Update(showing)
     end
 
     ArmorySpellBookFrame_UpdateSkillLineTabs();
-    
+
     -- Setup tabs
     ArmorySpellBookFrame.petTitle = nil;
     if ( hasPetSpells ) then
@@ -361,7 +361,7 @@ function ArmorySpellButton_UpdateButton(self)
     iconTexture:SetTexture(texture);
     spellString:SetText(spellName);
     subSpellString:SetText(subSpellName);
-    
+
     -- If there is no spell sub-name, move the bottom row of text up
     if ( subSpellName == "" ) then
         self.SpellSubName:SetHeight(6);

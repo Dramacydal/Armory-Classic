@@ -32,18 +32,18 @@ ArmoryBackgroundUpdater = {};
 ArmoryBackgroundUpdater.__index = ArmoryBackgroundUpdater;
 
 function ArmoryBackgroundUpdater:new()
-    local self = {}; 
+    local self = {};
     setmetatable(self, ArmoryBackgroundUpdater);
     self.timer = CreateFrame("Frame", nil, UIParent);
     self.timer:Hide();
-    self.timer:SetScript("OnUpdate", 
-        function(timer) 
+    self.timer:SetScript("OnUpdate",
+        function(timer)
             if ( not self.thread ) then
                 return;
             elseif ( coroutine.status(self.thread) == "dead" ) then
                 timer:Hide();
                 return;
-            elseif ( coroutine.status(self.thread) == "suspended") then 
+            elseif ( coroutine.status(self.thread) == "suspended") then
                 coroutine.resume(self.thread, self);
             end
         end

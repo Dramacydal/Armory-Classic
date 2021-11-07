@@ -55,14 +55,14 @@ local function SaveSpellBook(dbEntry, oldNum, newNum, bookType)
         else
             local spellName, subSpellName =  _G.GetSpellBookItemName(i, bookType);
             local texture = _G.GetSpellBookItemTexture(i, bookType);
-            local autoCastAllowed = _G.GetSpellAutocast(i, bookType); 
+            local autoCastAllowed = _G.GetSpellAutocast(i, bookType);
             local isPassive = _G.IsPassiveSpell(i, bookType);
             local link = _G.GetSpellLink(i, bookType);
             local tooltip = Armory:AllocateTooltip();
             tooltip:SetSpellBookItem(i, bookType);
             local tooltipLines = Armory:Tooltip2Table(tooltip);
             Armory:ReleaseTooltip(tooltip);
-            
+
             dbEntry:SetValue(2, container, i, spellName, subSpellName, texture, isPassive, autoCastAllowed, link, tooltipLines);
         end
     end
@@ -121,7 +121,7 @@ function Armory:SetSpells()
                 local newNum = _G.HasPetSpells() or 0;
                 SaveSpellBook(dbEntry, oldNum, newNum, BOOKTYPE_PET);
             end
-        end             
+        end
 
         self:Unlock(container);
     else
@@ -242,6 +242,6 @@ function Armory:FindSpell(spellList, ...)
         end
     end
     self.selectedPet = currentPet;
-    
+
     return list;
 end

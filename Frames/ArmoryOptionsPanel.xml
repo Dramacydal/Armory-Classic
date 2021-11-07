@@ -152,7 +152,7 @@
   <Slider name="ArmoryOptionsPanelSliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
     <Scripts>
       <OnValueChanged>
-        self.value = value; 
+        self.value = value;
         self.setFunc(value);
       </OnValueChanged>
     </Scripts>
@@ -503,7 +503,7 @@
       </CheckButton>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsMinimapPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -670,7 +670,7 @@
       </CheckButton>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsModulePanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -953,7 +953,7 @@
           </OnLoad>
         </Scripts>
       </CheckButton>
-      
+
       <CheckButton name="$parentBuffs" inherits="ArmoryOptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentSubText" relativePoint="BOTTOMLEFT">
@@ -976,7 +976,7 @@
       </CheckButton>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsSharePanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -1255,7 +1255,7 @@
       </CheckButton>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsTooltipPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -1505,7 +1505,7 @@
 
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsFindPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -1658,7 +1658,7 @@
       </Frame>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsExpirationPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -2225,7 +2225,7 @@
       </CheckButton>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryOptionsMiscPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">

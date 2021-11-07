@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -54,7 +54,7 @@ ArmoryStaticPopupDialogs["ARMORY_DELETE_CHARACTER"] = {
     end,
     OnHide = function (self)
         self:SetParent(UIParent);
-        self.data = nil; 
+        self.data = nil;
     end,
     showAlert = 1,
     hideOnEscape = 1
@@ -85,7 +85,7 @@ function ArmoryStaticPopup_OnShow(self)
 
 	local dialog = ArmoryStaticPopupDialogs[self.which];
 	local OnShow = dialog.OnShow;
-	
+
 	if ( dialog.hideOnEscape ) then
 	    table.insert(UISpecialFrames, "ArmoryStaticPopup");
 	end
@@ -97,7 +97,7 @@ end
 
 function ArmoryStaticPopup_OnHide(self)
 	PlaySound(SOUNDKIT.IG_MAINMENU_CLOSE);
-	
+
 	local dialog = ArmoryStaticPopupDialogs[self.which];
 	local OnHide = dialog.OnHide;
 	local OnCancel = dialog.OnCancel;
@@ -111,7 +111,7 @@ function ArmoryStaticPopup_OnHide(self)
 		    end
 		end
 	end
-	
+
 	if ( not dialog.buttonClicked and OnCancel and not noCancelOnEscape) then
 		OnCancel(self, self.data, "clicked");
 	end
@@ -153,13 +153,13 @@ function ArmoryStaticPopup_Show(which, text_arg1, text_arg2, data)
 	dialog.buttonClicked = nil;
 	-- Clear out data
 	dialog.data = data;
-	
+
 	do	-- If there is any recursion in this block, we may get errors (tempButtonLocs is static). If you have to recurse, we'll have to create a new table each time.
 		assert(#tempButtonLocs == 0);	-- If this fails, we're recursing. (See the table.wipe at the end of the block)
-		
+
 		table.insert(tempButtonLocs, dialog.button1);
 		table.insert(tempButtonLocs, dialog.button2);
-		
+
 		for i = #tempButtonLocs, 1, -1 do
 			-- Do this stuff before we move it. (This is why we go back-to-front)
 			tempButtonLocs[i]:SetText(info["button"..i]);
@@ -170,22 +170,22 @@ function ArmoryStaticPopup_Show(which, text_arg1, text_arg2, data)
 				table.remove(tempButtonLocs, i);
 			end
 		end
-		
+
 		local numButtons = #tempButtonLocs;
 		-- Save off the number of buttons.
 		dialog.numButtons = numButtons;
-		
+
         if ( numButtons == 2 ) then
 			tempButtonLocs[1]:SetPoint("BOTTOMRIGHT", dialog, "BOTTOM", -6, 16);
 		elseif ( numButtons == 1 ) then
 			tempButtonLocs[1]:SetPoint("BOTTOM", dialog, "BOTTOM", 0, 16);
 		end
-		
+
 		for i = 1, numButtons do
 			if ( i > 1 ) then
 				tempButtonLocs[i]:SetPoint("LEFT", tempButtonLocs[i-1], "RIGHT", 13, 0);
 			end
-			
+
 			local width = tempButtonLocs[i]:GetTextWidth();
 			if ( width > 110 ) then
 				tempButtonLocs[i]:SetWidth(width + 20);
@@ -195,7 +195,7 @@ function ArmoryStaticPopup_Show(which, text_arg1, text_arg2, data)
 			tempButtonLocs[i]:Enable();
 			tempButtonLocs[i]:Show();
 		end
-		
+
 		table.wipe(tempButtonLocs);
 	end
 
@@ -263,7 +263,7 @@ function ArmoryStaticPopup_Resize(dialog, which)
 
 	local maxHeightSoFar, maxWidthSoFar = (dialog.maxHeightSoFar or 0), (dialog.maxWidthSoFar or 0);
 	local width = 320;
-	
+
 	if ( info.showAlert or info.closeButton ) then
 		-- Widen
 		width = 420;
@@ -272,7 +272,7 @@ function ArmoryStaticPopup_Resize(dialog, which)
 		dialog:SetWidth(width);
 		dialog.maxWidthSoFar = width;
 	end
-	
+
 	local height = 32 + dialog.text:GetHeight() + 8 + dialog.button1:GetHeight();
 	if ( height > maxHeightSoFar ) then
 		dialog:SetHeight(height);

@@ -42,10 +42,10 @@ local tabWidthCache = {};
 
 function ArmorySocialFrame_ShowSubFrame(frameName)
     for index, value in pairs(ARMORY_SOCIALFRAME_SUBFRAMES) do
-        _G[value]:Hide();    
+        _G[value]:Hide();
         if ( value == ARMORY_SOCIALFRAME_SUBFRAMES[PanelTemplates_GetSelectedTab(ArmorySocialFrame)] ) then
             _G[value]:Show();
-        end    
+        end
     end
 end
 
@@ -75,7 +75,7 @@ end
 function ArmorySocialFrame_OnShow(self)
     PlaySound(SOUNDKIT.IG_CHARACTER_INFO_TAB);
     PanelTemplates_SetTab(self, PanelTemplates_GetSelectedTab(self));
-    
+
     local tab;
     local totalTabWidth = 0;
     for i = 1, ARMORY_SOCIAL_TABS do

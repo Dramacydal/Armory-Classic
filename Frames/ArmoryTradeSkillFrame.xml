@@ -245,7 +245,7 @@
         <BarTexture file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar" />
         <BarColor r="0.25" g="0.25" b="0.75" />
       </StatusBar>
- 
+
       <Button parentKey="FilterButton" inherits="UIMenuButtonStretchTemplate" text="FILTER">
         <Size x="70" y="22"/>
         <Anchors>
@@ -646,7 +646,7 @@
                 <Anchors>
                   <Anchor point="LEFT" relativeKey="$parent.Reagent7" relativePoint="RIGHT" x="0" y="0"/>
                 </Anchors>
-              </Button>              
+              </Button>
             </Frames>
           </Frame>
         </ScrollChild>

@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -40,7 +40,7 @@ ArmoryTradeSkillTypePrefix = {
 	optimal = " [+++] ",
 	medium  = " [++] ",
 	easy	= " [+] ",
-	trivial = " ", 
+	trivial = " ",
 	header  = " "
 }
 
@@ -108,7 +108,7 @@ function ArmoryTradeSkillFrameMixin:Update(isCraft)
                 self:SetSelectedRecipe(self:GetSelectedRecipe());
             end
         end
-        
+
         ArmoryFrame_UpdateLineTabs();
     end
 end
@@ -138,7 +138,7 @@ function ArmoryTradeSkillFrameMixin:RefreshDisplay()
     self.RecipeList:RefreshDisplay();
 
     self:RefreshSkillTitleAndRank();
-    
+
     self:RefreshExpandButtonFrame(numTradeSkills);
 end
 
@@ -151,7 +151,7 @@ function ArmoryTradeSkillFrameMixin:Refresh()
     ArmoryCloseDropDownMenus();
     ArmoryCloseChildWindows();
     ShowUIPanel(self);
-    
+
     self:OnDataSourceChanged();
 
     self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
@@ -172,7 +172,7 @@ function ArmoryTradeSkillFrameMixin:ClearFilters()
     self.SearchBox:SetText("");
 
     self:ClearSlotFilter();
-    
+
     ArmoryCloseDropDownMenus();
 
     self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
@@ -185,15 +185,15 @@ end
 
 function ArmoryTradeSkillFrameMixin:SetSlotFilter(inventorySlotIndex, subClassIndex)
     self:ClearSlotFilter();
-    
+
     if ( inventorySlotIndex ) then
         Armory:SetTradeSkillInvSlotFilter(inventorySlotIndex);
     end
-    
+
     if ( subClassIndex ) then
         Armory:SetTradeSkillSubClassFilter(subClassIndex);
     end
-    
+
     self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
 end
 
@@ -225,7 +225,7 @@ function ArmoryTradeSkillFrameMixin:RefreshExpandButtonFrame(numTradeSkills)
             end
         end
     end
-    
+
     -- If all headers are not expanded then show collapse button, otherwise show the expand button
     if ( notExpanded ~= numHeaders ) then
         self.ExpandButtonFrame.CollapseAllButton.isCollapsed = nil;
@@ -270,7 +270,7 @@ function ArmoryTradeSkillFrameMixin:CollapseAllButtonClicked(button)
         button.isCollapsed = 1;
         Armory:CollapseTradeSkillSubClass(0);
     end
-    
+
     self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
 end
 
@@ -279,7 +279,7 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 	if ( level == 1 ) then
 		--[[ Only show makeable recipes ]]--
 		info.text = CRAFT_IS_MAKEABLE;
-		info.func = function() 
+		info.func = function()
 			Armory:SetOnlyShowMakeableRecipes(not Armory:GetOnlyShowMakeableRecipes());
 		    self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
 		end;
@@ -288,10 +288,10 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 		info.checked = Armory:GetOnlyShowMakeableRecipes();
 		info.isNotRadio = true;
 		ArmoryDropDownMenu_AddButton(info, level)
-		
+
 		--[[ Only show recipes that provide skill ups ]]--
 		info.text = TRADESKILL_FILTER_HAS_SKILL_UP;
-		info.func = function() 
+		info.func = function()
 			Armory:SetOnlyShowSkillUpRecipes(not Armory:GetOnlyShowSkillUpRecipes());
 		    self:SetSelectedRecipe(Armory:GetFirstTradeSkill());
 		end;
@@ -299,14 +299,14 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 		info.checked = Armory:GetOnlyShowSkillUpRecipes();
 		info.isNotRadio = true;
 		ArmoryDropDownMenu_AddButton(info, level);
-		
+
 		info.checked = 	nil;
 		info.isNotRadio = nil;
 		info.func = nil;
 		info.notCheckable = true;
 		info.keepShownOnClick = true;
-		info.hasArrow = true;	
-		
+		info.hasArrow = true;
+
         --[[ Filter recipes by inventory slot ]]--
         if ( Armory:GetTradeSkillInvSlots() ) then
             info.text = TRADESKILL_FILTER_SLOTS;
@@ -314,15 +314,15 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
             ArmoryDropDownMenu_AddButton(info, level);
         end
 
-        --[[ Filter recipes by parent category ]]--	
+        --[[ Filter recipes by parent category ]]--
         if ( Armory:GetTradeSkillSubClasses() ) then
             info.text = TRADESKILL_FILTER_CATEGORY;
             info.value = 2;
             ArmoryDropDownMenu_AddButton(info, level);
         end
-	
+
 	elseif ( level == 2 ) then
-		--[[ Inventory slots ]]--	
+		--[[ Inventory slots ]]--
 		if ARMORY_DROPDOWNMENU_MENU_VALUE == 1 then
 			local inventorySlots = { Armory:GetTradeSkillInvSlots() };
 			for i, inventorySlot in ipairs(inventorySlots) do
@@ -334,7 +334,7 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 				ArmoryDropDownMenu_AddButton(info, level);
 			end
 		elseif ( ARMORY_DROPDOWNMENU_MENU_VALUE == 2 ) then
-            -- [[ Sub classes ]]--	
+            -- [[ Sub classes ]]--
 			local subClasses = { Armory:GetTradeSkillSubClasses() };
 			for i, subClass in ipairs(subClasses) do
 				info.text = subClass;
@@ -345,7 +345,7 @@ function ArmoryTradeSkillFrameMixin:InitFilterMenu(dropdown, level)
 				ArmoryDropDownMenu_AddButton(info, level);
 			end
         end
-        
+
 	end
 end
 
@@ -393,7 +393,7 @@ function ArmoryTradeSkillRecipeListMixin:OnHeaderButtonClicked(categoryButton, c
     else
         Armory:CollapseTradeSkillSubClass(id);
     end
-    
+
     self:Refresh();
 end
 
@@ -423,8 +423,8 @@ function ArmoryTradeSkillRecipeListMixin:UpdateFilterBar()
 		filters = filters or {};
 		filters[#filters + 1] = CRAFT_IS_MAKEABLE;
 	end
-	
-	if ( Armory:GetOnlyShowSkillUpRecipes() ) then 
+
+	if ( Armory:GetOnlyShowSkillUpRecipes() ) then
 		filters = filters or {};
 		filters[#filters + 1] = TRADESKILL_FILTER_HAS_SKILL_UP;
 	end
@@ -435,7 +435,7 @@ function ArmoryTradeSkillRecipeListMixin:UpdateFilterBar()
 		filters = filters or {};
 		filters[#filters + 1] = categoryName;
 	end
-	
+
 	local invSlotFilter = Armory:GetTradeSkillInvSlotFilter();
 	if ( invSlotFilter ) then
 		filters = filters or {};
@@ -447,7 +447,7 @@ function ArmoryTradeSkillRecipeListMixin:UpdateFilterBar()
     end
 
     self.filtered = filters ~= nil;
-    
+
 	self:UpdateLayout();
 end
 
@@ -498,9 +498,9 @@ function ArmoryTradeSkillRecipeListMixin:RefreshDisplay()
 
         skillButton = self.buttons[i];
         skillButton:SetID(skillIndex);
-        
+
         local info = Armory:GetTradeSkillInfo(skillIndex);
-        
+
         if ( info and info.name and skillIndex <= numTradeSkills ) then
             skillButton:SetUp(info);
 
@@ -545,7 +545,7 @@ function ArmoryTradeSkillRecipeListMixin:UpdateLayout()
     if ( self.filtered ) then
         self.FilterBar:SetPoint("TOPLEFT", "ArmoryTradeSkillFrame", "TOPLEFT", 22, -96);
         self.FilterBar:Show();
-        
+
         self:SetHeight(LIST_FULL_HEIGHT - ROW_HEIGHT);
         self:SetPoint("TOPRIGHT", "ArmoryTradeSkillFrame", "TOPRIGHT", -64, -96 - ROW_HEIGHT);
         self.scrollBar:SetPoint("TOPLEFT", self, "TOPRIGHT", 1, -14 + ROW_HEIGHT);
@@ -680,7 +680,7 @@ function ArmoryTradeSkillButtonMixin:SetUpRecipe(textWidth, tradeSkillInfo)
         end
     end
 
-    self.Text:SetWidth(textWidth);   
+    self.Text:SetWidth(textWidth);
 end
 
 function ArmoryTradeSkillButtonMixin:SetSelected(selected)
@@ -822,7 +822,7 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
                     Armory:SetItemLink(reagentButton, Armory:GetTradeSkillReagentItemLink(self.selectedRecipe, reagentIndex));
                 end
             end
-            
+
             if ( Armory:HasInventory() ) then
                 -- use count from inventory
                 playerReagentCount = Armory:ScanInventory(reagentButton.link, true);
@@ -838,7 +838,7 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
                 local playerReagentCountAbbreviated = AbbreviateNumbers(playerReagentCount);
                 reagentButton.Count:SetFormattedText(TRADESKILL_REAGENT_COUNT, playerReagentCountAbbreviated, reagentCount);
                 --fix text overflow when the reagentButton count is too high
-                if ( math.floor(reagentButton.Count:GetStringWidth()) > math.floor(reagentButton.Icon:GetWidth() + .5) ) then 
+                if ( math.floor(reagentButton.Count:GetStringWidth()) > math.floor(reagentButton.Icon:GetWidth() + .5) ) then
                     --round count width down because the leftmost number can overflow slightly without looking bad
                     --round icon width because it should always be an int, but sometimes it's a slightly off float
                     reagentButton.Count:SetFormattedText("%s\n/%s", playerReagentCountAbbreviated, reagentCount);
@@ -852,7 +852,7 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
             local reagentButton = self.Contents.Reagents[reagentIndex];
             reagentButton:Hide();
         end
-        
+
 		self:Show();
     else
         self:Clear();
@@ -898,7 +898,7 @@ local function UpdateWhenClosing(closeFunc, isCraft)
     end
 
     ArmoryTradeSkillFrame.closing = true;
-    
+
     if ( Armory:GetConfigExtendedTradeSkills() ) then
         ArmoryTradeSkillFrame:Update(isCraft);
     end

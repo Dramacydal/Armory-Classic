@@ -91,11 +91,11 @@ local function GetRequirements(tooltip)
 
             elseif ( text:find(minLevelPattern) ) then
                 reqLevel = text:match(minLevelPattern);
-                
+
             elseif ( text:find(rankPattern) ) then
                 reqProfession, reqRank = text:match(rankPattern);
-            
-            elseif ( text:find(repPattern) ) then 
+
+            elseif ( text:find(repPattern) ) then
                 reqReputation, standing = text:match(repPattern);
                 reqStanding = 9;
                 for j = 1, 8 do
@@ -113,14 +113,14 @@ local function GetRequirements(tooltip)
 
             elseif ( text:find(classesPattern) ) then
                 reqClasses = text:match(classesPattern);
-            
+
             elseif ( text:find(reagentPattern) ) then
                 reagents = text:match(reagentPattern);
-                
+
             end
         end
     end
-    
+
     return tonumber(reqLevel), reqProfession, tonumber(reqRank), reqReputation, reqStanding, reqSkill, reqRaces, reqClasses, reagents, accountBound;
 end
 
@@ -183,7 +183,7 @@ end
 local crafters, itemCount, hasSkill, canLearn, candidates;
 local function EnhanceItemTooltip(tooltip, id, link)
     local spaceAdded, name;
-    
+
     if ( not Armory:IsValidTooltip(tooltip) ) then
         return;
     elseif ( link ~= fetched ) then
@@ -192,7 +192,7 @@ local function EnhanceItemTooltip(tooltip, id, link)
         hasSkill = nil;
         crafters = nil;
         candidates = nil;
-        
+
         -- Need the fully qualified link
         local name, link, _, itemLevel, minLevel, _, subType, _, equipLoc, _, _, itemType, itemSubType = GetItemInfo(link or id);
 
@@ -226,7 +226,7 @@ local function EnhanceItemTooltip(tooltip, id, link)
                     end
                 end
             end
-            
+
             crafters = Armory:GetCrafters(id);
         end
 
@@ -288,16 +288,16 @@ local function EnhanceItemTooltip(tooltip, id, link)
             end
         end
     end
-    
+
     tooltip:Show();
-    
+
     return 1;
 end
 
 local reagents, reagentCount;
 local function EnhanceRecipeTooltip(tooltip, id, link)
     local spaceAdded;
-    
+
     if ( id ~= fetched ) then
         fetched = id;
 
@@ -342,9 +342,9 @@ local function EnhanceRecipeTooltip(tooltip, id, link)
             tooltip:AddDoubleLine(name..format(" [%d/%d]", count, quantity), details, r, g, b, r, g, b);
         end
     end
-    
+
     tooltip:Show();
-    
+
     return 1;
 end
 
@@ -416,21 +416,21 @@ local function RegisterTooltipHook(tooltip, idType, hook, reset)
 
         SetTooltipHook(tooltip, "SetMerchantItem", _G.GetMerchantItemLink);
         SetTooltipHook(tooltip, "SetAuctionItem", _G.GetAuctionItemLink);
-        
+
         SetTooltipHook(tooltip, "SetAction", function(action)
             local actionType, actionID = _G.GetActionInfo(action);
             if ( actionType == "item" ) then
                 return select(2, _G.GetItemInfo(actionID));
             end
         end);
-        
+
         SetTooltipHook(tooltip, "SetInboxItem", function(messageIndex, attachIndex)
             if ( messageIndex and attachIndex ) then
                 return _G.GetInboxItemLink(messageIndex, attachIndex);
             end
         end);
         SetTooltipHook(tooltip, "SetQuestItem", _G.GetQuestItemLink);
-        
+
         SetTooltipHook(tooltip, "SetMerchantCostItem", function(index, itemIndex)
             local _, _, link, currencyName = _G.GetMerchantItemCostItem(index, itemIndex);
             return link or GetDummyCurrencyLink(currencyName);
@@ -470,7 +470,7 @@ local function RegisterTooltipHook(tooltip, idType, hook, reset)
                     end
                 end
             end
-            
+
             hook.idType = nil;
             hook.id = nil;
         end);
@@ -501,7 +501,7 @@ function Armory:RegisterTooltipHooks(tooltip)
 end
 
 function Armory:ResetTooltipHook()
-    fetched = nil; 
+    fetched = nil;
 end
 
 function Armory:RefreshTooltip(tooltip)
@@ -526,7 +526,7 @@ function Armory:IsValidTooltip(tooltip)
     if ( numLines == 0 ) then
         return false;
     end
-    
+
     for i = 1, numLines  do
         text = self:GetTooltipText(tooltip, i);
         if ( text == RETRIEVING_ITEM_INFO ) then
@@ -701,7 +701,7 @@ function Armory:SetHyperlink(tooltip, link)
     if ( not (link and tooltip) ) then
         return;
     end
-    
+
     local color, kind, _, name = self:GetLinkInfo(link);
     if ( not pcall(tooltip.SetHyperlink, tooltip, link) ) then
         tooltip:AddLine(color..name);

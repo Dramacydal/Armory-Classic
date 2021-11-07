@@ -1,14 +1,14 @@
 If you are an author of a trade skill add-on you can register your add-on with
 Armory by calling:
 
-    Armory:RegisterTradeSkillAddOn("your_addon_name", 
+    Armory:RegisterTradeSkillAddOn("your_addon_name",
         unregister_update_event_function, register_update_event_function);
 
 For example:
 
-    Armory:RegisterTradeSkillAddOn("ATSW", 
-        function() ATSWFrame:UnregisterEvent("TRADE_SKILL_UPDATE"); end, 
-        function() ATSWFrame:RegisterEvent("TRADE_SKILL_UPDATE"); end 
+    Armory:RegisterTradeSkillAddOn("ATSW",
+        function() ATSWFrame:UnregisterEvent("TRADE_SKILL_UPDATE"); end,
+        function() ATSWFrame:RegisterEvent("TRADE_SKILL_UPDATE"); end
     );
 
 This will prevent Armory triggering TRADE_SKILL_UPDATE events when it updates
@@ -18,14 +18,14 @@ option 'Enable subclass and slot filters' in Armory). But users will appreciate
 it when you register your add-on with Armory.
 
 
-If you want to use Armory’s data you’ll need to call its methods to retrieve it.
+If you want to use Armoryï¿½s data youï¿½ll need to call its methods to retrieve it.
 There is no official API but Armory uses the same method names as their Blizzard
 counterparts, e.g. Armory:UnitClass() will return the same information as
-Blizzard’s UnitClass() but then for the currently selected character.
+Blizzardï¿½s UnitClass() but then for the currently selected character.
 
 Most likely you want to iterate through the stored inventory data. To accomplish
 this you need to save the current character, loop through the data and restore
-the saved character when you’re done.
+the saved character when youï¿½re done.
 You can use profiles to save, select and restore the selected character.
 
 Your basic layout will be:
@@ -39,7 +39,7 @@ Your basic layout will be:
     end
     Armory:SelectProfile(currentProfile);
 
-which will respect the faction filter that limits the selectable characters to the 
+which will respect the faction filter that limits the selectable characters to the
 current realm and faction.
 
 As an alternative you can also use:

@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -33,7 +33,7 @@ ARMORY_INVENTORY_HEIGHT = 16;
 
 function ArmoryInventoryListViewFrame_OnShow(self)
     FauxScrollFrame_SetOffset(ArmoryInventoryListViewScrollFrame, 0);
-    ArmoryInventoryListViewScrollFrameScrollBar:SetMinMaxValues(0, 0); 
+    ArmoryInventoryListViewScrollFrameScrollBar:SetMinMaxValues(0, 0);
     ArmoryInventoryListViewScrollFrameScrollBar:SetValue(0);
     Armory:SetInventorySearchAllFilter(Armory:GetInventorySearchAll());
     ArmoryInventoryListViewFrameSearchAllCheckButton:SetChecked(Armory:GetInventorySearchAllFilter());
@@ -53,7 +53,7 @@ function ArmoryInventoryListViewFrame_Update()
     if ( not ArmoryInventoryListViewFrame:IsShown() ) then
         return;
     end
-    
+
     local numLines = Armory:GetNumInventoryLines();
     local offset = FauxScrollFrame_GetOffset(ArmoryInventoryListViewScrollFrame);
 

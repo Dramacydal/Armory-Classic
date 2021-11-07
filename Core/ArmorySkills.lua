@@ -65,7 +65,7 @@ end
 
 local function UpdateSkillHeaderState(index, isCollapsed)
     local dbEntry = Armory.selectedDbBaseEntry;
-    
+
     if ( dbEntry ) then
         if ( index == 0 ) then
             for i = 1, dbEntry:GetNumValues(container) do
@@ -125,11 +125,11 @@ function Armory:SetSkills()
         end;
         local funcExpand = _G.ExpandSkillHeader;
         local funcCollapse = _G.CollapseSkillHeader;
-        
+
         dbEntry:SetExpandableListValues(container, funcNumLines, funcGetLineState, funcGetLineInfo, funcExpand, funcCollapse);
- 
+
         dirty = dirty or self:IsPlayerSelected();
-        
+
         self:Unlock(container);
     else
         self:PrintDebug("LOCKED", container);

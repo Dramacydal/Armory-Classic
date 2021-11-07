@@ -805,7 +805,7 @@ function Armory:SetConfigPositionMinimapGlobal(on)
     self:SetConfigMinimapAngle(angle);
     self:SetConfigMinimapRadius(radius);
 end
- 
+
 function Armory:GetConfigPositionMinimapGlobal()
     return self:Setting("General", "GlobalMinimapPosition") or nil;
 end
@@ -1219,7 +1219,7 @@ end
 function Armory:GetConfigSummaryMoney()
     return not self:Setting("General", "HideSummaryMoney");
 end
- 
+
 function Armory:SetConfigSummaryRaidInfo(on)
     self:Setting("General", "HideSummaryRaidInfo", not on);
 end
@@ -1254,7 +1254,7 @@ end
 
 function Armory:SetConfigFrameScale(scale)
     self:Setting("General", "Scale", scale);
-    
+
     for _, frameName in ipairs(ARMORYFRAME_MAINFRAMES) do
         if ( _G[frameName]:IsShown() ) then
             _G[frameName]:SetScale(scale);

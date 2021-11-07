@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -92,7 +92,7 @@ function ArmoryLookupFrame_OnLoad(self)
     ArmoryDropDownMenu_SetSelectedValue(ArmoryLookupTypeDropDown, ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE);
 
     FauxScrollFrame_SetOffset(ArmoryLookupScrollFrame, 0);
-    ArmoryLookupScrollFrameScrollBar:SetMinMaxValues(0, 0); 
+    ArmoryLookupScrollFrameScrollBar:SetMinMaxValues(0, 0);
     ArmoryLookupScrollFrameScrollBar:SetValue(0);
 
     ArmoryLookupFrameEditBox:SetText(SEARCH);
@@ -143,7 +143,7 @@ function ArmoryLookupFrame_OnUpdate(self, elapsed)
             ArmoryLookupFrame_Update();
         end
     end
-    
+
     ArmoryLookupFrame_UpdateTarget();
 
     self.updateDelay = 0;
@@ -366,7 +366,7 @@ function ArmoryLookupTypeDropDown_Initialize()
     ArmoryDropDownMenu_AddButton(info);
 
     info.text = QUESTS_LABEL;
-    info.value = ARMORY_LOOKUP_TYPE.LOOKUP_QUEST; 
+    info.value = ARMORY_LOOKUP_TYPE.LOOKUP_QUEST;
     info.checked = nil;
     ArmoryDropDownMenu_AddButton(info);
 
@@ -434,7 +434,7 @@ function ArmoryLookupFrame_UpdateTarget()
     else
         ArmoryLookupFrameTargetText:SetText(ERR_GENERIC_NO_TARGET);
     end
-    
+
     if ( channel ~= "CHANNEL" and ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupTypeDropDown) == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
         ArmoryLookupFrame.type = ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE;
         ArmoryDropDownMenu_Initialize(ArmoryLookupTypeDropDown, ArmoryLookupTypeDropDown_Initialize);
@@ -447,7 +447,7 @@ function ArmoryLookupFrame_UpdateLookupButton()
     local text = ArmoryLookupFrameEditBox:GetText();
 
     if ( text ~= SEARCH and text ~= NAME and strlen(text) > 0 and ArmoryLookupChannelDropDown.numChannels > 0 ) then
-        ArmoryLookupButton:Enable();    
+        ArmoryLookupButton:Enable();
     else
         ArmoryLookupButton:Disable();
     end
@@ -455,7 +455,7 @@ end
 
 function ArmoryLookupFrame_UpdateAutoComplete()
     local id = ArmoryLookupFrame.type;
-   
+
     ArmoryLookupFrameEditBox.autoCompleteParams = nil;
     if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_CHARACTER ) then
         local channel = ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupChannelDropDown) or "NONE";
@@ -576,7 +576,7 @@ function ArmoryLookupFrame_Update()
         ArmoryLookupExpandAllButton.collapsed = 1;
         ArmoryLookupExpandAllButton:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up");
     end
-    
+
     table.wipe(lines);
 end
 
@@ -601,7 +601,7 @@ function ArmoryLookupFrame_SendRequest()
     ArmoryLookupFrame_Update();
 
     ArmoryLookupMessageFrame:Clear();
-    
+
     if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
         local skill = ArmoryDropDownMenu_GetSelectedValue(ArmoryLookupTradeSkillDropDown);
         message = strjoin(ARMORY_LOOKUP_SEPARATOR, ARMORY_LOOKUP_SKILLS[skill], exact, search);
@@ -614,7 +614,7 @@ function ArmoryLookupFrame_SendRequest()
     else
         return;
     end
-    
+
     ArmoryLookupMessageFrame:AddMessage(format(ARMORY_LOOKUP_REQUEST_SENT, _G[channel]));
     ArmoryLookupMessageFrame:Show();
 
@@ -623,7 +623,7 @@ end
 
 function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sender, channel)
     local findFunc, arg1, arg2;
-    local exact, search 
+    local exact, search
 
     if ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_SKILL);
@@ -637,7 +637,7 @@ function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sende
         local skill;
         skill, exact, search = strsplit(ARMORY_LOOKUP_SEPARATOR, message);
         arg1 = ArmoryLookupFrame_GetSkillName(skill);
-       
+
     elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_QUEST ) then
         Armory:PrintCommunication(ARMORY_LOOKUP_QUEST);
         if ( version ~= "c1" ) then
@@ -664,10 +664,10 @@ function ArmoryLookupFrame_ProcessRequest(id, version, message, msgNumber, sende
             Armory:PrintCommunication(string.format(ARMORY_LOOKUP_IGNORED, ARMORY_IGNORE_REASON_VERSION));
             return;
         end
-    
+
         findFunc = ArmoryLookupFrame_FindItem;
         exact, search = strsplit(ARMORY_LOOKUP_SEPARATOR, message);
-        
+
     else
         return;
 
@@ -729,7 +729,7 @@ end
 
 function ArmoryLookupFrame_CanShare(profile, channel)
     if ( not Armory.messaging ) then
-        return true; 
+        return true;
     elseif ( profile.realm ~= Armory.playerRealm ) then
         return false;
     elseif ( profile.character ~= Armory.player and not (Armory:GetConfigShareAsAlt("player") and Armory:GetConfigShareAsAlt()) ) then
@@ -745,7 +745,7 @@ end
 
 function ArmoryLookupFrame_FindRecipe(exact, search, arg1)
     local dbEntry = Armory.selectedDbBaseEntry;
-    local skillName, skillType, link, ref; 
+    local skillName, skillType, link, ref;
     local result = {};
 
     if ( Armory:GetConfigShareProfessions() and dbEntry and dbEntry:Contains("Professions", arg1) ) then
@@ -854,11 +854,11 @@ function ArmoryLookupFrame_InspectCharacter(exact, search, arg1)
             table.insert(info, 1, table.concat(tab, " "));
         end
         table.insert(result, table.concat(info, ARMORY_LOOKUP_CONTENT_SEPARATOR));
-        
+
         table.wipe(info);
         table.wipe(tab);
     end
-    
+
     return result;
 end
 
@@ -950,13 +950,13 @@ function ArmoryLookupFrame_ProcessResponse(id)
                             table.insert(data, {name=name, values=values});
                         end
                     end
-                    
+
                     if ( retry ) then
                         table.insert(data, {name=ARMORY_LOOKUP_NOT_CACHED, func=ArmoryLookupFrame_SendRequest});
                     end
-                    
+
                     update = true;
-                    
+
                 elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_ITEM ) then
                     -- owner\nS:24478\fN:3\nS:35624\fN:1 (item, count)
                     owner = fields[1];
@@ -1008,7 +1008,7 @@ function ArmoryLookupFrame_ProcessResponse(id)
                         end
                     end
                     update = true;
-                    
+
                 elseif ( id == ARMORY_LOOKUP_TYPE.LOOKUP_RECIPE ) then
                     -- owner\n|cffffffff|Hitem:6888::::::::6::::1:3524:::|h[Herb Baked Egg]|h|r\n|cffffffff|Henchant:7428|h[Enchant Bracer - Minor Deflect]|h|r
                     owner = fields[1];
@@ -1049,7 +1049,7 @@ function ArmoryLookupFrame_ProcessResponse(id)
         ArmoryAddonMessageFrame_RemoveReply(module, sender);
     end
 
-    if ( sort ) then        
+    if ( sort ) then
         table.sort(data, function(a, b) return a.name < b.name end);
     end
 

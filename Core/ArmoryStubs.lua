@@ -114,7 +114,7 @@ function Armory:GetPetIcon()
     if ( className == "DEATHKNIGHT" ) then
         return "Interface\\Icons\\Spell_Shadow_RaiseDead"; --Spell_Shadow_AnimateDead";
     elseif ( className == "MAGE" ) then
-        return "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2"; 
+        return "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2";
     elseif ( creatureFamily ) then
         if ( creatureFamily == "Fel Imp" ) then
             return GetSpellTexture(112866);
@@ -147,8 +147,8 @@ local oldPets = {};
 function Armory:GetPets(unit)
     table.wipe(pets);
     table.wipe(oldPets);
-   
-    if ( self:PetsEnabled() ) then 
+
+    if ( self:PetsEnabled() ) then
         local dbEntry = self.selectedDbBaseEntry;
         if ( unit == "player" ) then
             dbEntry = self.playerDbBaseEntry;
@@ -223,7 +223,7 @@ function Armory:GetPVPYesterdayStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPYesterdayStats");
     end
-    
+
     if ( not (hk and self:IsToday(timestamp)) ) then
         hk = 0;
         cp = 0;
@@ -239,7 +239,7 @@ function Armory:GetPVPThisWeekStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPThisWeekStats");
     end
-    
+
     if ( not (hk and self:IsInWeek(timestamp)) ) then
         hk = 0;
         cp = 0;
@@ -255,7 +255,7 @@ function Armory:GetPVPLastWeekStats(update)
     else
         timestamp, hk, cp = self:GetCharacterValue("PVPLastWeekStats");
     end
-    
+
     if ( not (hk and self:IsInWeek(timestamp, -1)) ) then
         hk = 0;
         cp = 0;
@@ -337,7 +337,7 @@ function Armory:PetExists(pet, unit)
     if ( unit == "player" ) then
         dbEntry = self.playerDbBaseEntry;
     end
-    
+
     return dbEntry and dbEntry:Contains("Pets", pet);
 end
 
@@ -368,7 +368,7 @@ function Armory:SetBagItem(id, index)
                 if ( timeLeftScanned ~= "" ) then
                     timeLeftScanned = " "..string.format(GUILD_BANK_LOG_TIME, timeLeftScanned);
                 end
- 
+
             --local timeLeft, timestamp = self:GetInventoryContainerValue(id, "TimeLeft"..index);
             --if ( timeLeft ) then
                 --local timeLeftScanned = SecondsToTime(time() - timestamp, true);
@@ -385,7 +385,7 @@ function Armory:SetBagItem(id, index)
                 self:Table2Tooltip(GameTooltip, tooltipLines);
                 GameTooltip:Show();
             end
-        
+
         end
     end
 end
@@ -432,7 +432,7 @@ function Armory:SetInventoryItemInfo(index)
     local link = _G.GetInventoryItemLink("player", index);
     local hasItem, hasCooldown, repairCost;
     local invalid;
-    
+
     if ( link ) then
         local tooltip1 = self:AllocateTooltip();
         hasItem, hasCooldown, repairCost = tooltip1:SetInventoryItem("player", index);
@@ -441,7 +441,7 @@ function Armory:SetInventoryItemInfo(index)
         end
         self:ReleaseTooltip(tooltip1);
     end
-    
+
     if ( not invalid ) then
         self:SetCharacterValue("InventoryItem"..index, hasItem, hasCooldown, repairCost);
         self:SetCharacterValue("InventoryItemLink"..index, link);

@@ -225,7 +225,7 @@
           <Frame name="ArmoryPetTalents">
             <Size>
               <AbsDimension x="30" y="30"/>
-            </Size> 
+            </Size>
             <Anchors>
               <Anchor point="BOTTOMLEFT" x="0" y="-125"/>
             </Anchors>

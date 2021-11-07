@@ -44,13 +44,13 @@ local function GetQuestLines()
     local dbEntry = Armory.selectedDbBaseEntry;
 
     table.wipe(questLines);
-    
+
     if ( dbEntry ) then
         local count = dbEntry:GetNumValues(container);
         local collapsed = false;
         local hasItems = (questLogFilter == "");
         local include, text, numItems;
-        
+
         for i = 1, count do
             local name, _, _, isHeader, _, _, _, questID = dbEntry:GetValue(container, i, "Info");
 
@@ -84,12 +84,12 @@ local function GetQuestLines()
                 end
             end
         end
-        
+
         if ( not hasItems ) then
             table.wipe(questLines);
         end
     end
-    
+
     dirty = false;
     owner = Armory:SelectedCharacter();
 
@@ -130,7 +130,7 @@ local function UpdateQuestHeaderState(index, isCollapsed)
             end
         end
     end
-    
+
     dirty = true;
 end
 
@@ -160,14 +160,14 @@ function Armory:UpdateQuests()
             self.ignoreQuestUpdate = false;
             return;
         end
-        
+
         self:Lock(container);
 
         self:PrintDebug("UPDATE", container);
 
         if ( self:HasQuestLog() ) then
             local success, dataMissing;
-        
+
             local numQuests = 0;
             local currentQuest = _G.GetQuestLogSelection();
 
@@ -192,7 +192,7 @@ function Armory:UpdateQuests()
                     info.Failed = _G.IsCurrentQuestFailed();
                 end
                 if ( _G.GetQuestLogTimeLeft() ) then
-                    info.TimeLeft = dbEntry.Save(_G.GetQuestLogTimeLeft(), time()); 
+                    info.TimeLeft = dbEntry.Save(_G.GetQuestLogTimeLeft(), time());
                 end
                 if ( _G.GetQuestLogRequiredMoney() > 0 ) then
                     info.RequiredMoney = _G.GetQuestLogRequiredMoney();
@@ -243,16 +243,16 @@ function Armory:UpdateQuests()
                 end
                 return id;
             end;
-            
+
             -- LightHeaded hooks SelectQuestLogEntry
             local stubbed;
             if ( LightHeaded ) then
                 stubbed = LightHeaded.GetCurrentQID;
                 LightHeaded.GetCurrentQID = function() return nil; end;
             end
-            
+
             dbEntry:ClearContainer(container);
-           
+
             if ( retries < 1 ) then
                 -- if expand/collapse has been called a QUEST_LOG_UPDATE event will be fired immediately after the scan has been completed
                 success, self.ignoreQuestUpdate = dbEntry:SetExpandableListValues(container, funcNumLines, funcGetLineState, funcGetLineInfo, funcExpand, funcCollapse, funcAdditionalInfo, funcSelect);
@@ -270,7 +270,7 @@ function Armory:UpdateQuests()
             dbEntry:SetValue(2, container, "NumQuests", numQuests);
 
             _G.SelectQuestLogEntry(currentQuest);
-            
+
             if ( stubbed ) then
                 LightHeaded.GetCurrentQID = stubbed;
             end
@@ -279,7 +279,7 @@ function Armory:UpdateQuests()
         end
 
         dirty = dirty or self:IsPlayerSelected();
-        
+
         self:Unlock(container);
     else
         self:PrintDebug("LOCKED", container);
@@ -305,7 +305,7 @@ function Armory:GetNumQuestLogEntries()
 end
 
 function Armory:GetQuestLogTitle(index)
-    local title, level, questTag, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLineValue(index); 
+    local title, level, questTag, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isBounty, isStory, isHidden, isScaling = GetQuestLineValue(index);
     isCollapsed = self:GetHeaderLineState(container, title);
     return title, level, questTag, isHeader, isCollapsed, isComplete, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory, isHidden, isScaling;
 end
@@ -456,14 +456,14 @@ function Armory:FindQuest(...)
             end
         end
     end
-    
+
     return list;
 end
 
 function Armory:FindQuestItem(itemList, ...)
     local dbEntry = self.selectedDbBaseEntry;
     local list = itemList or {};
-    
+
     if ( dbEntry ) then
         local numEntries = dbEntry:GetNumValues(container);
         if ( numEntries ) then
@@ -492,7 +492,7 @@ function Armory:FindQuestItem(itemList, ...)
             end
         end
     end
-    
+
     return list;
 end
 
@@ -527,6 +527,6 @@ function Armory:FindQuestSpell(spellList, ...)
             end
         end
     end
-    
+
     return list;
 end

@@ -58,13 +58,13 @@ local secPattern = SPELL_TIME_REMAINING_SEC:gsub("%%d", "%%d+");
 
 local function SetBuff(dbEntry, unit, index, filter)
     local tooltipLines;
-    
+
     if ( _G.UnitAura(unit, index, filter) ) then
         local tooltip = Armory:AllocateTooltip();
         tooltip:SetUnitAura(unit, index, filter);
         tooltipLines = Armory:Tooltip2Table(tooltip);
         Armory:ReleaseTooltip(tooltip);
-    
+
         if ( #tooltipLines > 0 ) then
             local _, _, _, remaining = Armory:String2Text(tooltipLines[#tooltipLines]);
             if ( IsMatch(remaining, secPattern) or IsMatch(remaining, minPattern) or IsMatch(remaining, hoursPattern) or IsMatch(remaining, daysPattern) ) then
@@ -114,7 +114,7 @@ local function GetBuffTimeLeft(unit, index, filter)
                 if ( not timestamp ) then
                     return;
                 end
-                
+
                 timeLeft = expirationTime - uptime;
 
                 if ( spellId and continuousBuffs[tostring(spellId)] ) then
@@ -126,7 +126,7 @@ local function GetBuffTimeLeft(unit, index, filter)
             end
             timeLeft = max(timeLeft, 0);
         end
-    
+
         return timeLeft;
     end
 end
@@ -145,7 +145,7 @@ function Armory:SetBuffs(unit)
     if ( not dbEntry ) then
         return;
     end
-    
+
     if ( strlower(unit) == "pet" ) then
         if ( not self:IsPersistentPet() ) then
             return;
@@ -157,12 +157,12 @@ function Armory:SetBuffs(unit)
         dbEntry:SetValue(container, nil);
         return;
     end
-    
+
     if ( not self:IsLocked(container) ) then
         self:Lock(container);
-        
+
         self:PrintDebug("UPDATE", container);
-        
+
         dbEntry:SetValue(2, container, "Time", time(), GetTime());
 
         -- Handle Buffs

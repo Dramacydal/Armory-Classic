@@ -25,7 +25,7 @@
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
 --]]
- 
+
 local Armory, _ = Armory;
 
 ARMORY_MAX_OTHER_TABS = 4;
@@ -37,11 +37,11 @@ local tabWidthCache = {};
 
 function ArmoryOtherFrame_ShowSubFrame()
     for index, value in pairs(ARMORY_OTHERFRAME_SUBFRAMES) do
-        _G[value]:Hide();    
+        _G[value]:Hide();
         if ( value == ARMORY_OTHERFRAME_SUBFRAMES[PanelTemplates_GetSelectedTab(ArmoryOtherFrame)] ) then
             _G[value]:Show();
-        end    
-    end 
+        end
+    end
 end
 
 function ArmoryOtherFrame_OpenSubFrame(id)
@@ -107,18 +107,18 @@ local function TabAdjust(id, enable, firstTab, numTabs)
             firstTab = id;
         end
         numTabs = numTabs + 1;
-    end    
+    end
     return firstTab, numTabs;
 end
 
 function ArmoryOtherFrameTab_Update()
     local numTabs = 0;
     local firstTab;
-    
+
     firstTab, numTabs = TabAdjust(1, Armory:HasReputation(), firstTab, numTabs);
     firstTab, numTabs = TabAdjust(2, Armory:SkillsEnabled(), firstTab, numTabs);
     firstTab, numTabs = TabAdjust(3, Armory:RaidEnabled(), firstTab, numTabs);
-    
+
     if ( numTabs > 0 ) then
         local tab;
         local totalTabWidth = 0;
@@ -137,13 +137,13 @@ function ArmoryOtherFrameTab_Update()
             end
         end
         ArmoryFrame_CheckTabBounds("ArmoryOtherFrameTab", totalTabWidth, 320, tabWidthCache);
-        
+
         if ( numTabs == 1 ) then
             _G["ArmoryOtherFrameTab"..firstTab]:Hide();
         end
         ArmoryReputationFrame_UpdateHeader(numTabs == 1);
     end
-    
+
     return firstTab, numTabs;
 end
 

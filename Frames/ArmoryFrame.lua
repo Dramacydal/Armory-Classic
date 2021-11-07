@@ -124,7 +124,7 @@ function ArmoryFrame_OnLoad(self)
     self:RegisterEvent("PLAYER_LEAVE_COMBAT");
     self:RegisterEvent("PLAYER_REGEN_DISABLED");
     self:RegisterEvent("PLAYER_REGEN_ENABLED");
-    
+
 	ButtonFrameTemplate_HideButtonBar(self);
 
 	self.Inset:SetPoint("BOTTOMRIGHT", self, "BOTTOMLEFT", PANEL_DEFAULT_WIDTH + PANEL_INSET_RIGHT_OFFSET, PANEL_INSET_BOTTOM_OFFSET);
@@ -143,7 +143,7 @@ end
 
 function ArmoryFrame_OnEvent(self, event, ...)
     local arg1 = ...;
-	
+
     if ( event == "VARIABLES_LOADED" ) then
         Armory:InitDb();
         Armory:SetProfile(Armory:CurrentProfile());
@@ -219,7 +219,7 @@ function ArmoryFrame_Initialize()
         Armory.requestedTimePlayed = true;
         RequestTimePlayed();
     end
-    
+
     Armory:RemoveOldAuctions();
 
     local expire = Armory:CheckMailItems(1);
@@ -360,7 +360,7 @@ local function TabAdjust(id, enable)
         if ( nextTab ) then
             nextTab:SetPoint("LEFT", tab, "RIGHT", -16, 0);
         end
-    end    
+    end
 end
 
 function ArmoryFrameTab_Update()
@@ -370,7 +370,7 @@ function ArmoryFrameTab_Update()
     else
         ArmoryFrameTab5:SetText(OTHER);
     end
-    
+
     TabAdjust(1, true);
     TabAdjust(2, Armory:HasPetUI());
     TabAdjust(3, Armory:HasTalents());
@@ -442,18 +442,18 @@ function ArmorySelectCharacter_Update(characterList)
     end
 
     characterList:Clear();
-    
+
     if ( #realms == 1 ) then
         table.wipe(collapsed);
     end
-    
+
     local index, column, myColumn;
 
     for _, realm in ipairs(realms) do
         index, column = characterList:AddLine();
 
         if ( #realms > 1 ) then
-            myColumn = column; index, column = characterList:SetCell(index, myColumn, format("Interface\\Buttons\\UI-%sButton-Up", collapsed[realm] and "Plus" or "Minus"), iconProvider); 
+            myColumn = column; index, column = characterList:SetCell(index, myColumn, format("Interface\\Buttons\\UI-%sButton-Up", collapsed[realm] and "Plus" or "Minus"), iconProvider);
             characterList:SetCellScript(index, myColumn, "OnMouseDown",
                 function(self, realm)
                     if ( collapsed[realm] ) then
@@ -465,9 +465,9 @@ function ArmorySelectCharacter_Update(characterList)
                 end,
                 realm
             );
-            myColumn = column; index, column = characterList:SetCell(index, myColumn, realm, GameFontNormalSmallLeft);  
+            myColumn = column; index, column = characterList:SetCell(index, myColumn, realm, GameFontNormalSmallLeft);
         else
-            myColumn = column; index, column = characterList:SetCell(index, myColumn, realm, GameFontNormalSmallLeft, "LEFT", 2);  
+            myColumn = column; index, column = characterList:SetCell(index, myColumn, realm, GameFontNormalSmallLeft, "LEFT", 2);
         end
 
         for _, character in ipairs(Armory:CharacterList(realm)) do
@@ -482,28 +482,28 @@ function ArmorySelectCharacter_Update(characterList)
                 else
                     myColumn = column; index, column = characterList:SetCell(index, myColumn, "");
                 end
-                
+
                 if ( Armory:GetConfigUseClassColors() ) then
 					local class, classEn = Armory:UnitClass(unit);
-					character = "|c"..Armory:ClassColor(classEn, true)..character..FONT_COLOR_CODE_CLOSE; 
+					character = "|c"..Armory:ClassColor(classEn, true)..character..FONT_COLOR_CODE_CLOSE;
 				end
 
                 myColumn = column; index, column = characterList:SetCell(index, myColumn, character, GameFontHighlightSmallLeft);
                 if ( Armory:GetConfigShowEnhancedTips() and Armory:UnitLevel(unit) and Armory:UnitClass(unit) ) then
                     local class, classEn = Armory:UnitClass(unit);
-                    characterList:SetCellScript(index, myColumn, "OnEnter", 
+                    characterList:SetCellScript(index, myColumn, "OnEnter",
                         function(self, tooltipInfo)
                             Armory:AddEnhancedTip(self, tooltipInfo[1], 1.0, 1.0, 1.0, tooltipInfo[2], 1);
                         end,
                         {Armory:UnitPVPName(unit), format(PLAYER_LEVEL_NO_SPEC, Armory:UnitLevel(unit), Armory:ClassColor(classEn, true), class)}
-                    ); 
-                    characterList:SetCellScript(index, myColumn, "OnLeave", 
+                    );
+                    characterList:SetCellScript(index, myColumn, "OnLeave",
                         function(self)
                             GameTooltip:Hide();
                         end
-                    ); 
+                    );
                 end
-                characterList:SetCellScript(index, myColumn, "OnMouseDown", 
+                characterList:SetCellScript(index, myColumn, "OnMouseDown",
                     function(self, profile)
                         characterList:Hide();
                         ArmoryFrameSelectCharacter(profile);
@@ -526,15 +526,15 @@ function ArmoryFrame_DeleteCharacter(data)
     end
     Armory:DeleteProfile(data.realm, data.character, true);
     ArmoryFrame_Update(profile, true);
-    if ( Armory.summary ) then 
-        Armory:UpdateSummary(); 
+    if ( Armory.summary ) then
+        Armory:UpdateSummary();
     end
 end
 
 function ArmoryFrame_UpdateLineTabs()
     local tabId = 1;
     local frame;
-    
+
     for i = 1, #ARMORYFRAME_CHILDFRAMES do
         frame = _G[ARMORYFRAME_CHILDFRAMES[i]];
         frame.enabled = nil;
@@ -840,7 +840,7 @@ function ArmoryMinimapButton_Move()
     local x = math.cos(angle);
     local y = math.sin(angle);
     local q = 1;
-    if ( x < 0 ) then 
+    if ( x < 0 ) then
         q = q + 1;
     end
     if ( y > 0 ) then
@@ -1001,7 +1001,7 @@ function ArmoryShowCompareItem(tooltip, link)
     if ( (link or "") == ""  ) then
         return;
     end
-    
+
     local equipLoc, subtype;
     if ( link:find("|H") ) then
         _, _, _, equipLoc, _, _, subtype = GetItemInfoInstant(link);
@@ -1065,7 +1065,7 @@ function ArmoryShowCompareItem(tooltip, link)
     else
         side = "right";
     end
-  
+
     local setCompareItem = function(index)
         local tooltip = _G["ArmoryComparisonTooltip"..index];
         if ( tooltip and compareSlots[index] ) then

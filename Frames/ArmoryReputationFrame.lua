@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -92,7 +92,7 @@ function ArmoryReputationFrame_Update()
                 if ( isCollapsed ) then
                     factionHeader:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up");
                 else
-                    factionHeader:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up"); 
+                    factionHeader:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up");
                 end
                 factionHeader.index = factionIndex;
                 factionHeader.isCollapsed = isCollapsed;
@@ -103,7 +103,7 @@ function ArmoryReputationFrame_Update()
                 factionName = _G["ArmoryReputationBar"..i.."FactionName"];
                 factionName:SetText(name);
                 _G["ArmoryReputationBar"..i.."FactionStanding"]:SetText(factionStanding);
-                
+
                 local atWarIndicator = _G["ArmoryReputationBar"..i.."AtWarCheck"];
                 if ( atWarWith ) then
                     atWarIndicator:Show();

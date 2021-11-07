@@ -27,10 +27,10 @@
 --]]
 
 local Armory, _ = Armory;
-        
-Armory.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("Armory", 
-    { type = "data source", 
-      icon = "Interface\\CharacterFrame\\TemporaryPortrait", 
+
+Armory.LDB = LibStub:GetLibrary("LibDataBroker-1.1"):NewDataObject("Armory",
+    { type = "data source",
+      icon = "Interface\\CharacterFrame\\TemporaryPortrait",
       text = UNKNOWN,
       label = ARMORY_TITLE
      }
@@ -70,7 +70,7 @@ function Armory.LDB:OnTooltipShow()
         if ( Armory.summary and Armory.summary:IsShown() ) then
            self:SetFrameLevel(Armory.summary:GetFrameLevel() + 2);
         end
-        
+
         local color;
         if ( realm == Armory.playerRealm and character == Armory.player and not Armory:GetConfigCharacterEnabled() ) then
             color = RED_FONT_COLOR;
@@ -81,7 +81,7 @@ function Armory.LDB:OnTooltipShow()
         self:AddLine(ARMORY_TITLE, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
         self:AddDoubleLine(ARMORY_TOOLTIP1, character, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, color.r, color.g, color.b);
         self:AddDoubleLine(ARMORY_TOOLTIP2, realm, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, color.r, color.g, color.b);
-        
+
         if ( table.getn(Armory:SelectableProfiles()) > 0 ) then
             Armory:TooltipAddHints(self, ARMORY_TOOLTIP_HINT1, ARMORY_TOOLTIP_HINT2);
         else
@@ -94,11 +94,11 @@ function Armory.LDB:OnTooltipShow()
             end
             Armory.LDB.anchorFrame:SetParent(self:GetOwner());
             Armory.LDB.anchorFrame:SetAllPoints(self:GetOwner());
-            
+
             Armory.summaryEnabled = true;
             Armory:ShowSummary(Armory.LDB.anchorFrame);
         end
-    end  
+    end
 end
 
 function Armory.LDB:OnEnter()
@@ -108,7 +108,7 @@ function Armory.LDB:OnEnter()
         GameTooltip:ClearLines();
 
         Armory.LDB.OnTooltipShow(GameTooltip);
-        
+
         GameTooltip:Show();
     end
 end

@@ -41,7 +41,7 @@ local function GetFactionLines()
     local dbEntry = Armory.selectedDbBaseEntry;
 
     table.wipe(factionLines);
-    
+
     if ( dbEntry ) then
         local count = dbEntry:GetNumValues(container);
         local collapsed = false;
@@ -64,10 +64,10 @@ local function GetFactionLines()
             end
         end
     end
-    
+
     dirty = false;
     owner = Armory:SelectedCharacter();
-    
+
     return factionLines;
 end
 
@@ -98,7 +98,7 @@ local function UpdateFactionHeaderState(index, isCollapsed)
             end
         end
     end
-    
+
     dirty = true;
 end
 
@@ -125,14 +125,14 @@ function Armory:UpdateFactions()
         dbEntry:SetValue(container, nil);
         return;
     end
-    
+
     if ( not self:IsLocked(container) ) then
         self:Lock(container);
 
         self:PrintDebug("UPDATE", container);
 
         local _, numFactions = _G.GetNumFactions();
-  
+
         -- store the complete (expanded) list
         local funcNumLines = _G.GetNumFactions;
         local funcGetLineInfo = _G.GetFactionInfo;
@@ -152,7 +152,7 @@ function Armory:UpdateFactions()
         end
 
         dirty = dirty or self:IsPlayerSelected();
-        
+
         self:Unlock(container);
     else
         self:PrintDebug("LOCKED", container);
@@ -198,7 +198,7 @@ end
 
 function Armory:GetFactionStanding(factionName)
     local dbEntry = self.selectedDbBaseEntry;
-    
+
     if ( dbEntry ) then
         local count = dbEntry:GetNumValues(container);
         for i = 1, count do

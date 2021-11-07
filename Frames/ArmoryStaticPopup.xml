@@ -2,7 +2,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\..\FrameXML\UI.xsd">
   <Script file="ArmoryStaticPopup.lua"/>
-  
+
   <Button name="ArmoryStaticPopupButtonTemplate" virtual="true">
     <Size x="128" y="21"/>
     <Scripts>
@@ -31,7 +31,7 @@
     <DisabledFont style="GameFontDisable"/>
     <HighlightFont style="GameFontHighlight"/>
   </Button>
-  
+
   <Frame name="ArmoryStaticPopup" toplevel="true" setAllPoints="true" parent="UIParent" enableMouse="true" frameStrata="DIALOG" hidden="true">
     <Size x="320" y="72"/>
     <Anchors>

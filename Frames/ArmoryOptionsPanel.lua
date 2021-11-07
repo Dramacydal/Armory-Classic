@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -102,12 +102,12 @@ function ArmoryOptionsPanel_Refresh(self)
                 else
                     control:SetChecked(not control.value);
                 end
-    
+
                 ArmoryOptionsPanel_RefreshDependentControls(control);
 
                 if ( control.disabled ) then
                     BlizzardOptionsPanel_CheckButton_Disable(control);
-                elseif ( not control.dependency ) then 
+                elseif ( not control.dependency ) then
                     BlizzardOptionsPanel_CheckButton_Enable(control, 1);
                 end
 
@@ -120,11 +120,11 @@ function ArmoryOptionsPanel_Refresh(self)
                 end
 
             end
-            
+
             if ( control.colorGet ) then
                 local frame = control:GetParent();
                 local swatch = _G[frame:GetName().."ColorSwatch"];
-                
+
                 frame.r, frame.g, frame.b = control.colorGet();
                 swatch:GetNormalTexture():SetVertexColor(control.colorGet());
 
@@ -132,7 +132,7 @@ function ArmoryOptionsPanel_Refresh(self)
                     control.currColor = {};
                     SetTableColor(control.currColor, control.colorGet());
                 end
-                
+
                 if ( not control.dependency ) then
                     ArmoryOptionsPanel_EnableSwatch(swatch, not control.disabled);
                 end
@@ -151,7 +151,7 @@ function ArmoryOptionsPanel_CheckButton_OnClick(checkButton)
         end
     elseif ( checkButton.invert ) then
         setting = true;
-    end 
+    end
 
     checkButton:SetValue(setting);
 
@@ -169,7 +169,7 @@ function ArmoryOptionsPanel_WeeklyResetDropDown_OnEvent(self, event, ...)
         ArmoryDropDownMenu_Initialize(self, ArmoryOptionsPanel_WeeklyResetDropDown_Initialize);
         ArmoryDropDownMenu_SetSelectedValue(self, self.value);
 
-        self.SetValue = 
+        self.SetValue =
             function (self, value)
                 self.value = value;
                 ArmoryDropDownMenu_SetSelectedValue(self, value);
@@ -228,7 +228,7 @@ function ArmoryOptionsPanel_DefaultSearchTypeDropDown_OnEvent(self, event, ...)
         ArmoryDropDownMenu_Initialize(self, ArmoryOptionsPanel_DefaultSearchTypeDropDown_Initialize);
         ArmoryDropDownMenu_SetSelectedValue(self, self.value);
 
-        self.SetValue = 
+        self.SetValue =
             function (self, value)
                 self.value = value;
                 ArmoryDropDownMenu_SetSelectedValue(self, value);
@@ -269,7 +269,7 @@ function ArmoryOptionsPanel_WarningSoundDropDown_OnEvent(self, event, ...)
         ArmoryDropDownMenu_Initialize(self, ArmoryOptionsPanel_WarningSoundDropDown_Initialize);
         ArmoryDropDownMenu_SetSelectedValue(self, self.value);
 
-        self.SetValue = 
+        self.SetValue =
             function (self, value)
                 self.value = value;
                 ArmoryDropDownMenu_SetSelectedValue(self, value);
@@ -308,7 +308,7 @@ function ArmoryOptionsPanel_WarningSoundDropDown_Initialize()
     info.value = "";
     info.checked = nil;
     ArmoryDropDownMenu_AddButton(info);
-   
+
     for k, v in ipairs(Armory.sounds) do
         info.text = SOUND_LABEL.." "..k;
         info.value = v;
@@ -323,7 +323,7 @@ function ArmoryOptionsPanel_RegisterControl(control, parentFrame)
     if ( control.label ) then
         entry = Armory.options[control.label];
 
-        if ( control.type == CONTROLTYPE_CHECKBOX ) then    
+        if ( control.type == CONTROLTYPE_CHECKBOX ) then
 
             control.text = _G[control.label.."_TEXT"];
             control.tooltipText = _G[control.label.."_TOOLTIP"];
@@ -351,7 +351,7 @@ function ArmoryOptionsPanel_RegisterControl(control, parentFrame)
     else
         control.disabledFunc = function() end;
     end
-    
+
     local parent = control:GetParent();
     local swatch = _G[parent:GetName().."ColorSwatch"];
     if ( swatch ) then
@@ -359,7 +359,7 @@ function ArmoryOptionsPanel_RegisterControl(control, parentFrame)
     end
 
     parentFrame.controls = parentFrame.controls or {};
-    table.insert(parentFrame.controls, control);    
+    table.insert(parentFrame.controls, control);
 end
 
 function ArmoryOptionsPanel_SetupDependentControl(dependency, control, invert)
@@ -422,7 +422,7 @@ function ArmoryOptionsPanel_EnableDependentControl(control, enable)
             control:Disable();
         end
     end
-    
+
     local parent = control:GetParent();
     local swatch = _G[parent:GetName().."ColorSwatch"];
     if ( swatch ) then
@@ -450,7 +450,7 @@ function ArmoryOptionsPanel_OpenColorPicker(self)
     local info = ArmoryDropDownMenu_CreateInfo();
 
     info.r, info.g, info.b = self.control.colorGet();
-    info.swatchFunc = function() 
+    info.swatchFunc = function()
         ArmoryOptionsPanel.colorSet(ColorPickerFrame:GetColorRGB());
         ArmoryOptionsPanel.colorPicker:GetNormalTexture():SetVertexColor(ColorPickerFrame:GetColorRGB());
     end;
@@ -525,8 +525,8 @@ local function SetSocial(on)
         Armory:ClearEvents();
     end
 end
-        
-local function SetPets(on)    
+
+local function SetPets(on)
    if ( on ) then
         if ( HasPetUI() ) then
             ArmoryPetFrame_Update(1);
@@ -535,7 +535,7 @@ local function SetPets(on)
         Armory:ClearPets();
     end
 end
-            
+
 local function SetTalents(on)
     if ( on ) then
         Armory:SetTalents();
@@ -554,7 +554,7 @@ local function SetPVP(on)
     end
 end
 
-local function SetReputation(on)            
+local function SetReputation(on)
     if ( on ) then
         Armory:UpdateFactions();
     else
@@ -571,7 +571,7 @@ local function SetRaid(on)
     end
 end
 
-local function SetBuffs(on)         
+local function SetBuffs(on)
     if ( on ) then
         Armory:SetBuffs("player");
         if ( HasPetUI() ) then
@@ -589,11 +589,11 @@ local function SetTradeSkills(on)
         Armory:ClearTradeSkills();
     end
 end
-  
+
 function ArmoryOptionsPanel_CheckModule(control, module)
     if ( control.value == control.currValue ) then
         return;
-    
+
     elseif ( module == "Inventory" ) then
         SetInventory(control.value);
 
@@ -611,13 +611,13 @@ function ArmoryOptionsPanel_CheckModule(control, module)
 
     elseif ( module == "Pets" ) then
         SetPets(control.value);
-            
+
     elseif ( module == "Talents" ) then
         SetTalents(control.value);
 
     elseif ( module == "PVP" ) then
         SetPVP(control.value);
-            
+
     elseif ( module == "Reputation" ) then
         SetReputation(control.value);
 
@@ -628,10 +628,10 @@ function ArmoryOptionsPanel_CheckModule(control, module)
         SetBuffs(control.value);
 
     end
-    
+
     if ( ArmoryFrame:IsVisible() ) then
         ArmoryCloseChildWindows();
         Armory:Toggle();
     end
-    Armory:HideSummary(true); 
+    Armory:HideSummary(true);
 end

@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -109,7 +109,7 @@ function ArmoryQuestLogFrame_OnUpdate(self, elapsed)
         self.timePassed = self.timePassed + elapsed;
         if ( self.timePassed > UPDATE_DELAY ) then
             ArmoryQuestLogTimerText:SetText(TIME_REMAINING.." "..SecondsToTime(Armory:GetQuestLogTimeLeft()));
-            self.timePassed = 0;        
+            self.timePassed = 0;
         end
     end
 end
@@ -134,7 +134,7 @@ function ArmoryQuestLog_Update()
 
     -- Update Quest Count
     ArmoryQuestLogQuestCount:SetFormattedText(QUEST_LOG_COUNT_TEMPLATE, numQuests, MAX_QUESTLOG_QUESTS);
-    
+
     -- ScrollFrame update
     FauxScrollFrame_Update(ArmoryQuestLogListScrollFrame, numEntries, ARMORY_QUESTS_DISPLAYED, ARMORY_QUESTLOG_QUEST_HEIGHT, nil, nil, nil, ArmoryQuestLogHighlightFrame, 293, 316 )
 
@@ -167,7 +167,7 @@ function ArmoryQuestLog_Update()
                 if ( isCollapsed ) then
                     questLogTitle:SetNormalTexture("Interface\\Buttons\\UI-PlusButton-Up");
                 else
-                    questLogTitle:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up"); 
+                    questLogTitle:SetNormalTexture("Interface\\Buttons\\UI-MinusButton-Up");
                 end
                 questHighlight:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight");
             else
@@ -502,7 +502,7 @@ function ArmoryQuestFrameItems_Update()
 
         local index;
         local baseIndex = rewardsCount;
-        for i=1, numQuestChoices, 1 do    
+        for i=1, numQuestChoices, 1 do
             index = i + baseIndex;
             questItem = _G[questItemName..index];
             questItem.type = "choice";
@@ -580,7 +580,7 @@ function ArmoryQuestFrameItems_Update()
         -- Anchor the reward text differently if there are choosable rewards
         if ( numQuestSpellRewards > 0  ) then
             questItemReceiveText:SetText(REWARD_ITEMS);
-            questItemReceiveText:SetPoint("TOPLEFT", questItemName..rewardsCount, "BOTTOMLEFT", 3, -5);        
+            questItemReceiveText:SetPoint("TOPLEFT", questItemName..rewardsCount, "BOTTOMLEFT", 3, -5);
         elseif ( numQuestChoices > 0  ) then
             questItemReceiveText:SetText(REWARD_ITEMS);
             local index = numQuestChoices;
@@ -588,7 +588,7 @@ function ArmoryQuestFrameItems_Update()
                 index = index - 1;
             end
             questItemReceiveText:SetPoint("TOPLEFT", questItemName..index, "BOTTOMLEFT", 3, -5);
-        else 
+        else
             questItemReceiveText:SetText(REWARD_ITEMS_ONLY);
             questItemReceiveText:SetPoint("TOPLEFT", questState.."RewardTitleText", "BOTTOMLEFT", 3, -5);
         end
@@ -632,7 +632,7 @@ function ArmoryQuestFrameItems_Update()
             Armory:SetItemLink(questItem, Armory:GetQuestLogItemLink(questItem.type, i));
             rewardsCount = rewardsCount + 1;
         end
-    else    
+    else
         questItemReceiveText:Hide();
     end
 end

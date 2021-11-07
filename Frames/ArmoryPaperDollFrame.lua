@@ -24,12 +24,12 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
 ARMORY_SLOTINFO = {
-	INVTYPE_2HWEAPON = "MainHandSlot", 
+	INVTYPE_2HWEAPON = "MainHandSlot",
 	INVTYPE_BODY = "ShirtSlot",
 	INVTYPE_CHEST = "ChestSlot",
 	INVTYPE_CLOAK = "BackSlot",
@@ -142,7 +142,7 @@ function ArmoryPaperDollTradeSkillFrame_OnEvent(self, event, ...)
         if ( Armory.forceScan or not Armory:ProfessionsExists() ) then
             Armory:Execute(ArmoryPaperDollTradeSkillFrame_UpdateSkills);
         end
-    else 
+    else
         Armory:Execute(ArmoryPaperDollTradeSkillFrame_UpdateSkills);
     end
 end
@@ -155,7 +155,7 @@ end
 function ArmoryHealth_OnLoad(self)
     self:RegisterUnitEvent("UNIT_HEALTH", "player");
     self:RegisterUnitEvent("UNIT_MAXHEALTH", "player");
-    
+
 	ArmoryHealthTextFrameLabel:SetText(strupper(HEALTH)..":");
     ArmoryHealth.tooltipTitle = HEALTH;
 	ArmoryHealth.tooltipText = NEWBIE_TOOLTIP_HEALTHBAR;
@@ -183,7 +183,7 @@ function ArmoryPaperDollItemSlotButton_Update(button, itemId)
     local unit = "player";
     local count = 0;
     local link, quality, texture;
-    
+
     if ( itemId ~= nil ) then
         if ( itemId ~= 0 ) then
             _, link, quality, _, _, _, _, _, _, texture = _G.GetItemInfo(itemId);
@@ -196,7 +196,7 @@ function ArmoryPaperDollItemSlotButton_Update(button, itemId)
         count = Armory:GetInventoryItemCount(unit, button:GetID());
         button.itemId = nil;
     end
-    
+
     if ( texture ) then
         SetItemButtonTexture(button, texture);
         SetItemButtonCount(button, count);
@@ -210,7 +210,7 @@ function ArmoryPaperDollItemSlotButton_Update(button, itemId)
         SetItemButtonCount(button, 0);
         button.hasItem = nil;
     end
-    
+
     SetItemButtonQuality(button, quality, button.itemId or link);
 
     Armory:SetInventoryItem("player", button:GetID(), true);
@@ -293,7 +293,7 @@ function ArmoryPaperDollFrame_SetZone()
     local zoneName = Armory:GetZoneText();
     local subzoneName = Armory:GetSubZoneText();
     if ( subzoneName == zoneName ) then
-        subzoneName = "";    
+        subzoneName = "";
     end
 
     if ( zoneName ) then
@@ -349,12 +349,12 @@ function ArmoryPaperDollFrame_OnEvent(self, event, unit)
     if ( unit == "player" ) then
         if ( event == "UNIT_LEVEL" or event == "PLAYER_XP_UPDATE" or event == "UPDATE_EXHAUSTION" ) then
             Armory:Execute(ArmoryPaperDollFrame_SetLevel);
-        elseif ( event == "UNIT_DAMAGE" or 
-                 event == "UNIT_ATTACK_SPEED" or 
-                 event == "UNIT_RANGEDDAMAGE" or 
-                 event == "UNIT_ATTACK" or 
-                 event == "UNIT_STATS" or 
-                 event == "UNIT_RANGED_ATTACK_POWER" or 
+        elseif ( event == "UNIT_DAMAGE" or
+                 event == "UNIT_ATTACK_SPEED" or
+                 event == "UNIT_RANGEDDAMAGE" or
+                 event == "UNIT_ATTACK" or
+                 event == "UNIT_STATS" or
+                 event == "UNIT_RANGED_ATTACK_POWER" or
                  event == "UNIT_MAXHEALTH" or
                  event == "UNIT_AURA" or
                  event == "UNIT_RESISTANCES" ) then
@@ -381,7 +381,7 @@ function ArmoryPaperDollFrame_OnEvent(self, event, unit)
 end
 
 function ArmoryPaperDollFrame_HasData()
-    local unit = "player"; 
+    local unit = "player";
     return UnitLevel(unit) and UnitRace(unit) and UnitClass(unit);
 end
 
@@ -411,7 +411,7 @@ function ArmoryPaperDollFrame_SetPrimaryStats()
 		local posBuff;
 		local negBuff;
 		stat, effectiveStat, posBuff, negBuff = Armory:UnitStat("player", i);
-		
+
 		-- Set the tooltip text
 		local tooltipText = HIGHLIGHT_FONT_COLOR_CODE.._G["SPELL_STAT"..i.."_NAME"].." ";
 
@@ -427,7 +427,7 @@ function ArmoryPaperDollFrame_SetPrimaryStats()
 			text:SetText(effectiveStat);
 			frame.tooltip = tooltipText..effectiveStat..FONT_COLOR_CODE_CLOSE;
 			frame.tooltip2 = classStatText;
-		else 
+		else
 			tooltipText = tooltipText..effectiveStat;
 			if ( posBuff > 0 or negBuff < 0 ) then
 				tooltipText = tooltipText.." ("..(stat - posBuff - negBuff)..FONT_COLOR_CODE_CLOSE;
@@ -463,7 +463,7 @@ function ArmoryPaperDollFrame_SetResistances()
 		local base;
 		local text = _G["ArmoryMagicResText"..i];
 		local frame = _G["ArmoryMagicResFrame"..i];
-		
+
 		base, resistance, positive, negative = Armory:UnitResistance("player", frame:GetID());
 
 		-- resistances can now be negative. Show Red if negative, Green if positive, white otherwise
@@ -540,7 +540,7 @@ function ArmoryPaperDollFrame_SetArmor(unit, prefix)
 	local playerLevel = Armory:UnitLevel(unit);
 	local armorReduction = effectiveArmor/((85 * playerLevel) + 400);
 	armorReduction = 100 * (armorReduction/(armorReduction + 1));
-	
+
 	frame.tooltip2 = format(ARMOR_TOOLTIP, playerLevel, armorReduction);
 end
 
@@ -583,13 +583,13 @@ function ArmoryPaperDollFrame_SetAttackPower(unit, prefix)
 	if ( not prefix ) then
 		prefix = "";
 	end
-	
+
     local base, posBuff, negBuff = Armory:UnitAttackPower(unit);
     if ( not base ) then
         return;
     end
 
-	local frame = _G["Armory"..prefix.."AttackPowerFrame"]; 
+	local frame = _G["Armory"..prefix.."AttackPowerFrame"];
 	local text = _G["Armory"..prefix.."AttackPowerFrameStatText"];
 
 	PaperDollFormatStat(MELEE_ATTACK_POWER, base, posBuff, negBuff, frame, text);
@@ -608,11 +608,11 @@ function ArmoryPaperDollFrame_SetDamage(unit, prefix)
 	local damageFrame = _G["Armory"..prefix.."DamageFrame"];
 
     local speed, offhandSpeed = Armory:UnitAttackSpeed(unit);
-	
+
 	local minDamage;
-	local maxDamage; 
+	local maxDamage;
 	local minOffHandDamage;
-	local maxOffHandDamage; 
+	local maxOffHandDamage;
 	local physicalBonusPos;
 	local physicalBonusNeg;
 	local percent;
@@ -631,25 +631,25 @@ function ArmoryPaperDollFrame_SetDamage(unit, prefix)
 	local totalBonus = (fullDamage - baseDamage);
 	local damagePerSecond = (max(fullDamage,1) / speed);
 	local damageTooltip = max(floor(minDamage),1).." - "..max(ceil(maxDamage),1);
-	
+
 	local colorPos = "|cff20ff20";
 	local colorNeg = "|cffff2020";
 	if ( totalBonus == 0 ) then
-		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then 
-			damageText:SetText(displayMin.." - "..displayMax);	
+		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then
+			damageText:SetText(displayMin.." - "..displayMax);
 		else
 			damageText:SetText(displayMin.."-"..displayMax);
 		end
 	else
-		
+
 		local color;
 		if ( totalBonus > 0 ) then
 			color = colorPos;
 		else
 			color = colorNeg;
 		end
-		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then 
-			damageText:SetText(color..displayMin.." - "..displayMax.."|r");	
+		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then
+			damageText:SetText(color..displayMin.." - "..displayMax.."|r");
 		else
 			damageText:SetText(color..displayMin.."-"..displayMax.."|r");
 		end
@@ -664,12 +664,12 @@ function ArmoryPaperDollFrame_SetDamage(unit, prefix)
 		elseif ( percent < 1 ) then
 			damageTooltip = damageTooltip..colorNeg.." x"..floor(percent*100+0.5).."%|r";
 		end
-		
+
 	end
 	damageFrame.damage = damageTooltip;
 	damageFrame.attackSpeed = speed;
 	damageFrame.dps = damagePerSecond;
-	
+
 	-- If there's an offhand speed then add the offhand info to the tooltip
 	if ( offhandSpeed ) then
 		minOffHandDamage = (minOffHandDamage / percent) - physicalBonusPos - physicalBonusNeg;
@@ -715,7 +715,7 @@ function ArmoryPaperDollFrame_SetRangedAttack(unit, prefix)
         return;
     end
 
-	local frame = _G["Armory"..prefix.."RangedAttackFrame"]; 
+	local frame = _G["Armory"..prefix.."RangedAttackFrame"];
 	local text = _G["Armory"..prefix.."RangedAttackFrameStatText"];
 
 	-- If no ranged texture then set stats to n/a
@@ -731,7 +731,7 @@ function ArmoryPaperDollFrame_SetRangedAttack(unit, prefix)
 	if ( not rangedTexture or hasRelic ) then
 		return;
 	end
-	
+
 	if( rangedAttackMod == 0 ) then
 		text:SetText(rangedAttackBase);
 	else
@@ -755,9 +755,9 @@ function ArmoryPaperDollFrame_SetRangedAttackPower(unit, prefix)
 	if ( not prefix ) then
 		prefix = "";
 	end
-	local frame = _G["Armory"..prefix.."RangedAttackPowerFrame"]; 
+	local frame = _G["Armory"..prefix.."RangedAttackPowerFrame"];
 	local text = _G["Armory"..prefix.."RangedAttackPowerFrameStatText"];
-	
+
 	-- If no ranged attack then set to n/a
 	if ( ArmoryPaperDollFrame.noRanged ) then
 		text:SetText(NOT_APPLICABLE);
@@ -819,8 +819,8 @@ function ArmoryPaperDollFrame_SetRangedDamage(unit, prefix)
 	local tooltip = max(floor(minDamage),1).." - "..max(ceil(maxDamage),1);
 
 	if ( totalBonus == 0 ) then
-		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then 
-			damageText:SetText(displayMin.." - "..displayMax);	
+		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then
+			damageText:SetText(displayMin.." - "..displayMax);
 		else
 			damageText:SetText(displayMin.."-"..displayMax);
 		end
@@ -833,8 +833,8 @@ function ArmoryPaperDollFrame_SetRangedDamage(unit, prefix)
 		else
 			color = colorNeg;
 		end
-		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then 
-			damageText:SetText(color..displayMin.." - "..displayMax.."|r");	
+		if ( ( displayMin < 100 ) and ( displayMax < 100 ) ) then
+			damageText:SetText(color..displayMin.." - "..displayMax.."|r");
 		else
 			damageText:SetText(color..displayMin.."-"..displayMax.."|r");
 		end
@@ -870,7 +870,7 @@ function ArmoryPaperDollFrame_SetDefense(unit, prefix)
 
 	local frame = _G["Armory"..prefix.."DefenseFrame"];
 	local text = _G["Armory"..prefix.."DefenseFrameStatText"];
-	
+
 	local posBuff = 0;
 	local negBuff = 0;
 	if ( modifier > 0 ) then
@@ -906,7 +906,7 @@ function ArmoryPaperDollFrame_UpdateInventory()
     ArmoryPaperDollFrame_UpdateSlot(ArmoryMainHandSlot);
     ArmoryPaperDollFrame_UpdateSlot(ArmorySecondaryHandSlot);
     ArmoryPaperDollFrame_UpdateSlot(ArmoryRangedSlot);
-    
+
     Armory.hasEquipment = true;
     Armory_EQC_Refresh();
 end
@@ -954,7 +954,7 @@ function ArmoryPaperDollFrame_UpdateTalent()
     local maxPointsSpent = 0;
     local specialism = NONE;
     local iconTexture;
-    
+
 	for i = 1, Armory:GetNumTalentTabs(inspect) do
         local name, texture, pointsSpent = Armory:GetTalentTabInfo(i, inspect);
         talents[i] = pointsSpent;
@@ -964,7 +964,7 @@ function ArmoryPaperDollFrame_UpdateTalent()
             maxPointsSpent = pointsSpent;
         end
     end
-    
+
     if ( iconTexture ) then
         SetPortraitToTexture(ArmoryPaperDollTalentButtonIcon, iconTexture);
     else
@@ -1036,7 +1036,7 @@ function ArmoryAlternateSlotFrame_Show(parent, orientation, direction)
     local parentId = Armory:GetUniqueItemId(parent.link)
     local id, link, equipLoc, texture, itemId;
     local numItems = 0;
-    
+
     table.wipe(alternatives);
 
     for i = 1, #ArmoryInventoryContainers do

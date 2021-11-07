@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -105,7 +105,7 @@ function ArmoryAuraButton_Update(buttonName, index, filter, unit)
         end
         return false;
     end
-    
+
     local helpful = (filter == "HELPFUL");
 
     -- If button doesn't exist make it
@@ -130,7 +130,7 @@ function ArmoryAuraButton_Update(buttonName, index, filter, unit)
     else
         -- Anchor Debuffs
         ArmoryDebuffButton_UpdateAnchors(buttonName, index);
-   
+
         -- Set color of debuff border based on dispel class.
         local debuffSlot = _G[buffName.."Border"];
         if ( debuffSlot ) then
@@ -143,7 +143,7 @@ function ArmoryAuraButton_Update(buttonName, index, filter, unit)
             debuffSlot:SetVertexColor(color.r, color.g, color.b);
         end
     end
-    
+
     -- Set Texture
     local icon = _G[buffName.."Icon"];
     icon:SetTexture(texture);
@@ -156,7 +156,7 @@ function ArmoryAuraButton_Update(buttonName, index, filter, unit)
     else
         buffCount:Hide();
     end
-    
+
     return true;
 end
 

@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -72,7 +72,7 @@ end
 
 function ArmoryPetFrame_OnEvent(self, event, ...)
     local arg1 = ...;
-    
+
     if ( not Armory:CanHandleEvents() ) then
         return;
     elseif ( event == "PLAYER_ENTERING_WORLD" ) then
@@ -138,7 +138,7 @@ function ArmoryPetFrame_Update(petChanged)
 
     local currentPet = Armory:GetCurrentPet();
     if ( not Armory:PetsEnabled() or (currentPet == UNKNOWN and not Armory:HasPetUI()) ) then
-        ArmoryFrameTab_Update(); 
+        ArmoryFrameTab_Update();
         return;
     end
 
@@ -181,7 +181,7 @@ function ArmoryPetFrame_Update(petChanged)
     end
     Armory.selectedPet = currentPet;
     ArmoryPetFrame.selectedPet = currentPet;
-        
+
     ArmoryPetFrame_SetSelectedPetInfo();
     ArmoryPetFrame_UpdateStats();
 
@@ -197,7 +197,7 @@ function ArmoryPetFrame_Update(petChanged)
         ArmoryPetFramePetInfo:Hide();
         ArmoryPetAttributesFrame:Hide();
         ArmoryPetResistanceFrame:Hide();
-    end  
+    end
 end
 
 function ArmoryPetFrame_SetSelectedPetInfo()
@@ -247,7 +247,7 @@ function ArmoryPetFrame_SetHappiness()
     local hasPetUI, isHunterPet = Armory:HasPetUI();
     if ( not happiness or not isHunterPet ) then
         ArmoryPetFrameDiet:Hide();
-        return;    
+        return;
     end
     ArmoryPetFrameDiet:Show();
     if ( happiness == 1 ) then
@@ -284,14 +284,14 @@ function ArmoryPetFrame_SetResistances()
         end
         text = _G["ArmoryPetMagicResText"..i];
         frame = _G["ArmoryPetMagicResFrame"..i];
-        
+
         base, resistance, positive, negative = Armory:UnitResistance("pet", frame:GetID());
         resistance = resistance or 0;
         positive = positive or 0;
         negative = negative or 0;
 
         frame.tooltip = _G["RESISTANCE"..frame:GetID().."_NAME"];
-    
+
         -- resistances can now be negative. Show Red if negative, Green if positive, white otherwise
         if( resistance < 0 ) then
             text:SetText(RED_FONT_COLOR_CODE..resistance..FONT_COLOR_CODE_CLOSE);

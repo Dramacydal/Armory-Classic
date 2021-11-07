@@ -67,19 +67,19 @@ end
 
 function Armory:SetTalents()
     local dbEntry = self.playerDbBaseEntry;
-    
+
     if ( not dbEntry ) then
         return;
     elseif ( not self:TalentsEnabled() or _G.UnitLevel("player") < SHOW_TALENT_LEVEL ) then
         dbEntry:SetValue(container, nil);
         return;
     end
-    
+
     if ( not self:IsLocked(container) ) then
         self:Lock(container);
 
         self:PrintDebug("UPDATE", container);
-    
+
         local tooltip = self:AllocateTooltip();
         local inspect = false;
         local tooltipLines;
@@ -96,14 +96,14 @@ function Armory:SetTalents()
                 if ( tooltipLines[#tooltipLines]:match(TOOLTIP_TALENT_LEARN) ) then
                     table.remove(tooltipLines);
                 end
-            
+
                 SetTalentValue(i, "Info"..j, _G.GetTalentInfo(i, j, inspect));
                 SetTalentValue(i, "Prereqs"..j, _G.GetTalentPrereqs(i, j, inspect));
                 SetTalentValue(i, "Tooltip"..j, unpack(tooltipLines));
             end
         end
         self:ReleaseTooltip(tooltip);
-        
+
         self:Unlock(container);
     else
         self:PrintDebug("LOCKED", container);

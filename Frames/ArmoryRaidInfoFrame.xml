@@ -56,7 +56,7 @@
       </Frame>
     </Frames>
   </Frame>
-  
+
   <Frame name="ArmoryRaidInfoFrame" enableMouse="true" movable="true" parent="ArmoryOtherFrame" useParentLevel="true" hidden="true" id="3">
     <Size>
       <AbsDimension x="345" y="372"/>

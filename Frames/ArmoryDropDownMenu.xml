@@ -1,7 +1,7 @@
 <!-- Revision: @file-revision@ @file-date-iso@ -->
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\..\FrameXML\UI.xsd">
-	<Script file="ArmoryDropDownMenu.lua"/>
+  <Script file="ArmoryDropDownMenu.lua"/>
   <Button name="ArmoryDropDownMenuButtonTemplate" virtual="true">
     <Size x="100" y="16"/>
     <Layers>
@@ -339,19 +339,19 @@
     </Scripts>
   </Frame>
   <Button name="ArmoryDropDownList1" toplevel="true" frameStrata="FULLSCREEN_DIALOG" inherits="ArmoryDropDownListTemplate" hidden="true" id="1">
-		<Size>
-			<AbsDimension x="180" y="10"/>
-		</Size>
-		<Scripts>
-			<OnLoad>
-				local fontName, fontHeight, fontFlags = _G["ArmoryDropDownList1Button1NormalText"]:GetFont();
-				ARMORY_DROPDOWNMENU_DEFAULT_TEXT_HEIGHT = fontHeight;
-			</OnLoad>
-		</Scripts>
-	</Button>
-	<Button name="ArmoryDropDownList2" toplevel="true" frameStrata="FULLSCREEN_DIALOG" inherits="ArmoryDropDownListTemplate" hidden="true" id="2">
-		<Size>
-			<AbsDimension x="180" y="10"/>
-		</Size>
-	</Button>
+    <Size>
+      <AbsDimension x="180" y="10"/>
+    </Size>
+    <Scripts>
+      <OnLoad>
+        local fontName, fontHeight, fontFlags = _G["ArmoryDropDownList1Button1NormalText"]:GetFont();
+        ARMORY_DROPDOWNMENU_DEFAULT_TEXT_HEIGHT = fontHeight;
+      </OnLoad>
+    </Scripts>
+  </Button>
+  <Button name="ArmoryDropDownList2" toplevel="true" frameStrata="FULLSCREEN_DIALOG" inherits="ArmoryDropDownListTemplate" hidden="true" id="2">
+    <Size>
+      <AbsDimension x="180" y="10"/>
+    </Size>
+  </Button>
 </Ui>

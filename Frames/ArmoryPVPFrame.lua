@@ -48,7 +48,7 @@ end
 
 function ArmoryPVPFrame_Update(updateAll)
 	local hk, dk, contribution, rank, highestRank, rankName, rankNumber;
-	
+
 	-- This only gets set on player entering the world
 	if ( updateAll ) then
 		-- Yesterday's values
@@ -65,12 +65,12 @@ function ArmoryPVPFrame_Update(updateAll)
 		ArmoryHonorFrameLastWeekContributionValue:SetText(contribution);
 		ArmoryHonorFrameLastWeekStandingValue:SetText(rank);
 	end
-	
+
 	-- This session's values
 	hk, dk = Armory:GetPVPSessionStats();
 	ArmoryHonorFrameCurrentHKValue:SetText(hk);
 	ArmoryHonorFrameCurrentDKValue:SetText(dk);
-	
+
 	-- Lifetime stats
 	hk, dk, highestRank = Armory:GetPVPLifetimeStats();
 	ArmoryHonorFrameLifeTimeHKValue:SetText(hk);
@@ -88,7 +88,7 @@ function ArmoryPVPFrame_Update(updateAll)
 	end
 	ArmoryHonorFrameCurrentPVPTitle:SetText(rankName);
 	ArmoryHonorFrameCurrentPVPRank:SetText("("..RANK.." "..rankNumber..")");
-	
+
 	-- Set icon
 	if ( rankNumber > 0 ) then
 		ArmoryHonorFramePvPIcon:SetTexture(format("%s%02d","Interface\\PvPRankBadges\\PvPRank",rankNumber));
@@ -96,7 +96,7 @@ function ArmoryPVPFrame_Update(updateAll)
 	else
 		ArmoryHonorFramePvPIcon:Hide();
 	end
-	
+
 	-- Set rank progress and bar color
 	local factionGroup, factionName = Armory:UnitFactionGroup("player");
 	if ( factionGroup == "Alliance" ) then

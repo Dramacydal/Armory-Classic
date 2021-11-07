@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 local AC = LibStub("AceComm-3.0");
@@ -108,11 +108,11 @@ function ArmoryAddonMessageFrame_Send(id, version, message, destination, msgNumb
     local msgType = "A";
     local segmentType = " ";
     local len;
-    
+
     if ( destination ~= "CHANNEL" and not RegisterAddonMessagePrefix ) then
         maxlen = maxlen - strlen(ARMORY_ID);
     end
-    
+
     if ( segments[id] ) then
         table.wipe(segments[id]);
     else
@@ -148,7 +148,7 @@ function ArmoryAddonMessageFrame_Send(id, version, message, destination, msgNumb
         len = min(maxlen, strlen(message));
         if ( len > 0 ) then
             table.insert(segments[id], strsub(message, 1, len));
-            if ( strlen(message) > len ) then            
+            if ( strlen(message) > len ) then
                 message = strsub(message, len - strlen(message));
             else
                 message = "";
@@ -165,7 +165,7 @@ function ArmoryAddonMessageFrame_Send(id, version, message, destination, msgNumb
         segment = ArmoryAddonMessageFrame_GetSegment(id, version, msgType, msgNumber, segmentType, i, segments[id][i]);
         ArmoryAddonMessageFrame_SendMessage(segment, destination);
     end
-    
+
     table.wipe(segments[id]);
 end
 
@@ -195,7 +195,7 @@ end
 function ArmoryAddonMessageFrame_SendMessage(message, destination)
     local target = destination:match("^TARGET:(.*)");
 
-    if ( target ) then 
+    if ( target ) then
         destination = "WHISPER";
     end
     if ( Armory.messaging ) then
@@ -302,7 +302,7 @@ function ArmoryAddonMessageFrame_ParseMessage(message, channel, sender)
     elseif ( fields[1]:match("^[%d%.]+") ) then
         -- version broadcast received
         ArmoryPaperDollFrame_UpdateVersion(fields[1]);
-        
+
         if ( Armory.users ) then
             Armory.users[sender] = strjoin("|", strsub(channel, 1, 1), fields[1], time());
         end
@@ -360,7 +360,7 @@ function ArmoryAddonMessageFrame_UpdateChannel(leave)
         if ( id ~= 0 ) then
             LeaveChannelByName(channelName);
         end
-            
+
     elseif ( id == 0 ) then
         if ( not JoinTemporaryChannel(channelName) ) then
             Armory.channel = nil;

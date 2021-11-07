@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -35,10 +35,10 @@ ARMORY_EQUIPMENT_CONTAINER = -6;
 
 ARMORY_CACHE_CONTAINER = "Cache";
 
-ArmoryInventoryContainers = { 
-    BACKPACK_CONTAINER, 1, 2, 3, 4, BANK_CONTAINER, 5, 6, 7, 8, 9, 10, 11, 
-    ARMORY_MAIL_CONTAINER, 
-    ARMORY_AUCTIONS_CONTAINER, ARMORY_NEUTRAL_AUCTIONS_CONTAINER, 
+ArmoryInventoryContainers = {
+    BACKPACK_CONTAINER, 1, 2, 3, 4, BANK_CONTAINER, 5, 6, 7, 8, 9, 10, 11,
+    ARMORY_MAIL_CONTAINER,
+    ARMORY_AUCTIONS_CONTAINER, ARMORY_NEUTRAL_AUCTIONS_CONTAINER,
     ARMORY_EQUIPMENT_CONTAINER
 };
 
@@ -63,19 +63,19 @@ function ArmoryInventoryFrame_OnLoad(self)
     self:RegisterEvent("AUCTION_OWNED_LIST_UPDATE");
 
     SetPortraitToTexture("ArmoryInventoryFramePortrait", "Interface\\Buttons\\Button-Backpack-Up");
-    
+
     -- Tab Handling code
     PanelTemplates_SetNumTabs(self, 2);
     PanelTemplates_SetTab(self, 1);
 
-    hooksecurefunc("ContainerFrameItemButton_OnModifiedClick", 
+    hooksecurefunc("ContainerFrameItemButton_OnModifiedClick",
         function(self, button)
             local bag = self:GetParent():GetID();
             local slot = self:GetID();
             ArmoryInventoryFramePasteItem(button, GetContainerItemLink(bag, slot));
         end
     );
-    hooksecurefunc("ChatFrame_OnHyperlinkShow", 
+    hooksecurefunc("ChatFrame_OnHyperlinkShow",
         function(self, link, text, button)
             ArmoryInventoryFramePasteItem(button, link);
         end
@@ -135,7 +135,7 @@ function ArmoryInventoryFrame_OnEvent(self, event, ...)
     elseif ( event == "MAIL_CLOSED" ) then
         if ( self.mailOpen ) then
             self.mailOpen = false;
-            
+
             -- Must execute immediately
             ArmoryInventoryFrame_UpdateContainer(ARMORY_MAIL_CONTAINER);
             if ( Armory:GetConfigMailCheckCount() and Armory:GetConfigExpirationDays() > 0 and not Armory:GetConfigMailHideCount() ) then
@@ -154,7 +154,7 @@ function ArmoryInventoryFrame_OnEvent(self, event, ...)
             ArmoryInventoryFrame_UpdateContainer(ARMORY_AUCTIONS_CONTAINER);
         end
     end
-    
+
     ArmoryInventoryFrame_UpdateFrame(update);
 end
 
@@ -229,7 +229,7 @@ function ArmoryInventoryFrame_Update()
         else
             ArmoryInventoryIconViewFrame:Show();
         end
-    end    
+    end
 end
 
 function ArmoryInventoryFrameTab_OnClick(self)
@@ -251,7 +251,7 @@ function ArmoryInventoryMoneyFrame_OnEnter(self)
     local currentRealm, currentCharacter = Armory:GetPaperDollLastViewed();
     local currentFaction = Armory:UnitFactionGroup("player");
     local money = {};
-    
+
     local addToFactionTotal = function (realm)
 		if ( Armory:UnitFactionGroup("player") == currentFaction ) then
 			if ( not money[realm] ) then
@@ -260,7 +260,7 @@ function ArmoryInventoryMoneyFrame_OnEnter(self)
 			money[realm] = money[realm] + Armory:GetMoney();
 		end
     end;
-    
+
     if ( Armory:IsConnectedRealm(currentRealm) ) then
 		for _, profile in ipairs(Armory:GetConnectedProfiles()) do
 			Armory:SelectProfile(profile);
@@ -273,12 +273,12 @@ function ArmoryInventoryMoneyFrame_OnEnter(self)
 		end
 	end
     Armory:LoadProfile(currentRealm, currentCharacter);
-    
+
     local total = money[currentRealm];
     GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
     GameTooltip:AddLine(format(ARMORY_MONEY_TOTAL, currentRealm, currentFaction), "", 1, 1, 1);
     SetTooltipMoney(GameTooltip, total, "TOOLTIP");
-    
+
     local grandTotal;
     for realm, realmTotal in pairs(money) do
 		if ( realm ~= currentRealm ) then
@@ -292,13 +292,13 @@ function ArmoryInventoryMoneyFrame_OnEnter(self)
 		GameTooltip:AddLine(format(ARMORY_MONEY_TOTAL, "-", currentFaction), "", 1, 1, 1);
 		SetTooltipMoney(GameTooltip, total);
     end
-    
+
     if ( self.showTooltip and self.staticMoney ~= total ) then
         GameTooltip:AddLine(" ");
         GameTooltip:AddLine(currentCharacter..":", "", 1, 1, 1);
         SetTooltipMoney(GameTooltip, self.staticMoney);
     end
-	
+
 	GameTooltip:Show();
 end
 

@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -41,7 +41,7 @@ ARMORY_VOID_CONTAINER_ROW_HEIGHT = 26;
 function ArmoryInventoryIconViewFrame_OnLoad(self)
     ArmoryInventoryIconViewFrameScrollBarScrollDownButton:SetScript("OnClick", ArmoryInventoryIconViewFrameDownArrow_OnClick);
     ArmoryInventoryIconViewFrameScrollBar:SetValue(0);
-    
+
     local numContainers = #ArmoryInventoryContainers;
     for i = 1, ARMORY_MAX_CONTAINERS do
         if ( i <= numContainers ) then
@@ -50,7 +50,7 @@ function ArmoryInventoryIconViewFrame_OnLoad(self)
         else
             _G["ArmoryInventoryContainer"..i]:Hide();
         end
-    end 
+    end
 end
 
 function ArmoryInventoryIconViewFrame_OnShow(self)
@@ -80,7 +80,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
     local buttonBaseName = containerName.."Item";
     local buttonTemplate = "ArmoryInventoryFrameItemButtonTemplate";
     local rowHeight = ARMORY_CONTAINER_ROW_HEIGHT;
-    
+
     if ( Armory:GetInventoryBagLayout() and id >= BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then
         columns = NUM_CONTAINER_COLUMNS;
         isPlusTwoBag = (mod(numSlots, columns) == 2);
@@ -97,7 +97,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
   	if ( numSlots > ARMORY_MAX_CONTAINER_ITEMS ) then
 		numSlots = ARMORY_MAX_CONTAINER_ITEMS;
 		containerTitle = format("%s (%d+)", containerTitle, numSlots);
-	end 
+	end
 
     label:SetText(containerTitle);
 
@@ -128,7 +128,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
         offset = 2;
         rows = 1;
     end
-    
+
     local index, template;
     for i = 1, numSlots do
         index = offset + i;
@@ -148,7 +148,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
                     itemButton:SetPoint("TOPLEFT", buttonBaseName..(index - columns), "BOTTOMLEFT", 0, 0);
                     rows = rows + 1;
                 else
-                    itemButton:SetPoint("TOPLEFT", buttonBaseName..(index - 1), "TOPRIGHT", 0, 0);    
+                    itemButton:SetPoint("TOPLEFT", buttonBaseName..(index - 1), "TOPRIGHT", 0, 0);
                 end
             end
 
@@ -161,14 +161,14 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
             Armory:SetItemLink(itemButton, nil);
             itemButton.hasItem = nil;
             itemButton.IconBorder:Hide();
-            
+
             itemButton:Show();
         else
             itemButton:Hide();
         end
     end
-   
-    if ( id == ARMORY_VOID_CONTAINER ) then	
+
+    if ( id == ARMORY_VOID_CONTAINER ) then
         -- Hide other button type
         for i = 1, ARMORY_MAX_CONTAINER_ITEMS do
             if ( Armory:GetInventoryBagLayout() ) then
@@ -189,7 +189,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
             itemButton:Hide();
         end
     end
-    
+
     if ( not isCollapsed ) then
         local texture, itemCount, quality, slotId;
         local name, link;
@@ -210,7 +210,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
                     index = offset + i;
                 end
                 buttonName = buttonBaseName..index;
-                
+
                 itemButton = _G[buttonName];
                 if ( itemButton ) then
 					itemButton.icon:SetTexture(texture);
@@ -218,7 +218,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
 					if ( itemCount and itemCount > 1 ) then
 						SetItemButtonCount(itemButton, itemCount);
 					end
-	                
+
 					link = Armory:GetContainerItemLink(id, i);
 					name = Armory:GetNameFromLink(link);
 					if ( not Armory:InventoryFilterActive() or (name and Armory:MatchInventoryItem(Armory:GetInventoryItemNameFilter(), name, link)) ) then
@@ -241,7 +241,7 @@ function ArmoryInventoryIconViewFrame_ShowContainer(containerFrame)
             end
         end
     end
-    
+
     containerFrame:SetHeight((rows * rowHeight) + label:GetHeight() - ARMORY_CONTAINER_OFFSET_Y);
     containerFrame:Show();
     ArmoryInventoryIconViewFrame_SetScroll();
@@ -251,7 +251,7 @@ function ArmoryInventoryIconViewFrame_CheckContainerSize(label, size)
 	if ( size > ARMORY_MAX_CONTAINER_ITEMS ) then
 		numSlots = ARMORY_MAX_CONTAINER_ITEMS;
 		label = format("%s (%d+)", label, numSlots);
-	end 
+	end
 	return label, numSlots;
 end
 

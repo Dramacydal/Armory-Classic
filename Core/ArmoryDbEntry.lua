@@ -235,7 +235,7 @@ function ArmoryDbEntry:SetExpandableListValues(key, funcNumLines, funcGetLineSta
         end
         isCollapsed = true;
     end
-    
+
     return (not failed), isCollapsed;
 end
 

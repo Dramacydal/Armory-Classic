@@ -72,7 +72,7 @@ function ArmoryDropDownMenu_Initialize(frame, initFunction, displayMode, level, 
 		end
 	end
 	frame:SetHeight(ARMORY_DROPDOWNMENU_BUTTON_HEIGHT * 2);
-	
+
 	-- Set the initialize function and call it.  The initFunction populates the dropdown list.
 	if ( initFunction ) then
 		frame.initialize = initFunction;
@@ -202,7 +202,7 @@ end
 
 function ArmoryDropDownMenu_AddButton(info, level)
 	--[[
-	Might to uncomment this if there are performance issues 
+	Might to uncomment this if there are performance issues
 	if ( not ARMORY_DROPDOWNMENU_OPEN_MENU ) then
 		return;
 	end
@@ -210,29 +210,29 @@ function ArmoryDropDownMenu_AddButton(info, level)
 	if ( not level ) then
 		level = 1;
 	end
-	
+
 	local listFrame = _G["ArmoryDropDownList"..level];
 	local listFrameName = listFrame:GetName();
 	local index = listFrame.numButtons + 1;
 	local width;
 
 	ArmoryDropDownMenu_CreateFrames(level, index);
-	
+
 	-- Set the number of buttons in the listframe
 	listFrame.numButtons = index;
-	
+
 	local button = _G[listFrameName.."Button"..index];
 	local normalText = _G[button:GetName().."NormalText"];
 	local icon = _G[button:GetName().."Icon"];
 	-- This button is used to capture the mouse OnEnter/OnLeave events if the dropdown button is disabled, since a disabled button doesn't receive any events
 	-- This is used specifically for drop down menu time outs
 	local invisibleButton = _G[button:GetName().."InvisibleButton"];
-	
+
 	-- Default settings
 	button:SetDisabledFontObject(GameFontDisableSmallLeft);
 	invisibleButton:Hide();
 	button:Enable();
-	
+
 	-- If not clickable then disable the button and set it white
 	if ( info.notClickable ) then
 		info.disabled = 1;
@@ -244,7 +244,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 		info.disabled = 1;
 		button:SetDisabledFontObject(GameFontNormalSmallLeft);
 	end
-	
+
 	-- Disable the button if disabled and turn off the color code
 	if ( info.disabled ) then
 		button:Disable();
@@ -325,7 +325,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 	else
 		button.value = nil;
 	end
-	
+
 	-- Show the expand arrow if it has one
 	if ( info.hasArrow ) then
 		_G[listFrameName.."Button"..index.."ExpandArrow"]:Show();
@@ -333,7 +333,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 		_G[listFrameName.."Button"..index.."ExpandArrow"]:Hide();
 	end
 	button.hasArrow = info.hasArrow;
-	
+
 	-- If not checkable move everything over to the left to fill in the gap where the check would be
 	local xPos = 5;
 	local yPos = -((button:GetID() - 1) * ARMORY_DROPDOWNMENU_BUTTON_HEIGHT) - ARMORY_DROPDOWNMENU_BORDER_HEIGHT;
@@ -345,7 +345,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 			normalText:SetPoint("LEFT", button, "LEFT", 0, 0);
 		end
 		xPos = xPos + 10;
-		
+
 	else
 		xPos = xPos + 12;
 		normalText:SetPoint("LEFT", button, "LEFT", 20, 0);
@@ -358,7 +358,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 			xPos = xPos - 6;
 		end
 	end
-	
+
 	-- If no open frame then set the frame to the currently initialized frame
 	if ( not frame ) then
 		frame = _G[ARMORY_DROPDOWNMENU_INIT_MENU];
@@ -382,7 +382,7 @@ function ArmoryDropDownMenu_AddButton(info, level)
 			end
 		end
 	end
-	
+
 	-- Checked can be a function now
 	local checked = info.checked;
 	if ( type(checked) == "function" ) then
@@ -424,7 +424,7 @@ function ArmoryDropDownMenu_Refresh(frame, useValue, dropdownLevel)
 	if ( not dropdownLevel ) then
 		dropdownLevel = ARMORY_DROPDOWNMENU_MENU_LEVEL;
 	end
-	
+
 	-- Just redraws the existing menu
 	for i=1, ARMORY_DROPDOWNMENU_MAXBUTTONS do
 		button = _G["ArmoryDropDownList"..dropdownLevel.."Button"..i];
@@ -483,8 +483,8 @@ function ArmoryDropDownMenu_Refresh(frame, useValue, dropdownLevel)
 end
 
 function ArmoryDropDownMenu_ResetValues()
-	-- This will either taint everything, or clean taint off of everything, so be careful. Calling this while any dropdown menus are open/displayed is not recommended.	
-	
+	-- This will either taint everything, or clean taint off of everything, so be careful. Calling this while any dropdown menus are open/displayed is not recommended.
+
 	ARMORY_DROPDOWNMENU_MINBUTTONS = 8;
 	ARMORY_DROPDOWNMENU_MAXBUTTONS = 8;
 	ARMORY_DROPDOWNMENU_MAXLEVELS = 2;
@@ -579,7 +579,7 @@ function ArmoryDropDownMenuButton_OnClick(self)
 		ArmoryCloseDropDownMenus();
 	end
 
-	if ( type (self.checked) ~= "function" ) then 
+	if ( type (self.checked) ~= "function" ) then
 		self.checked = checked;
 	end
 
@@ -632,10 +632,10 @@ function ArmoryToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffs
 	        uiScale = uiScale * Armory:GetConfigFrameScale();
         end
 		listFrame:SetScale(uiScale);
-		
-		-- Hide the listframe anyways since it is redrawn OnShow() 
+
+		-- Hide the listframe anyways since it is redrawn OnShow()
 		listFrame:Hide();
-		
+
 		-- Frame to anchor the dropdown menu to
 		local anchorFrame;
 
@@ -756,9 +756,9 @@ function ArmoryToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffs
 			offscreenY = 1;
 		end
 		if ( listFrame:GetRight() > GetScreenWidth() ) then
-			offscreenX = 1;	
+			offscreenX = 1;
 		end
-		
+
 		--  If level 1 can only go off the bottom of the screen
 		if ( level == 1 ) then
 			if ( offscreenY and offscreenX ) then
@@ -773,7 +773,7 @@ function ArmoryToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffs
 				point = gsub(point, "(.*)LEFT", "%1RIGHT");
 				relativePoint = gsub(relativePoint, "(.*)RIGHT", "%1LEFT");
 			end
-			
+
 			listFrame:ClearAllPoints();
 			if ( anchorName == "cursor" ) then
 				listFrame:SetPoint(point, relativeTo, "BOTTOMLEFT", xOffset, yOffset);
@@ -802,14 +802,14 @@ function ArmoryToggleDropDownMenu(level, value, dropDownFrame, anchorName, xOffs
 				xOffset = 0;
 				yOffset = 14;
 			end
-			
+
 			listFrame:ClearAllPoints();
 			listFrame:SetPoint(point, anchorFrame, relativePoint, xOffset, yOffset);
 		end
 	end
 end
 
-hooksecurefunc("CloseDropDownMenus", function(level) 
+hooksecurefunc("CloseDropDownMenus", function(level)
     if ( not level ) then
         ArmoryCloseDropDownMenus();
     end
@@ -849,7 +849,7 @@ function ArmoryDropDownMenu_SetButtonWidth(frame, width)
 	if ( width == "TEXT" ) then
 		width = _G[frame:GetName().."Text"]:GetWidth();
 	end
-	
+
 	_G[frame:GetName().."Button"]:SetWidth(width);
 	frame.noResize = 1;
 end
@@ -911,7 +911,7 @@ function ArmoryDropDownMenu_GetCurrentDropDown()
 	elseif ( ARMORY_DROPDOWNMENU_INIT_MENU ) then
 		return _G[ARMORY_DROPDOWNMENU_INIT_MENU];
 	end
-	
+
 	-- If no dropdown then use this? NOOO~!
 	assert(false);
 end

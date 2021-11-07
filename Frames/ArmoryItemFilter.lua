@@ -25,7 +25,7 @@
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
 --]]
- 
+
 local Armory, _ = Armory;
 local updated;
 
@@ -38,7 +38,7 @@ function ArmoryItemFilter_Create()
             options = {},
             dropdowns = {},
         };
-        
+
         ArmoryItemFilter_InitGeneral();
         ArmoryItemFilter_InitQuality();
         ArmoryItemFilter_InitClasses();
@@ -52,25 +52,25 @@ function ArmoryItemFilter_Load(self)
 end
 
 function ArmoryItemFilter_InitGeneral()
-    table.insert(Armory.itemFilter.options, 
-        { text = ARMORY_FILTER_ENABLE, 
+    table.insert(Armory.itemFilter.options,
+        { text = ARMORY_FILTER_ENABLE,
           func = ArmoryItemFilter_Enable,
         }
     );
-    table.insert(Armory.itemFilter.options, 
-        { text = ARMORY_FILTER_ALL, 
+    table.insert(Armory.itemFilter.options,
+        { text = ARMORY_FILTER_ALL,
           func = ArmoryItemFilter_Select,
-          type = "all", 
+          type = "all",
         }
     );
-    table.insert(Armory.itemFilter.options, 
-        { text = ARMORY_FILTER_CLEAR, 
+    table.insert(Armory.itemFilter.options,
+        { text = ARMORY_FILTER_CLEAR,
           func = ArmoryItemFilter_Select,
           type = "clear"
         }
     );
-    table.insert(Armory.itemFilter.options, 
-        { text = CLOSE, 
+    table.insert(Armory.itemFilter.options,
+        { text = CLOSE,
           func = function() ArmoryHideDropDownMenu(1); end,
         }
     );
@@ -79,9 +79,9 @@ end
 
 function ArmoryItemFilter_InitQuality()
     table.insert(Armory.itemFilter.options, { text = QUALITY, header = true });
-    
+
     for i = 0, #ITEM_QUALITY_COLORS - 4  do
-        table.insert(Armory.itemFilter.options, 
+        table.insert(Armory.itemFilter.options,
             { text = _G["ITEM_QUALITY"..i.."_DESC"],
               type = "quality",
               func = ArmoryItemFilter_Set,
@@ -107,7 +107,7 @@ function ArmoryItemFilter_InitClasses()
     table.insert(Armory.itemFilter.options, { text = TYPE, header = true });
 
     for i, itemClass in ipairs(auctionItemClasses) do
-        table.insert(Armory.itemFilter.options, 
+        table.insert(Armory.itemFilter.options,
             { text = itemClass[1],
               type = "classes",
               func = ArmoryItemFilter_Set,
@@ -153,9 +153,9 @@ function ArmoryItemFilter_Select(self, arg1)
             option.checked = Armory.itemFilter[option.type][option.value];
         end
     end
-    
+
     ArmoryItemFilterDropDown_Refresh();
-    
+
     if ( arg1 ) then
         ArmoryItemFilter_Update();
     end
@@ -201,11 +201,11 @@ end
 function ArmoryItemFilter_InitializeDropDown(dropdown)
     ArmoryItemFilter_Create();
     ArmoryItemFilter_SelectDropDown(dropdown);
-    
+
     ArmoryDropDownMenu_Initialize(dropdown, ArmoryItemFilterDropDown_Initialize, "MENU");
     ArmoryDropDownMenu_JustifyText(dropdown, "LEFT");
     ArmoryItemFilterDropDown_SetText();
-    
+
     local filterText = _G[dropdown:GetName().."Button"];
     filterText:SetScript("OnEnter", ArmoryItemFilterDropDown_OnEnter);
     filterText:SetScript("OnLeave", ArmoryItemFilterDropDown_OnLeave);
@@ -217,7 +217,7 @@ function ArmoryItemFilterDropDown_Initialize()
         local info = ArmoryDropDownMenu_CreateInfo();
         local option = Armory.itemFilter.options[i];
         info.text = option.text;
-        info.colorCode = option.color; 
+        info.colorCode = option.color;
         info.isTitle = option.header;
         info.notClickable = info.isTitle;
         info.notCheckable = not (option.type == "quality" or option.type == "classes");
@@ -227,7 +227,7 @@ function ArmoryItemFilterDropDown_Initialize()
         info.keepShownOnClick = 1;
         info.arg1 = option.type;
         info.arg2 = i;
-        
+
         ArmoryDropDownMenu_AddButton(info);
     end
 end
@@ -259,4 +259,3 @@ function ArmoryItemFilterDropDown_Refresh()
         end
     end
 end
-

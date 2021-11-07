@@ -1197,7 +1197,7 @@
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="ArmorySecondaryHandSlot" relativePoint="TOPRIGHT" x="5" y="0"/>
 						</Anchors>
-					</Button>          
+					</Button>
         </Frames>
       </Frame>
 

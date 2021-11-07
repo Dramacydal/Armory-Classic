@@ -25,7 +25,7 @@
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
 --]]
- 
+
 local Armory, _ = Armory;
 
 ARMORY_MAX_RAID_INFOS = 20;
@@ -58,11 +58,11 @@ function ArmoryRaidInfoFrame_Update()
     if ( Armory:UpdateInstancesInProgress() or not ArmoryRaidInfoFrame:IsShown() ) then
         return;
     end
-    
+
     local savedInstances = Armory:GetNumSavedInstances();
     local instanceName, instanceID, instanceReset;
     local j = 1;
-    
+
     for i = 1, ARMORY_MAX_RAID_INFOS do
         if ( i <= savedInstances ) then
             instanceName, instanceID, instanceReset = Armory:GetSavedInstanceInfo(i);

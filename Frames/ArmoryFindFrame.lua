@@ -24,7 +24,7 @@
         You have an implicit licence to use this AddOn with these facilities
         since that is it's designated purpose as per:
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
---]] 
+--]]
 
 local Armory, _ = Armory;
 
@@ -60,14 +60,14 @@ end
 function ArmoryFindFrame_Initialize(searchType, exact, search)
     ArmoryFindFrameEditBox:SetText("");
     ArmoryDropDownMenu_Initialize(ArmoryFindTypeDropDown, ArmoryFindTypeDropDown_Initialize);
-    
+
     if ( searchType ) then
         table.wipe(ARMORY_FIND_RESULTS);
-        
+
         FauxScrollFrame_SetOffset(ArmoryFindFrameScrollFrame, 0);
-        ArmoryFindFrameScrollFrameScrollBar:SetMinMaxValues(0, 0); 
+        ArmoryFindFrameScrollFrameScrollBar:SetMinMaxValues(0, 0);
         ArmoryFindFrameScrollFrameScrollBar:SetValue(0);
-        
+
         if ( (search or "") ~= "" ) then
             if ( exact and search:find(" ") ) then
                 if ( search:find('"') ) then
@@ -182,10 +182,10 @@ function ArmoryFindButton_OnClick(self)
     local text = ArmoryFindFrameEditBox:GetText();
     local exact = text:match([[^['"](.*)['"]$]]);
     local where = ArmoryDropDownMenu_GetSelectedValue(ArmoryFindTypeDropDown);
-    
+
     ArmoryFindFrame.running = true;
     ArmoryFindFrame_InitializeView(where);
-        
+
     if ( exact ) then
         Armory:Find(where, exact);
     else
@@ -205,7 +205,7 @@ end
 
 function ArmoryFindFrameButton_OnEnter(self)
     local index = self.index;
-   
+
     if ( index and index <= #ARMORY_FIND_RESULTS ) then
         local link = ARMORY_FIND_RESULTS[index].link;
         if ( link ) then
@@ -217,7 +217,7 @@ function ArmoryFindFrameButton_OnEnter(self)
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
                 Armory:Table2Tooltip(GameTooltip, tooltipLines, 2);
                 GameTooltip:Show();
-            end   
+            end
         end
 
         if ( ArmoryFindFrame.simpleView ) then
@@ -251,7 +251,7 @@ function ArmoryFindFrame_UpdateFindButton()
     local text = ArmoryFindFrameEditBox:GetText();
 
     if ( not ArmoryFindFrame.running and strlen(text) > 0 ) then
-        ArmoryFindButton:Enable();    
+        ArmoryFindButton:Enable();
     else
         ArmoryFindButton:Disable();
     end
@@ -297,14 +297,14 @@ function ArmoryFindFrame_Update()
                 buttonText:Show();
                 width = 145;
             end
-            
+
             -- If need scrollbar resize columns
             if ( showScrollBar ) then
                 buttonText:SetWidth(width - 14);
             else
                 buttonText:SetWidth(width);
             end
-            
+
             button:Show();
         end
     end

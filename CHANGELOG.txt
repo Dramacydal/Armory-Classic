@@ -3,6 +3,10 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.9.1 ===
+Bump TOC
+Contains a fix for an error popping up when showing the summary or character list
+
 ==== v1.9.0 ===
 Adjustments have been made for patch 1.14.0
 Includes updated zhTW translations

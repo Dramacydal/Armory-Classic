@@ -438,7 +438,7 @@ function Armory:Init()
         self:SetCommand("ARMORY_CMD_CHECK", function(...) Armory:CheckMailItems(nil, ...) end);
         self:SetCommand("ARMORY_CMD_CHECKCD", function(...) Armory:CheckTradeSkillCooldowns(...) end);
         self:SetCommand("ARMORY_CMD_FIND", function(...) return Armory:Find(Armory:ParseArgs(...)) end);
-        self:SetCommand("ARMORY_CMD_LOOKUP", function(...) ArmoryLookupFrame_Toggle(...) end);
+        self:SetCommand("ARMORY_CMD_LOOKUP", function(...) ArmoryLookupFrame_Toggle() end);
 
         for i = 1, GetNumAddOns() do
             if ( GetAddOnInfo(i) == ARMORY_SHARE_DOWNLOAD_ADDON ) then

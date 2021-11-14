@@ -195,7 +195,7 @@ local function SetItemCache(itemContainer, link, count, unit)
         if ( unit == "player" ) then
             dbEntry = Armory.playerDbBaseEntry;
         end
-        
+
         local itemId = Armory:GetUniqueItemId(link);
         if ( dbEntry and itemId ) then
             if ( dbEntry:Contains(container, itemContainer, ARMORY_CACHE_CONTAINER, itemId) ) then
@@ -262,7 +262,7 @@ local function SetSlotInfo(id, index, texture, count, quality, link, expires, eq
     if ( not dbEntry ) then
         return;
     end
-    
+
     if ( link and id >= BANK_CONTAINER and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS and IsEquippableItem(link) ) then
         local _, _, _, equipLoc = _G.GetItemInfoInstant(link);
         if ( equipLoc == "INVTYPE_HAND" or equipLoc == "INVTYPE_WAIST" or equipLoc == "INVTYPE_CLOAK" ) then
@@ -291,7 +291,7 @@ function Armory:ContainerExists(id, unit)
     if ( unit == "player" ) then
         dbEntry = self.playerDbBaseEntry;
     end
-    
+
     local itemContainer = InventoryContainerName(id);
     if ( dbEntry ) then
         return dbEntry:Contains(container, itemContainer);
@@ -309,7 +309,7 @@ function Armory:SetContainer(id)
     if ( not dbEntry ) then
         return;
     end
-    
+
     -- Make sure money gets updated
     self:GetMoney();
 
@@ -319,7 +319,7 @@ function Armory:SetContainer(id)
         dbEntry:SetValue(container, nil);
         return;
     end
-    
+
     -- signal some update triggers
     local name, numSlots = self:GetInventoryContainerInfo(id, "player");
     local link, texture;
@@ -329,19 +329,19 @@ function Armory:SetContainer(id)
         link = self:GetInventoryItemLink("player", bagSlot);
         texture = self:GetInventoryItemTexture("player", bagSlot);
     end
-    
+
     if ( not self:IsLocked(itemContainer) ) then
         self:Lock(itemContainer);
 
         self:PrintDebug("UPDATE", itemContainer);
 
         local _, oldNum = GetContainerInfo(dbEntry, itemContainer);
-        
+
         local daysLeft, timeLeft, count, quality, remaining;
         local nextSlot = 1;
 
         ClearItemCache(itemContainer, "player");
-        
+
         if ( id == ARMORY_MAIL_CONTAINER ) then
             local sender, itemCount;
             numSlots, count = _G.GetInboxNumItems();
@@ -379,7 +379,7 @@ function Armory:SetContainer(id)
                     end
                 end
             end
-            
+
             if ( warned ) then
                 self:PlayWarningSound();
             end
@@ -396,7 +396,7 @@ function Armory:SetContainer(id)
                     nextSlot = nextSlot + 1;
                 end
             end
-            
+
         else
             for i = 1, _G.GetContainerNumSlots(id) do
                 texture, count, _, quality, _, _, link = _G.GetContainerItemInfo(id, i);
@@ -406,10 +406,10 @@ function Armory:SetContainer(id)
                     nextSlot = nextSlot + 1;
                 end
             end
-            
+
         end
-        
-        for index = nextSlot, (oldNum or 0) do 
+
+        for index = nextSlot, (oldNum or 0) do
             ClearSlotInfo(itemContainer, index);
         end
 
@@ -423,7 +423,7 @@ function Armory:SetContainer(id)
         else
             numSlots = nextSlot - 1;
         end
-        
+
         --link = nil;
         --texture = nil;
         --if ( id > BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then
@@ -431,9 +431,9 @@ function Armory:SetContainer(id)
             --link = _G.GetInventoryItemLink("player", bagSlot);
             --texture = _G.GetInventoryItemTexture("player", bagSlot);
         --end
-        
+
         --SetContainerInfo(dbEntry, itemContainer, name, numSlots, bagSlots, remaining, time(), link, texture);
-        
+
         SetContainerInfo(dbEntry, itemContainer, name, numSlots, bagSlots, remaining, time());
 
         self:Unlock(itemContainer);
@@ -445,7 +445,7 @@ end
 function Armory:SetMailSent(name)
     mailTo = strtrim(name);
     table.wipe(mailItems);
-    
+
     local link, itemID, texture, count, quality;
     for i = 1, ATTACHMENTS_MAX_SEND do
         if ( _G.HasSendMailItem(i) ) then
@@ -484,7 +484,7 @@ function Armory:SetMailReturned(id)
                 table.insert(mailItems, itemInfo);
             end
         end
-        ArmoryInventoryFrame_UpdateFrame(Armory:AddMail()); 
+        ArmoryInventoryFrame_UpdateFrame(Armory:AddMail());
     end
 end
 
@@ -517,27 +517,27 @@ function Armory:AddMail()
                 dbEntry = self.selectedDbBaseEntry;
                 name, numSlots, bagSlots, remaining, timestamp = GetContainerInfo(dbEntry, itemContainer);
                 index = (numSlots or 0);
-                
+
                 SetContainerInfo(dbEntry, itemContainer, name, index + numItems, bagSlots, remaining, timestamp);
- 
+
                 for i = 1, numItems do
                     itemInfo = mailItems[i];
                     index = index + 1;
 
-                    SetInventoryValue(dbEntry, itemContainer, index, itemInfo.Texture, itemInfo.Count, itemInfo.Quality, itemInfo.Link, 30, self:CanEquip(itemInfo.Link), nil, itemInfo.Ignorable, _, _, time());
+                    SetInventoryValue(dbEntry, itemContainer, index, itemInfo.Texture, itemInfo.Count, itemInfo.Quality, itemInfo.Link, 30, self:CanEquip(itemInfo.Link), nil, itemInfo.Ignorable, time());
 
                     SetItemCache(itemContainer, itemInfo.Link, itemInfo.Count);
                 end
-                
+
                 dirty = dirty or self:IsPlayerSelected();
                 break;
             end
         end
         self:SelectProfile(currentProfile);
     end
-    
+
     mailTo = "";
-        
+
     return dirty;
 end
 
@@ -548,11 +548,11 @@ function Armory:UpdateInventoryEquippable()
     if ( not dbEntry ) then
         return;
     end
-    
+
     local semaphore = "Equippable";
     if ( not self:IsLocked(semaphore) ) then
         self:Lock(semaphore);
-        
+
         self:PrintDebug("UPDATE", semaphore);
 
         updater:Start(
@@ -567,7 +567,7 @@ function Armory:UpdateInventoryEquippable()
                             self:Lock(itemContainer);
 
                             self:PrintDebug("UPDATE (equip)", itemContainer);
-                            
+
                             _, numSlots = GetContainerInfo(dbEntry, itemContainer);
                             if ( numSlots ) then
                                 for index = 1, numSlots do
@@ -578,16 +578,16 @@ function Armory:UpdateInventoryEquippable()
                                     end
                                 end
                             end
-                            
+
                             self:Unlock(itemContainer);
-                        
+
                             updater:Suspend();
                         else
                             self:PrintDebug("LOCKED (equip)", itemContainer);
                         end
                     end
                 end
-                
+
                 self:Unlock(semaphore);
             end
         );
@@ -623,18 +623,18 @@ function Armory:RemoveOldAuctions()
                             table.insert(mailItems, itemInfo);
                         end
                     end
-                    
+
                     local newNum = #auctionItems;
                     if ( newNum ~= numSlots ) then
                         ClearItemCache(itemContainer);
-                        
+
                         SetContainerInfo(dbEntry, itemContainer, name, newNum, bagSlots, remaining, timestamp);
                         for i = 1, max(newNum, numSlots) do
                             if ( i > newNum ) then
                                 ClearInventoryValue(dbEntry, itemContainer, i);
                             else
                                 local itemInfo = auctionItems[i];
-                                SetInventoryValue(dbEntry, itemContainer, i, itemInfo.Texture, itemInfo.Count, itemInfo.Quality, itemInfo.Link, itemInfo.Expires, nil, nil, nil, nil, nil, itemInfo.timestamp);
+                                SetInventoryValue(dbEntry, itemContainer, i, itemInfo.Texture, itemInfo.Count, itemInfo.Quality, itemInfo.Link, itemInfo.Expires, nil, nil, nil, itemInfo.timestamp);
                                 SetItemCache(itemContainer, itemInfo.Link, itemInfo.Count);
                             end
                         end
@@ -657,7 +657,7 @@ do
     end);
 
     hooksecurefunc("ReturnInboxItem", function(id)
-        Armory:SetMailReturned(id); 
+        Armory:SetMailReturned(id);
     end);
 end
 
@@ -718,7 +718,7 @@ function Armory:GetInventoryContainerValue(id, index, unit)
     if ( unit and unit == "player" ) then
         dbEntry = self.playerDbBaseEntry;
     end
-    
+
     if ( dbEntry ) then
         local itemContainer = InventoryContainerName(id);
         if ( id == ARMORY_EQUIPMENT_CONTAINER ) then
@@ -769,7 +769,7 @@ function Armory:GetContainerItemExpiration(id, index)
     if ( not dbEntry ) then
         return;
     end
-    
+
     local itemContainer = InventoryContainerName(id);
     local _, _, _, _, expires, _, _, ignorable, _, _, timestamp = GetInventoryValue(dbEntry, itemContainer, index);
     if ( not timestamp ) then
@@ -840,7 +840,7 @@ end
 
 function Armory:MatchInventoryItem(filter, name, link, emptyMatch)
     local match;
-    
+
     if ( filter == "" ) then
         match = ArmoryItemFilter(link);
         if ( not emptyMatch ) then
@@ -937,11 +937,11 @@ function Armory:ScanInventoryItems(items, reagentScan)
     local id, itemCount, name, link, itemString;
     local itemContainer;
     local buildCache;
-    
+
     local saveResult = function(result, id, count)
         if ( count == 0 ) then
             return;
-        
+
         elseif ( self:GetConfigShowItemCountPerSlot() ) then
             if ( not result.perSlot ) then
                 result.perSlot = {
@@ -975,10 +975,10 @@ function Armory:ScanInventoryItems(items, reagentScan)
             result.auction = result.auction + count;
         end
         result.count = result.count + count;
-    end; 
+    end;
 
     table.wipe(result);
-    
+
     for k, item in ipairs(items) do
         if ( type(item) == "table" ) then
             name = unpack(item);
@@ -995,7 +995,7 @@ function Armory:ScanInventoryItems(items, reagentScan)
 
         for i = 1, #ArmoryInventoryContainers do
             id = ArmoryInventoryContainers[i];
-            if ( (reagentScan and id >= BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS) or (not reagentScan and not self:IsDummyContainer(id)) ) then 
+            if ( (reagentScan and id >= BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS) or (not reagentScan and not self:IsDummyContainer(id)) ) then
                 itemContainer = InventoryContainerName(id);
                 if ( result[k].item and ItemCacheExists(itemContainer) ) then
                     itemCount = GetCachedItemCount(itemContainer, result[k].item);
@@ -1029,14 +1029,14 @@ end
 function Armory:GetEquipCount(link)
     local itemId = self:GetUniqueItemId(link);
     local count = 0;
-    
-    for slot = EQUIPPED_FIRST, EQUIPPED_LAST do 
+
+    for slot = EQUIPPED_FIRST, EQUIPPED_LAST do
         link = self:GetInventoryItemLink("player", slot);
         if ( self:GetUniqueItemId(link) == itemId ) then
             count = count + 1;
         end
     end
-    
+
     return count;
 end
 
@@ -1053,7 +1053,7 @@ function Armory:FindInventory(...)
     local id, numSlots, link, name, itemId, text, itemCount;
     local list = {};
     local items = {};
-    
+
     for _, profile in ipairs(self:Profiles()) do
         if ( self:GetConfigGlobalSearch() or self:IsConnectedRealm(profile.realm) ) then
             self:SelectProfile(profile);
@@ -1139,7 +1139,7 @@ function Armory:FindInventoryItem(itemList, ...)
                 end
             end
         end
-        
+
         if ( id > BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS ) then
             link = self:GetInventoryItemLink("player", ContainerIDToInventoryID(id));
         elseif ( id > NUM_BAG_SLOTS and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then

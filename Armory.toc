@@ -18,6 +18,7 @@
 ## X-Donate: PayPal:warmexx AT wow-neighbours DOT com
 ## X-Website: http://www.wow-neighbours.com/
 ## X-Category: Inventory
+## X-Curse-Project-ID: 342531
 
 Embeds.xml
 Locales.xml

@@ -413,9 +413,7 @@ function ArmorySelectCharacter_OnClick(self)
 
     self.characterList = Armory.qtip:Acquire("ArmoryCharacterList", 2);
     self.characterList:SetScale(Armory:GetConfigFrameScale());
-    self.characterList:SetToplevel(1);
     self.characterList:ClearAllPoints();
-    self.characterList:SetClampedToScreen(1);
     self.characterList:SetPoint("TOPLEFT", self, "BOTTOMLEFT");
     self.characterList:SetAutoHideDelay(1, self);
 

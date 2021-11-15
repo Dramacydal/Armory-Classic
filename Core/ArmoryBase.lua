@@ -48,6 +48,7 @@ end
 
 local Armory, _ = Armory;
 local QTip = LibStub("LibQTip-1.0");
+local DBIcon = LibStub("LibDBIcon-1.0");
 
 local iconProvider, cellPrototype, baseCellPrototype = QTip:CreateCellProvider(QTip.LabelProvider)
 
@@ -302,6 +303,42 @@ function Armory:GetUsageLine(index)
     local usage = self.usage[index];
     if ( usage ) then
         return "  "..usage[1]..GRAY_FONT_COLOR_CODE.." - "..usage[2]..FONT_COLOR_CODE_CLOSE;
+    end
+end
+
+function Armory:InitializeIcon()
+    if ( not DBIcon:IsRegistered(ARMORY_ID) ) then
+        DBIcon:Register(ARMORY_ID, self.LDB, { minimapPos = self:GetConfigMinimapAngle(), hide = true });
+        DBIcon:RegisterCallback("LibDBIcon_IconCreated", function(event, button, id)
+            if ( id == ARMORY_ID ) then
+                button:HookScript("OnDragStop", function()
+                    self:SetConfigMinimapAngle(button.db.minimapPos);
+                end);
+            end
+        end);
+    end
+
+    self:ShowIcon();
+end
+
+function Armory:MoveIconToPosition()
+    local button = DBIcon:GetMinimapButton(ARMORY_ID);
+    if ( button ) then
+        button.db.minimapPos = self:GetConfigMinimapAngle();
+        DBIcon:SetButtonToPosition(button, self:GetConfigMinimapAngle());
+    end
+end
+
+function Armory:ShowIcon(force)
+    if ( force or self:GetConfigShowMinimap() ) then
+        if ( not force and self:GetConfigHideMinimapIfToolbar() and (IsAddOnLoaded("FuBar") or IsAddOnLoaded("TitanClassic")) ) then
+            DBIcon:Hide(ARMORY_ID);
+        else
+            self:MoveIconToPosition();
+            DBIcon:Show(ARMORY_ID);
+        end
+    else
+        DBIcon:Hide(ARMORY_ID);
     end
 end
 

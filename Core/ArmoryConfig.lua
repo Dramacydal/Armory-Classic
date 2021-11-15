@@ -398,16 +398,6 @@ Armory.options = {
         maxValue = 360,
         valueStep = 0.01
     },
-    ARMORY_CMD_SET_MMB_RADIUS = {
-        type = "range",
-        set = function(value) Armory:SetConfigMinimapRadius(value); end,
-        get = function() return Armory:GetConfigMinimapRadius(); end,
-        disabled = function() return not Armory:GetConfigShowMinimap(); end,
-        default = 5,
-        minValue = 5,
-        maxValue = 160,
-        valueStep = 1
-    },
     ARMORY_CMD_SET_MMB_GLOBAL = {
         type = "toggle",
         set = function(value) Armory:SetConfigPositionMinimapGlobal(value and value ~= "0"); end,
@@ -780,30 +770,10 @@ function Armory:GetConfigMinimapAngle()
     return self:LocalSetting("Minimap", "Angle") or option.default;
 end
 
-function Armory:SetConfigMinimapRadius(value)
-    local option = self.options.ARMORY_CMD_SET_MMB_RADIUS;
-    local radius = max(min(value, option.maxValue), option.minValue);
-    if ( self:GetConfigPositionMinimapGlobal() ) then
-        self:Setting("General", "MinimapRadius", radius);
-    else
-        self:LocalSetting("Minimap", "Radius", radius);
-    end
-end
-
-function Armory:GetConfigMinimapRadius()
-    local option = self.options.ARMORY_CMD_SET_MMB_RADIUS;
-    if ( self:GetConfigPositionMinimapGlobal() ) then
-        return self:Setting("General", "MinimapRadius") or option.default;
-    end
-    return self:LocalSetting("Minimap", "Radius") or option.default;
-end
-
 function Armory:SetConfigPositionMinimapGlobal(on)
     local angle = self:GetConfigMinimapAngle();
-    local radius = self:GetConfigMinimapRadius();
     self:Setting("General", "GlobalMinimapPosition", on);
     self:SetConfigMinimapAngle(angle);
-    self:SetConfigMinimapRadius(radius);
 end
 
 function Armory:GetConfigPositionMinimapGlobal()

@@ -3,6 +3,11 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.10.0 ===
+Contains a fix for missing timestamps in inventory data.
+Contains a fix for Armory's icon tooltip and summary showing at the same time.
+Implements LibDBIcon to provide support for minimap button add-ons (radius setting has therefore been removed).
+
 ==== v1.9.1 ===
 Bump TOC
 Contains a fix for an error popping up when showing the summary or character list

@@ -784,16 +784,16 @@ function Armory:BuildSummary()
 	end
 end
 
-function Armory:ShowSummary(parent)
+function Armory:ShowSummary(tooltip, anchorFrame)
     if ( self:GetConfigShowSummary() and table.getn(self:SelectableProfiles()) > 0 ) then
-        local command = ArmoryCommand:new(Armory.InitializeSummary, self, parent);
+        local command = ArmoryCommand:new(Armory.InitializeSummary, self, tooltip, anchorFrame);
         command:SetDelay(self:GetConfigSummaryDelay());
         command:Enforce();
         Armory.commandHandler:AddCommand(command);
     end
 end
 
-function Armory:InitializeSummary(parent)
+function Armory:InitializeSummary(tooltip, anchorFrame)
     if ( self.summaryEnabled and not ((self.summary and self.summary:IsShown()) or ArmoryDropDownList1:IsVisible()) ) then
         local columns = 3;
 
@@ -841,9 +841,9 @@ function Armory:InitializeSummary(parent)
 
         self.summary = self.qtip:Acquire("ArmorySummary", columns);
         self.summary:SetScale(Armory:GetConfigFrameScale());
-        self.summary:SmartAnchorTo(parent);
-        self.summary:SetFrameLevel(parent:GetFrameLevel() + 1);
-        self.summary.parent = parent;
+        self.summary:SmartAnchorTo(anchorFrame);
+        self.summary:SetFrameLevel(anchorFrame:GetFrameLevel() + 1);
+        self.summary.parent = anchorFrame;
 
         self.summary:SetScript("OnMouseDown", function (self, button)
             if ( self.locked and button == "RightButton" ) then
@@ -859,6 +859,10 @@ function Armory:InitializeSummary(parent)
               self.isMoving = false;
             end
         end);
+
+        if ( tooltip ) then
+            tooltip:Hide();
+        end
 
         self:DisplaySummary();
     end

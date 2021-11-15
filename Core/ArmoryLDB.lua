@@ -96,7 +96,7 @@ function Armory.LDB:OnTooltipShow()
             Armory.LDB.anchorFrame:SetAllPoints(self:GetOwner());
 
             Armory.summaryEnabled = true;
-            Armory:ShowSummary(Armory.LDB.anchorFrame);
+            Armory:ShowSummary(self, Armory.LDB.anchorFrame);
         end
     end
 end

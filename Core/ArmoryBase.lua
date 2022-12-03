@@ -329,16 +329,28 @@ function Armory:MoveIconToPosition()
     end
 end
 
+local function ShowIcon(show)
+    local button = DBIcon:GetMinimapButton(ARMORY_ID);
+    if ( button ) then
+        button.db.hide = not show;
+    end
+    if ( show ) then
+        DBIcon:Show(ARMORY_ID);
+    else
+        DBIcon:Hide(ARMORY_ID);
+    end
+end
+
 function Armory:ShowIcon(force)
     if ( force or self:GetConfigShowMinimap() ) then
         if ( not force and self:GetConfigHideMinimapIfToolbar() and (IsAddOnLoaded("FuBar") or IsAddOnLoaded("TitanClassic")) ) then
-            DBIcon:Hide(ARMORY_ID);
+            ShowIcon(false);
         else
             self:MoveIconToPosition();
-            DBIcon:Show(ARMORY_ID);
+            ShowIcon(true);
         end
     else
-        DBIcon:Hide(ARMORY_ID);
+        ShowIcon(false);
     end
 end
 

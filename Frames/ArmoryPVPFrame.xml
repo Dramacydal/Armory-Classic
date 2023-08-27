@@ -122,11 +122,6 @@
 					<Anchor point="TOPLEFT" relativeTo="ArmoryHonorFrameLastWeekHK" relativePoint="BOTTOMLEFT" x="0" y="-2"/>
 				</Anchors>
 			</Frame>
-			<Frame name="ArmoryHonorFrameLastWeekStanding" inherits="HonorFrameStandingButtonTemplate">
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="ArmoryHonorFrameLastWeekContribution" relativePoint="BOTTOMLEFT" x="0" y="-2"/>
-				</Anchors>
-			</Frame>
 			<Frame name="ArmoryHonorFrameLifeTimeHK" inherits="HonorFrameHKButtonTemplate">
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="ArmoryHonorFrameLifeTimeTitle" relativePoint="BOTTOMLEFT" x="10" y="-4"/>

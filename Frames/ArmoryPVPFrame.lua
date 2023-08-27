@@ -63,7 +63,6 @@ function ArmoryPVPFrame_Update(updateAll)
 		hk, dk, contribution, rank = Armory:GetPVPLastWeekStats(updateAll);
 		ArmoryHonorFrameLastWeekHKValue:SetText(hk);
 		ArmoryHonorFrameLastWeekContributionValue:SetText(contribution);
-		ArmoryHonorFrameLastWeekStandingValue:SetText(rank);
 	end
 
 	-- This session's values

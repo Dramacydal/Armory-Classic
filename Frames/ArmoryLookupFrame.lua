@@ -519,7 +519,7 @@ function ArmoryLookupFrame_Update()
             if ( item.icon ) then
                 lineButton:SetNormalTexture(item.icon);
             else
-                lineButton:SetNormalTexture("");
+                lineButton:ClearNormalTexture();
             end
 
             text = (color or HIGHLIGHT_FONT_COLOR_CODE)..(item.display or item.name)..FONT_COLOR_CODE_CLOSE;

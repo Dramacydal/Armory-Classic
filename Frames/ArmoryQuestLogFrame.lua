@@ -172,7 +172,7 @@ function ArmoryQuestLog_Update()
                 questHighlight:SetTexture("Interface\\Buttons\\UI-PlusButton-Hilight");
             else
                 questLogTitle:SetText("  "..questLogTitleText);
-                questLogTitle:SetNormalTexture("");
+                questLogTitle:ClearNormalTexture();
                 questHighlight:SetTexture("");
             end
             -- Save if its a header or not

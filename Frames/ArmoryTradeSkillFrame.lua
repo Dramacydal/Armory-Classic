@@ -658,7 +658,7 @@ function ArmoryTradeSkillButtonMixin:SetUpRecipe(textWidth, tradeSkillInfo)
 
     local skillNamePrefix = ENABLE_COLORBLIND_MODE == "1" and ArmoryTradeSkillTypePrefix[tradeSkillInfo.difficulty] or " ";
 
-    self:SetNormalTexture("");
+    self:ClearNormalTexture();
     self.Highlight:SetTexture("");
 
     self.Text:SetWidth(0);

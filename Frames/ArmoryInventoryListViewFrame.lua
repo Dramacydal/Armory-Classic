@@ -122,7 +122,7 @@ function ArmoryInventoryListViewFrame_Update()
             elseif ( not name ) then
                 return;
             else
-                lineButton:SetNormalTexture("");
+                lineButton:ClearNormalTexture();
                 lineButtonHighlight:SetTexture("");
                 if ( numAvailable and numAvailable > 1 ) then
                     name = name.." ["..numAvailable.."]";

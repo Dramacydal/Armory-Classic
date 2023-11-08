@@ -39,7 +39,7 @@ if ( not Armory ) then
         messaging = true,
 
         title = ARMORY_TITLE,
-        version = GetAddOnMetadata("Armory", "Version"),
+        version = C_AddOns.GetAddOnMetadata("Armory", "Version"),
         dbVersion = 1,
         interface = _G.GetBuildInfo(),
         isClassic = _G.GetExpansionLevel() == LE_EXPANSION_CLASSIC,

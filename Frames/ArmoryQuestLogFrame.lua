@@ -278,7 +278,8 @@ function ArmoryQuestLog_SetSelection(questID)
         if ( questID > scrollFrameOffset and questID <= (scrollFrameOffset + ARMORY_QUESTS_DISPLAYED) and questID <= Armory:GetNumQuestLogEntries() ) then
             titleButton:LockHighlight();
             titleButtonTag:SetTextColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-            ArmoryQuestLogSkillHighlight:SetVertexColor(titleButton.r, titleButton.g, titleButton.b);
+            local color = ArmoryGetDifficultyColor(level);
+            ArmoryQuestLogSkillHighlight:SetVertexColor(color.r, color.g, color.b);
             ArmoryQuestLogHighlightFrame:SetPoint("TOPLEFT", "ArmoryQuestLogTitle"..id, "TOPLEFT", 5, 0);
             ArmoryQuestLogHighlightFrame:Show();
         end

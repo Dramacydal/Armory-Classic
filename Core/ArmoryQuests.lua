@@ -200,14 +200,27 @@ function Armory:UpdateQuests()
                 if ( _G.GetQuestLogRewardMoney() > 0 ) then
                     info.RewardMoney = _G.GetQuestLogRewardMoney();
                 end
-                if ( _G.GetNumQuestLogRewardSpells() > 0 ) then
+                local spellRewards = C_QuestInfoSystem.GetQuestRewardSpells(questID) or {};
+                local numQuestSpellRewards = #spellRewards;
+                if ( numQuestSpellRewards > 0 ) then
                     info.RewardSpells = {};
-                    for i = 1, _G.GetNumQuestLogRewardSpells() do
-                        local texture, name, isTradeskillSpell, isSpellLearned, hideSpellLearnText, isBoostSpell, garrFollowerID, genericUnlock, spellID = _G.GetQuestLogRewardSpell(i);
-		                local knownSpell = _G.IsSpellKnownOrOverridesKnown(spellID);
-                        local isFollowerCollected = garrFollowerID and C_Garrison.IsFollowerCollected(garrFollowerID);
-                        link = _G.GetQuestLogSpellLink(i);
-                        info.RewardSpells[i] = dbEntry.Save(texture, name, isTradeskillSpell, isSpellLearned, hideSpellLearnText, isBoostSpell, garrFollowerID, genericUnlock, spellID, knownSpell, isFollowerCollected, link);
+                    for i = 1, numQuestSpellRewards do
+                        local spellInfo = C_QuestInfoSystem.GetQuestRewardSpellInfo(questID, spellRewards[i]);
+		                local knownSpell = _G.IsSpellKnownOrOverridesKnown(spellInfo.spellID);
+                        local isFollowerCollected = spellInfo.garrFollowerID and C_Garrison.IsFollowerCollected(spellInfo.garrFollowerID);
+                        local link = _G.GetSpellLink(spellInfo.spellID);
+                        info.RewardSpells[i] = dbEntry.Save(
+                            spellInfo.texture,
+                            spellInfo.name,
+                            spellInfo.isTradeskill,
+                            spellInfo.isSpellLearned,
+                            spellInfo.hideSpellLearnText,
+                            spellInfo.isBoostSpell,
+                            spellInfo.garrFollowerID,
+                            spellInfo.genericUnlock,
+                            spellInfo.spellID,
+                            knownSpell, isFollowerCollected, link
+                        );
                         if ( not link ) then
                             dataMissing = true;
                         end

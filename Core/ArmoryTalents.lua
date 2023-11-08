@@ -97,8 +97,11 @@ function Armory:SetTalents()
                     table.remove(tooltipLines);
                 end
 
+                local tier, column, isLearnable = _G.GetTalentPrereqs(i, j, inspect);
+                if ( tier and column ) then
+                    SetTalentValue(i, "Prereqs"..j, tier, column, isLearnable);
+                end
                 SetTalentValue(i, "Info"..j, _G.GetTalentInfo(i, j, inspect));
-                SetTalentValue(i, "Prereqs"..j, _G.GetTalentPrereqs(i, j, inspect));
                 SetTalentValue(i, "Tooltip"..j, unpack(tooltipLines));
             end
         end

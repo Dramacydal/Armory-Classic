@@ -737,7 +737,8 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
         local recipeLink = GetTradeSkillItemLink(self.selectedRecipe);
         local productQuality = Armory:GetQualityFromLink(recipeLink);
         if ( productQuality ) then
-            self.Contents.RecipeName:SetTextColor(GetItemQualityColor(productQuality));
+            local r, g, b = GetItemQualityColor(productQuality);
+            self.Contents.RecipeName:SetTextColor(r, g, b);
         else
             self.Contents.RecipeName:SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
         end

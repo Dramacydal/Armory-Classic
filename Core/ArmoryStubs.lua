@@ -319,7 +319,7 @@ end
 
 function Armory:IsBankBagSlot(index)
     if ( index ) then
-        return index >= _G.ContainerIDToInventoryID(NUM_BAG_SLOTS + 1) and index <= _G.ContainerIDToInventoryID(NUM_BAG_SLOTS + NUM_BANKBAGSLOTS);
+        return index >= C_Container.ContainerIDToInventoryID(NUM_BAG_SLOTS + 1) and index <= C_Container.ContainerIDToInventoryID(NUM_BAG_SLOTS + NUM_BANKBAGSLOTS);
     end
 end
 

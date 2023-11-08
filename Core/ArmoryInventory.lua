@@ -325,7 +325,7 @@ function Armory:SetContainer(id)
     local link, texture;
     if ( id > BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then
         -- if stored within container, see below
-        local bagSlot = _G.ContainerIDToInventoryID(id);
+        local bagSlot = C_Container.ContainerIDToInventoryID(id);
         link = self:GetInventoryItemLink("player", bagSlot);
         texture = self:GetInventoryItemTexture("player", bagSlot);
     end
@@ -398,8 +398,8 @@ function Armory:SetContainer(id)
             end
 
         else
-            for i = 1, _G.GetContainerNumSlots(id) do
-                texture, count, _, quality, _, _, link = _G.GetContainerItemInfo(id, i);
+            for i = 1, C_Container.GetContainerNumSlots(id) do
+                texture, count, _, quality, _, _, link = C_Container.GetContainerItemInfo(id, i);
                 if ( texture ) then
                     SetSlotInfo(id, nextSlot, texture, count, quality, link, nil, self:CanEquip(link), i);
                     SetItemCache(itemContainer, link, count, "player");
@@ -418,8 +418,8 @@ function Armory:SetContainer(id)
             numSlots = NUM_BANKGENERIC_SLOTS;
             bagSlots, remaining = _G.GetNumBankSlots();
         elseif ( id > ARMORY_MAIL_CONTAINER ) then
-            numSlots = _G.GetContainerNumSlots(id);
-            name = _G.GetBagName(id);
+            numSlots = C_Container.GetContainerNumSlots(id);
+            name = C_Container.GetBagName(id);
         else
             numSlots = nextSlot - 1;
         end
@@ -427,7 +427,7 @@ function Armory:SetContainer(id)
         --link = nil;
         --texture = nil;
         --if ( id > BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then
-            --local bagSlot = _G.ContainerIDToInventoryID(id);
+            --local bagSlot = C_Container.ContainerIDToInventoryID(id);
             --link = _G.GetInventoryItemLink("player", bagSlot);
             --texture = _G.GetInventoryItemTexture("player", bagSlot);
         --end
@@ -1141,7 +1141,7 @@ function Armory:FindInventoryItem(itemList, ...)
         end
 
         if ( id > BACKPACK_CONTAINER and id <= NUM_BAG_SLOTS ) then
-            link = self:GetInventoryItemLink("player", ContainerIDToInventoryID(id));
+            link = self:GetInventoryItemLink("player", C_Container.ContainerIDToInventoryID(id));
         elseif ( id > NUM_BAG_SLOTS and id <= NUM_BAG_SLOTS + NUM_BANKBAGSLOTS ) then
             link = self:GetContainerItemLink(BANK_CONTAINER, NUM_BANKGENERIC_SLOTS + id - NUM_BAG_SLOTS);
         else

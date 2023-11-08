@@ -72,7 +72,7 @@ function ArmoryInventoryFrame_OnLoad(self)
         function(self, button)
             local bag = self:GetParent():GetID();
             local slot = self:GetID();
-            ArmoryInventoryFramePasteItem(button, GetContainerItemLink(bag, slot));
+            ArmoryInventoryFramePasteItem(button, C_Container.GetContainerItemLink(bag, slot));
         end
     );
     hooksecurefunc("ChatFrame_OnHyperlinkShow",

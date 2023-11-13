@@ -552,17 +552,6 @@
             </Offset>
           </Anchor>
         </Anchors>
-        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-          <BackgroundInsets>
-            <AbsInset left="11" right="12" top="12" bottom="11"/>
-          </BackgroundInsets>
-          <TileSize>
-            <AbsValue val="32"/>
-          </TileSize>
-          <EdgeSize>
-            <AbsValue val="32"/>
-          </EdgeSize>
-        </Backdrop>
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="ArmoryReputationDetailFactionName" inherits="GameFontNormal" justifyH="LEFT">
@@ -618,6 +607,7 @@
           </Layer>
         </Layers>
         <Frames>
+          <Frame parentKey="Border" inherits="DialogBorderDarkTemplate"/>
           <Button name="ArmoryReputationDetailCloseButton" inherits="UIPanelCloseButton">
             <Anchors>
               <Anchor point="TOPRIGHT">

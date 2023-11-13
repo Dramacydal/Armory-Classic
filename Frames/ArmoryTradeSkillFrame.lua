@@ -199,7 +199,6 @@ end
 
 function ArmoryTradeSkillFrameMixin:RefreshSkillTitleAndRank()
     local skillLineName, skillLineRank, skillLineMaxRank = Armory:GetTradeSkillLine();
-    local color = ArmoryTradeSkillTypeColor[skillType];
 
     self.TitleText:SetFormattedText(TRADE_SKILL_TITLE, skillLineName);
 
@@ -734,7 +733,7 @@ function ArmoryTradeSkillDetailsMixin:RefreshDisplay()
 	if ( recipeInfo and recipeInfo.type == "recipe" ) then
         self.Contents.RecipeName:SetText(recipeInfo.name);
 
-        local recipeLink = GetTradeSkillItemLink(self.selectedRecipe);
+        local recipeLink = Armory:GetTradeSkillItemLink(self.selectedRecipe);
         local productQuality = Armory:GetQualityFromLink(recipeLink);
         if ( productQuality ) then
             local r, g, b = GetItemQualityColor(productQuality);

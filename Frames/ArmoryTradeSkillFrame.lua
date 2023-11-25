@@ -451,7 +451,7 @@ function ArmoryTradeSkillRecipeListMixin:UpdateFilterBar()
 end
 
 function ArmoryTradeSkillRecipeListMixin:RefreshReagentCost()
-    if ( IsAddOnLoaded("GFW_ReagentCost") ) then
+    if ( C_AddOns.IsAddOnLoaded("GFW_ReagentCost") ) then
         local itemLink = Armory:GetTradeSkillItemLink(self.selectedSkill);
         if ( not (itemLink and FRC_Config.Enabled and FRC_PriceSource) ) then
             return;
@@ -471,7 +471,7 @@ function ArmoryTradeSkillRecipeListMixin:RefreshReagentCost()
         local materialsTotal, confidenceScore = FRC_MaterialsCost(skillLineName, identifier);
         local costText = GFWUtils.LtY("(Total cost: ");
         if ( materialsTotal == nil ) then
-            if ( not IsAddOnLoaded(FRC_PriceSource) ) then
+            if ( not C_AddOns.IsAddOnLoaded(FRC_PriceSource) ) then
                 costText = costText .. GFWUtils.Gray("["..FRC_PriceSource.." not loaded]");
             else
                 costText = costText .. GFWUtils.Gray("Unknown [insufficient data]");

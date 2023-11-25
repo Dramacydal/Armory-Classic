@@ -343,7 +343,7 @@ end
 
 function Armory:ShowIcon(force)
     if ( force or self:GetConfigShowMinimap() ) then
-        if ( not force and self:GetConfigHideMinimapIfToolbar() and (IsAddOnLoaded("FuBar") or IsAddOnLoaded("TitanClassic")) ) then
+        if ( not force and self:GetConfigHideMinimapIfToolbar() and (C_AddOns.IsAddOnLoaded("FuBar") or C_AddOns.IsAddOnLoaded("TitanClassic")) ) then
             ShowIcon(false);
         else
             self:MoveIconToPosition();
@@ -489,8 +489,8 @@ function Armory:Init()
         self:SetCommand("ARMORY_CMD_FIND", function(...) return Armory:Find(Armory:ParseArgs(...)) end);
         self:SetCommand("ARMORY_CMD_LOOKUP", function(...) ArmoryLookupFrame_Toggle() end);
 
-        for i = 1, GetNumAddOns() do
-            if ( GetAddOnInfo(i) == ARMORY_SHARE_DOWNLOAD_ADDON ) then
+        for i = 1, C_AddOns.GetNumAddOns() do
+            if ( C_AddOns.GetAddOnInfo(i) == ARMORY_SHARE_DOWNLOAD_ADDON ) then
                 self:SetCommand("ARMORY_CMD_DOWNLOAD", function(...) ArmoryLookupFrame_StartDownload(...) end);
                 break;
             end

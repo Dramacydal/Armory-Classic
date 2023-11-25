@@ -1,4 +1,4 @@
-## Interface: 11404
+## Interface: 11500
 ## Title: Armory Classic
 ## Title-frFR: Armory Classic [Armurerie]
 ## Title-esES: Armory Classic [Armería]

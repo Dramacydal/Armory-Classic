@@ -3,6 +3,9 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.13.0 ====
+Adjustments have been made for patch 1.15.0
+
 ==== v1.12.1 ====
 Contains a fix for recipe quality color
 Contains a fix for missing borders

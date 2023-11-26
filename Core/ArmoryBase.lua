@@ -308,7 +308,6 @@ end
 
 function Armory:InitializeIcon()
     if ( not DBIcon:IsRegistered(ARMORY_ID) ) then
-        DBIcon:Register(ARMORY_ID, self.LDB, { minimapPos = self:GetConfigMinimapAngle(), hide = true });
         DBIcon:RegisterCallback("LibDBIcon_IconCreated", function(event, button, id)
             if ( id == ARMORY_ID ) then
                 button:HookScript("OnDragStop", function()
@@ -316,6 +315,7 @@ function Armory:InitializeIcon()
                 end);
             end
         end);
+        DBIcon:Register(ARMORY_ID, self.LDB, { minimapPos = self:GetConfigMinimapAngle(), hide = true });
     end
 
     self:ShowIcon();

@@ -205,10 +205,11 @@ function Armory:UpdateQuests()
                 if ( numQuestSpellRewards > 0 ) then
                     info.RewardSpells = {};
                     for i = 1, numQuestSpellRewards do
-                        local spellInfo = C_QuestInfoSystem.GetQuestRewardSpellInfo(questID, spellRewards[i]);
-		                local knownSpell = _G.IsSpellKnownOrOverridesKnown(spellInfo.spellID);
+                        local spellID = spellRewards[i];
+                        local spellInfo = C_QuestInfoSystem.GetQuestRewardSpellInfo(questID, spellID);
+		                local knownSpell = _G.IsSpellKnownOrOverridesKnown(spellID);
                         local isFollowerCollected = spellInfo.garrFollowerID and C_Garrison.IsFollowerCollected(spellInfo.garrFollowerID);
-                        local link = _G.GetSpellLink(spellInfo.spellID);
+                        local link = _G.GetSpellLink(spellID);
                         info.RewardSpells[i] = dbEntry.Save(
                             spellInfo.texture,
                             spellInfo.name,
@@ -218,8 +219,7 @@ function Armory:UpdateQuests()
                             spellInfo.isBoostSpell,
                             spellInfo.garrFollowerID,
                             spellInfo.genericUnlock,
-                            spellInfo.spellID,
-                            knownSpell, isFollowerCollected, link
+                            spellID, knownSpell, isFollowerCollected, link
                         );
                         if ( not link ) then
                             dataMissing = true;

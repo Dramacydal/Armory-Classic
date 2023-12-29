@@ -399,10 +399,10 @@ function Armory:SetContainer(id)
 
         else
             for i = 1, C_Container.GetContainerNumSlots(id) do
-                texture, count, _, quality, _, _, link = C_Container.GetContainerItemInfo(id, i);
-                if ( texture ) then
-                    SetSlotInfo(id, nextSlot, texture, count, quality, link, nil, self:CanEquip(link), i);
-                    SetItemCache(itemContainer, link, count, "player");
+                local info = C_Container.GetContainerItemInfo(id, i);
+                if ( info and info.iconFileID ) then
+                    SetSlotInfo(id, nextSlot, info.iconFileID, info.stackCount, info.quality, info.hyperlink, nil, self:CanEquip(info.hyperlink), i);
+                    SetItemCache(itemContainer, info.hyperlink, info.stackCount, "player");
                     nextSlot = nextSlot + 1;
                 end
             end

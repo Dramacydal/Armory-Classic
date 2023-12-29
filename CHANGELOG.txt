@@ -3,6 +3,9 @@ The project page can be found on https://www.curseforge.com/wow/addons/armory.
 
 Thanks for using Armory. You can show your appreciation and support future development by donating!
 
+==== v1.13.3 ====
+Contains a fix for inventory not showing items
+
 ==== v1.13.2 ====
 Contains a fix for an error that could occur when saving quest info
 

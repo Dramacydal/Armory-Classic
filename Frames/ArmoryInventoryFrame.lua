@@ -59,7 +59,7 @@ function ArmoryInventoryFrame_OnLoad(self)
     self:RegisterEvent("PLAYERBANKSLOTS_CHANGED");
 	self:RegisterEvent("MAIL_SHOW");
     self:RegisterEvent("MAIL_SEND_SUCCESS");
-    self:RegisterEvent("MAIL_CLOSED");
+    self:RegisterEvent("SECURE_TRANSFER_CANCEL");
     self:RegisterEvent("AUCTION_OWNED_LIST_UPDATE");
 
     SetPortraitToTexture("ArmoryInventoryFramePortrait", "Interface\\Buttons\\Button-Backpack-Up");
@@ -132,7 +132,7 @@ function ArmoryInventoryFrame_OnEvent(self, event, ...)
         return;
     elseif ( event == "MAIL_SEND_SUCCESS" ) then
         update = Armory:AddMail();
-    elseif ( event == "MAIL_CLOSED" ) then
+    elseif ( event == "SECURE_TRANSFER_CANCEL" ) then
         if ( self.mailOpen ) then
             self.mailOpen = false;
 

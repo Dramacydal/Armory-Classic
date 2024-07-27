@@ -84,7 +84,8 @@ function Armory:SetTalents()
         local inspect = false;
         local tooltipLines;
         for i = 1, _G.GetNumTalentTabs(inspect) do
-            local name, texture, points, fileName = _G.GetTalentTabInfo(i, inspect);
+            local _, name, _, texture, points, fileName = _G.GetTalentTabInfo(i, inspect);
+
             if ( not texture ) then
                 _, texture = _G.GetSpellTabInfo(i + 1);
             end

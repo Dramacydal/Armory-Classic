@@ -30,7 +30,7 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.ExtendedTradeSkills" relativePoint="BOTTOMLEFT" y="-6" />
         </Anchors>
       </CheckButton>
-      <Frame name="$parentWarningSoundDropDown" inherits="ArmoryOptionsDropDownTemplate" mixin="ArmoryMiscWarningSoundMixin">
+      <Frame name="$parentWarningSound" inherits="ArmoryOptionsDropDownTemplate" mixin="ArmoryMiscWarningSoundMixin">
         <Anchors>
           <Anchor point="TOPLEFT" relativeKey="$parent.SystemWarnings" relativePoint="BOTTOMLEFT" x="-12" y="-24" />
         </Anchors>

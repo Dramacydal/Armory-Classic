@@ -264,7 +264,7 @@ Armory.options = {
         type = "toggle",
         set = function(value) Armory:SetConfigShareItems(value and value ~= "0"); end,
         get = function() return Armory:GetConfigShareItems("player"); end,
-        disabled = function() return not (Armory:HasDataSharing() and Armory:GetConfigShareChannel()); end,
+        disabled = function() return not (Armory:HasDataSharing() and Armory:HasInventory()); end,
         default = true
     },
     ARMORY_CMD_SET_SHAREALT = {

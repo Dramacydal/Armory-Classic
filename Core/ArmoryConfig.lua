@@ -44,6 +44,12 @@ Armory.options = {
         type = "toggle",
         set = function(value) Armory:SetConfigCharacterEnabled(value and value ~= "0"); end,
         get = function() return Armory:GetConfigCharacterEnabled(); end,
+        commit = function(value)
+            if ( not value ) then
+                Armory:DeleteProfile(Armory.playerRealm, Armory.player, true);
+            end
+            ReloadUI();
+        end,
         default = true
     },
     ARMORY_CMD_SET_SCANONENTER = {

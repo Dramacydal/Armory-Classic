@@ -930,7 +930,7 @@ function ArmoryDropDownMenuButton_OpenColorPicker(self, button)
 		button = self;
 	end
 	ARMORY_DROPDOWNMENU_MENU_VALUE = button.value;
-	OpenColorPicker(button);
+	ColorPickerFrame:SetupColorPickerAndShow(button);
 end
 
 function ArmoryDropDownMenu_DisableButton(level, id)

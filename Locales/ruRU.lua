@@ -32,6 +32,8 @@ L["ARMORY_CHECK_MAIL_DISABLED"] = "Проверка почты отключен�
 L["ARMORY_CHECK_MAIL_MESSAGE"] = "Входящие %1$s (%2$s) содержат вещь '%3$s' которая истечет через %4$s!"
 L["ARMORY_CHECK_MAIL_NONE"] = "Истекающей почты не найдено."
 L["ARMORY_CHECK_MAIL_POPUP"] = "Есть почта, которая скоро истечет. Используйте '/ar check' для подробной информации."
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 L["ARMORY_CMD_CHECK"] = "проверка"
 L["ARMORY_CMD_CHECK_INVALID"] = "Укажите количество дней для проверки или оставьте пустым для значения по умолчанию"
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "Проверка описания вещи"
@@ -177,6 +179,12 @@ L["ARMORY_CMD_SET_LDBLABEL_TOOLTIP"] = "Если включено, то текс
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "Проверьте оставшуюся почту"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "проверить не осталась ли почта в ящике"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "Если включено, будет отображено предупреждение когда не вся почта было отсканирована из-за того что был лимит отображения при исполнении"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Предупреждать о непрочитаной почте"
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "включить последнее посещение ящика при просмотре почты"
 --[[Translation missing --]]
@@ -488,6 +496,8 @@ L["ARMORY_MAIL_ITEM_COUNT"] = "Количество вещей:"
 L["ARMORY_MAIL_LAST_VISIT"] = "Последнее посещение:"
 L["ARMORY_MAIL_REMAINING"] = "Почта осталась:"
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s) не просматривал почтовый ящик в течение %3$s. Пожалуйста, зайдите этим персонажем, чтобы проверить 'Входящие'."
+--[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
 L["ARMORY_MINIMAP_LABEL"] = "Миникарта"
 L["ARMORY_MINIMAP_SUBTEXT"] = "Это настройки контроля отображения кнопки миникарты."
 L["ARMORY_MINIMAP_TITLE"] = "Кнопка Армори на Миникарте"
@@ -519,6 +529,7 @@ L["ARMORY_SHARE_TITLE"] = "Обмен данными"
 L["ARMORY_SHORTDATE_FORMAT"] = "ARMORY_SHORTDATE_FORMAT"
 L["ARMORY_SLASH_ALTERNATIVES"] = "/ar"
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "Шифт-клик, чтобы добавить в ваш текущий список."
+L["ARMORY_SOUND"] = "Звук"
 L["ARMORY_SUBTEXT"] = "Эти настройки позволят вам модифицировать поведение Армори."
 L["ARMORY_SUMMARY_LABEL"] = "Итог"
 L["ARMORY_SUMMARY_SUBTEXT1"] = "Эти настройки позволяют вам изменять итог вещей персонажа в Армори."
@@ -527,6 +538,8 @@ L["ARMORY_SUMMARY_TITLE"] = "Итоговые Настройки"
 L["ARMORY_TALENTS"] = "СПЕЦИАЛИЗАЦИЯ ТАЛАНТОВ:"
 L["ARMORY_TOOLTIP_HINT1"] = "Левый клик включить/выключить Армори"
 L["ARMORY_TOOLTIP_HINT2"] = "Правый клик для настроек"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 L["ARMORY_TOOLTIP_LABEL"] = "Подсказка"
 L["ARMORY_TOOLTIP_SUBTEXT"] = "Эти настройки позволяют вам добавлять информацию в подсказки."
 L["ARMORY_TOOLTIP_TITLE"] = "Улучшение подсказки"

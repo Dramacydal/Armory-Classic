@@ -29,6 +29,8 @@ L["ARMORY_CHECK_MAIL_MESSAGE"] = "Der Posteingang von %1$s (%2$s) enthält Gegen
 L["ARMORY_CHECK_MAIL_NONE"] = "Es wurden keine Gegenstände im Posteingang gefunden, die bald ablaufen werden."
 L["ARMORY_CHECK_MAIL_POPUP"] = [=[In Deinem Briefkasten befinden sich Gegenstände, die bald ablaufen werden. 
 Gib "/ar check" ein, um weitere Details zu sehen.]=]
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 L["ARMORY_CMD_CHECK"] = "check"
 L["ARMORY_CMD_CHECK_INVALID"] = "Trage eine Anzahl Tage ein, nachdem geprüft werden soll. Nichts für Standardeinstellung."
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "Prüfe auf bald ablaufende Gegenstände"
@@ -162,6 +164,12 @@ L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "Überprüfung auf verbleibende Po
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "auf verbleibende Post im Briefkasten überprüfen"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = [=[Aktiv: zeigt eine Warnung, wenn nicht alle Post überprüft werden konnte, weil das Anzeigelimit überschritten wurde
 Inaktiv: Keine Warnung bei übervollem Briefkasten]=]
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warnung vor ungelesener Post"
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "letzten Briefkastenbesuch beim Überprüfen auf Post berücksichtigen"
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TOOLTIP"] = [=[Aktiv: Zeigt eine Warnung, wenn ein Posteingang nicht für 30-minus-x Tage überprüft wurde, um unbemerkte Post zu verhindern.
@@ -453,6 +461,8 @@ L["ARMORY_MAIL_ITEM_COUNT"] = "Anzahl an Gegenständen:"
 L["ARMORY_MAIL_LAST_VISIT"] = "Letzter Besuch:"
 L["ARMORY_MAIL_REMAINING"] = "Verbleibende Post:"
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s) hat den Briefkasten seit %3$s nicht mehr überprüft. Bitte log dich ein um deinen Posteingang zu überprüfen."
+--[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
 L["ARMORY_MINIMAP_LABEL"] = "Minikarte"
 L["ARMORY_MINIMAP_SUBTEXT"] = "Diese Optionen kontrollieren die Anzeige des Minikartenbuttons."
 L["ARMORY_MINIMAP_TITLE"] = "Armory-Minikartenbutton"
@@ -482,6 +492,7 @@ L["ARMORY_SHARE_TITLE"] = "Daten Teilen"
 L["ARMORY_SHORTDATE_FORMAT"] = "ARMORY_SHORTDATE_FORMAT"
 L["ARMORY_SLASH_ALTERNATIVES"] = "/ar"
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "Shift-Klick, um dies deiner aktuellen Liste hinzuzufügen."
+L["ARMORY_SOUND"] = "Sound"
 L["ARMORY_SUBTEXT"] = "Diese Optionen erlauben es dir, das Verhalten von Armory zu beeinflussen."
 L["ARMORY_SUMMARY_LABEL"] = "Charakterübersicht"
 L["ARMORY_SUMMARY_SUBTEXT1"] = "Diese Optionen erlauben dir, die Charakterübersicht zu beeinflussen."
@@ -490,6 +501,8 @@ L["ARMORY_SUMMARY_TITLE"] = "Optionen der Charakterübersicht"
 L["ARMORY_TALENTS"] = "Talentspezialisierung:"
 L["ARMORY_TOOLTIP_HINT1"] = "Klicken schaltet Armory um"
 L["ARMORY_TOOLTIP_HINT2"] = "Rechtsklicken für Optionen"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 L["ARMORY_TOOLTIP_LABEL"] = "Tooltip"
 L["ARMORY_TOOLTIP_SUBTEXT"] = "Diese Optionen erlauben es, den Tooltips weitere Informationen hinzuzufügen"
 L["ARMORY_TOOLTIP_TITLE"] = "Verbesserung der Tooltips"

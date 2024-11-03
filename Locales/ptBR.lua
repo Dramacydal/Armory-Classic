@@ -34,11 +34,13 @@ L["ARMORY_CHECK_CD_NONE"] = "No cooldowns found"
 --[[Translation missing --]]
 L["ARMORY_CHECK_MAIL_DISABLED"] = "Item expiration check is disabled."
 --[[Translation missing --]]
-L["ARMORY_CHECK_MAIL_MESSAGE"] = "The inbox of %1$s (%2$s) contains item '%3$s' that will expire in %4$s!"
+L["ARMORY_CHECK_MAIL_MESSAGE"] = "The inbox of %1$s (%2$s) contains item '%3$s' that will expire in %4$d |4day:days;!"
 --[[Translation missing --]]
 L["ARMORY_CHECK_MAIL_NONE"] = "No mailbox items found that are about to expire."
 --[[Translation missing --]]
 L["ARMORY_CHECK_MAIL_POPUP"] = "There are mail items that are about to expire. Use '/ar check' for more details."
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 --[[Translation missing --]]
 L["ARMORY_CMD_CHECK"] = "check"
 --[[Translation missing --]]
@@ -279,6 +281,12 @@ L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "Check for remaining mail"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "check for remaining mail in the inbox"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "If enabled, a warning will be shown when not all mails were scanned because the inbox display limit has been exceeded."
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warn for unnoticed mail"
 --[[Translation missing --]]
@@ -768,6 +776,8 @@ L["ARMORY_MAIL_REMAINING"] = "Mail remaining:"
 --[[Translation missing --]]
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s) hasn't visited the mailbox for %3$s. Please log in to check your inbox."
 --[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
+--[[Translation missing --]]
 L["ARMORY_MINIMAP_LABEL"] = "Minimap"
 --[[Translation missing --]]
 L["ARMORY_MINIMAP_SUBTEXT"] = "These options control the display of the minimap button."
@@ -821,6 +831,7 @@ L["ARMORY_SHORTDATE_FORMAT"] = "ARMORY_SHORTDATE_FORMAT"
 L["ARMORY_SLASH_ALTERNATIVES"] = "/ar"
 --[[Translation missing --]]
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "Shift-click to add to your current list."
+L["ARMORY_SOUND"] = "Som"
 --[[Translation missing --]]
 L["ARMORY_SUBTEXT"] = "These options allow you to modify Armory's behavior."
 --[[Translation missing --]]
@@ -837,6 +848,8 @@ L["ARMORY_TALENTS"] = "TALENT SPECIALIZATION:"
 L["ARMORY_TOOLTIP_HINT1"] = "Left-click toggles Armory"
 --[[Translation missing --]]
 L["ARMORY_TOOLTIP_HINT2"] = "Right-click for options"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 --[[Translation missing --]]
 L["ARMORY_TOOLTIP_LABEL"] = "Tooltip"
 --[[Translation missing --]]

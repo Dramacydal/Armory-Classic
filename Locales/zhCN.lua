@@ -29,6 +29,8 @@ L["ARMORY_CHECK_MAIL_DISABLED"] = "邮件过期检查功能被关闭."
 L["ARMORY_CHECK_MAIL_MESSAGE"] = "%1$s (%2$s) 的邮箱中 '%3$s' 将在 %4$s 天后过期!"
 L["ARMORY_CHECK_MAIL_NONE"] = "无邮件将过期."
 L["ARMORY_CHECK_MAIL_POPUP"] = "有邮件将要过期. 使用 '/ar check' 获得更多信息."
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 L["ARMORY_CMD_CHECK"] = "检查"
 L["ARMORY_CMD_CHECK_INVALID"] = "指定要检查的天数或默认为无。"
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "检查邮件过期"
@@ -160,6 +162,12 @@ L["ARMORY_CMD_SET_LDBLABEL_TOOLTIP"] = "If enabled, a text label is shown in Lib
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "检查剩余邮件"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "检查收件箱中的剩余邮件"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "如果启用，则在未扫描所有邮件时将显示警告，因为已超出收件箱显示限制。"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warn for unnoticed mail"
 --[[Translation missing --]]
@@ -455,6 +463,8 @@ L["ARMORY_MAIL_LAST_VISIT"] = "最后访问："
 L["ARMORY_MAIL_REMAINING"] = "剩余邮件："
 --[[Translation missing --]]
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s) hasn't visited the mailbox for %3$s. Please log in to check your inbox."
+--[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
 L["ARMORY_MINIMAP_LABEL"] = "迷你地图"
 L["ARMORY_MINIMAP_SUBTEXT"] = "这个选项控制是否显示迷你地图按钮."
 L["ARMORY_MINIMAP_TITLE"] = "Armory 迷你地图按钮"
@@ -483,6 +493,7 @@ L["ARMORY_SHARE_TITLE"] = "数据共享"
 L["ARMORY_SHORTDATE_FORMAT"] = "ARMORY_SHORTDATE_FORMAT"
 L["ARMORY_SLASH_ALTERNATIVES"] = "/ar"
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "按住Shift键并单击以添加到当前列表。"
+L["ARMORY_SOUND"] = "声音"
 L["ARMORY_SUBTEXT"] = "这个设置界面将让你可以修改 Armory 的配置."
 L["ARMORY_SUMMARY_LABEL"] = "摘要"
 L["ARMORY_SUMMARY_SUBTEXT1"] = "这些选项允许您更改Armory的角色摘要列表。"
@@ -491,6 +502,8 @@ L["ARMORY_SUMMARY_TITLE"] = "摘要选项"
 L["ARMORY_TALENTS"] = "主要天赋："
 L["ARMORY_TOOLTIP_HINT1"] = "左键点击以开启或关闭 Armory"
 L["ARMORY_TOOLTIP_HINT2"] = "右键点击打开设置界面"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 L["ARMORY_TOOLTIP_LABEL"] = "鼠标提示"
 L["ARMORY_TOOLTIP_SUBTEXT"] = "这些选项允许您向鼠标提示添加信息。"
 L["ARMORY_TOOLTIP_TITLE"] = "鼠标提示增强"

@@ -27,6 +27,8 @@ L["ARMORY_CHECK_MAIL_DISABLED"] = "信件過期檢查功能被關閉。"
 L["ARMORY_CHECK_MAIL_MESSAGE"] = "%1$s (%2$s) 信箱中的 '%3$s' 將在 %4$s 天後過期！"
 L["ARMORY_CHECK_MAIL_NONE"] = "信箱中沒有即將過期的物品。"
 L["ARMORY_CHECK_MAIL_POPUP"] = "信箱中有即將過期的物品，請使用 '/ar check' 來獲得更多資訊。"
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 L["ARMORY_CMD_CHECK"] = "檢查"
 L["ARMORY_CMD_CHECK_INVALID"] = "指定要檢查的天數，預設為無。"
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "檢查是否有過期信件"
@@ -196,6 +198,12 @@ L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "Check for remaining mail"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "check for remaining mail in the inbox"
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "If enabled, a warning will be shown when not all mails were scanned because the inbox display limit has been exceeded."
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 --[[Translation missing --]]
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "Warn for unnoticed mail"
 --[[Translation missing --]]
@@ -685,6 +693,8 @@ L["ARMORY_MAIL_REMAINING"] = "Mail remaining:"
 --[[Translation missing --]]
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s) hasn't visited the mailbox for %3$s. Please log in to check your inbox."
 --[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
+--[[Translation missing --]]
 L["ARMORY_MINIMAP_LABEL"] = "Minimap"
 --[[Translation missing --]]
 L["ARMORY_MINIMAP_SUBTEXT"] = "These options control the display of the minimap button."
@@ -736,6 +746,7 @@ L["ARMORY_SHORTDATE_FORMAT"] = "ARMORY_SHORTDATE_FORMAT"
 L["ARMORY_SLASH_ALTERNATIVES"] = "/ar"
 --[[Translation missing --]]
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "Shift-click to add to your current list."
+L["ARMORY_SOUND"] = "音效"
 --[[Translation missing --]]
 L["ARMORY_SUBTEXT"] = "These options allow you to modify Armory's behavior."
 --[[Translation missing --]]
@@ -752,6 +763,8 @@ L["ARMORY_TALENTS"] = "TALENT SPECIALIZATION:"
 L["ARMORY_TOOLTIP_HINT1"] = "Left-click toggles Armory"
 --[[Translation missing --]]
 L["ARMORY_TOOLTIP_HINT2"] = "Right-click for options"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 --[[Translation missing --]]
 L["ARMORY_TOOLTIP_LABEL"] = "Tooltip"
 --[[Translation missing --]]

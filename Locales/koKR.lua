@@ -30,6 +30,8 @@ L["ARMORY_CHECK_MAIL_DISABLED"] = "아이템 기한 만료 확인 기능이 비�
 L["ARMORY_CHECK_MAIL_MESSAGE"] = "%1$s(서버: %2$s)의 우편함에 %4$s 후에 기한이 만료되는 아이템 '%3$s'|1이;가; 포함되어 있습니다!"
 L["ARMORY_CHECK_MAIL_NONE"] = "기한이 경과된 우편함 아이템을 찾지 못했습니다."
 L["ARMORY_CHECK_MAIL_POPUP"] = "기한이 경과된 우편 아이템이 있습니다. 보다 더 상세한 것을 원하시면 '/ar check'를 사용하세요."
+--[[Translation missing --]]
+L["ARMORY_CHECK_MAIL_SHORT_MESSAGE"] = "The inbox of %1$s (%2$s) contains %3$d |4item:items; that will expire within %4$d |4day:days;!"
 L["ARMORY_CMD_CHECK"] = "확인"
 L["ARMORY_CMD_CHECK_INVALID"] = "기한 만료 경고를 위한 날짜를 설정해 주세요 그렇지 않으면 기본값은 없습니다.(기본값 0)."
 L["ARMORY_CMD_CHECK_MENUTEXT"] = "아이템 기한 만료 확인"
@@ -59,8 +61,7 @@ L["ARMORY_CMD_DOWNLOAD_TEXT"] = "길드원으로 부터 제조법을 내려 받�
 L["ARMORY_CMD_FIND"] = "찾기"
 L["ARMORY_CMD_FIND_ALL"] = "모두"
 L["ARMORY_CMD_FIND_FOUND"] = "산출된 총 수량: %d"
---[[Translation missing --]]
-L["ARMORY_CMD_FIND_GLYPH"] = "glyph"
+L["ARMORY_CMD_FIND_GLYPH"] = "문양"
 L["ARMORY_CMD_FIND_GLYPH_TOOLTIP"] = "아직 배우지 않은 문양을 찾으려면 '?' 또는 '%s' 를 사용하세요."
 L["ARMORY_CMD_FIND_INVENTORY"] = "소지품"
 L["ARMORY_CMD_FIND_ITEM"] = "아이템"
@@ -166,6 +167,12 @@ L["ARMORY_CMD_SET_LDBLABEL_TOOLTIP"] = "활성화하면, LibDataBroker 표시 �
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_MENUTEXT"] = "남은 우편을 위한 확인"
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TEXT"] = "우편함에 남아 있는 우편을 위한 확인 "
 L["ARMORY_CMD_SET_MAILCHECKCOUNT_TOOLTIP"] = "활성화하면, 경고는 모든 우편이 조사되지 않은 경우에 우편함 표시 제한을 초과하기 때문에 보여지지 않게 됩니다."
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_MENUTEXT"] = "Detailed mail warnings"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TEXT"] = "show a warning for each individual item"
+--[[Translation missing --]]
+L["ARMORY_CMD_SET_MAILCHECKVERBOSE_TOOLTIP"] = "If enabled, mail expiration warnings will be shown for each individual item; otherwise one consolidated message is shown per mailbox."
 L["ARMORY_CMD_SET_MAILCHECKVISIT_MENUTEXT"] = "미확인된 우편을 위한 경고"
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TEXT"] = "우편물 확인시 최종 우편함 방문 사항 포함"
 L["ARMORY_CMD_SET_MAILCHECKVISIT_TOOLTIP"] = "활성화 하면, 기한만료일 최소 30 이전까지 우편함을 열어보지 않은 케릭터에게 경고를 보여줄 것이며 따라서 거기에 포함된 우편은 통지되지 않을 것 입니다."
@@ -439,6 +446,8 @@ L["ARMORY_MAIL_LAST_VISIT"] = "마지막 방문:"
 L["ARMORY_MAIL_REMAINING"] = [=[남아 있는 우편:
 ]=]
 L["ARMORY_MAIL_VISIT_WARNING"] = "%1$s (%2$s)케릭터는 현제  %3$s이상 우편함을 살펴보지 않았습니다. 반드시 로그인하여 우편함을 확인해 주시기 바랍니다."
+--[[Translation missing --]]
+L["ARMORY_MAIL_VISIT_WARNING2"] = "%1$s (%2$s) hasn't visited the mailbox yet. Please log in to check your inbox."
 L["ARMORY_MINIMAP_LABEL"] = "미니맵"
 L["ARMORY_MINIMAP_SUBTEXT"] = "|cFF00FFFF이 옵션은 미니맵 버튼의 표시를 조절합니다."
 L["ARMORY_MINIMAP_TITLE"] = "Armory 미니맵 버튼"
@@ -475,6 +484,7 @@ L["ARMORY_SLASH_ALTERNATIVES"] = [=[/ar
 /아모리
 /dkahfl]=]
 L["ARMORY_SOCIAL_ADD_TOOLTIP"] = "'Shift-클릭'으로 현재 목록에 추가합니다."
+L["ARMORY_SOUND"] = "소리"
 L["ARMORY_SUBTEXT"] = "|cFF00FFFF이 옵션은 Armory의 동작을 변경할 수 있도록 합니다."
 L["ARMORY_SUMMARY_LABEL"] = "요약 정보"
 L["ARMORY_SUMMARY_SUBTEXT1"] = "|cFF00FFFF이 옵션은 아모리의 케릭터 요약정보에 대한 설정에 따릅니다."
@@ -483,6 +493,8 @@ L["ARMORY_SUMMARY_TITLE"] = "요약 정보 옵션"
 L["ARMORY_TALENTS"] = "특성:"
 L["ARMORY_TOOLTIP_HINT1"] = "좌-클릭: Armory 전환"
 L["ARMORY_TOOLTIP_HINT2"] = "우-클릭: 옵션"
+--[[Translation missing --]]
+L["ARMORY_TOOLTIP_HINT3"] = "Alt-click to show summary now"
 L["ARMORY_TOOLTIP_LABEL"] = "툴팁"
 L["ARMORY_TOOLTIP_SUBTEXT"] = "|cFF00FFFF이 옵션은 툴팁에 정보를 추가할 수 있도록 해 줍니다."
 L["ARMORY_TOOLTIP_TITLE"] = "강화된 툴팁"

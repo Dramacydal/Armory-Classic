@@ -600,3 +600,4 @@ ARMORY_MAIL_REMAINING                       = L["ARMORY_MAIL_REMAINING"];
 ARMORY_MAIL_ITEM_COUNT                      = L["ARMORY_MAIL_ITEM_COUNT"];
 ARMORY_BONUS_PATTERN                        = L["ARMORY_BONUS_PATTERN"];
 ARMORY_RECIPE_WARNING                       = L["ARMORY_RECIPE_WARNING"];
+ARMORY_SOUND                                = L["ARMORY_SOUND"];

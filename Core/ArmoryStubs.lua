@@ -273,7 +273,7 @@ function Armory:GetSubZoneText()
 end
 
 function Armory:GetWeeklyResetTime()
-	local day = self:GetConfigWeeklyReset();
+	local day = self:GetWeeklyResetDay();
 	local offset = (6 + day - date("%w", time())) % 7;
 	return self:GetServerTimeAsLocalTime(self:GetServerTime() + offset * 24 * 60 * 60);
 end

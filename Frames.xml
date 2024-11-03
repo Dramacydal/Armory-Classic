@@ -21,5 +21,4 @@
   <Include file="Frames\ArmorySocialFrame.xml"/>
   <Include file="Frames\ArmoryAddonMessageFrame.xml"/>
   <Include file="Frames\ArmoryLookupFrame.xml"/>
-  <Include file="Frames\ArmoryOptionsPanel.xml"/>
 </Ui>

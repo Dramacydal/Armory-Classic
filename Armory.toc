@@ -24,4 +24,5 @@ Embeds.xml
 Locales.xml
 Core.xml
 Shared.xml
+Config.xml
 Frames.xml

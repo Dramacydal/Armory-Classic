@@ -373,7 +373,7 @@ Armory.options = {
     },
     ARMORY_CMD_CONFIG = {
         type = "execute",
-        run = function() Armory:OpenConfigPanel(); end
+        run = function() ArmoryOptionsPanel:Open(); end
     },
     ARMORY_CMD_SET_SHOWMINIMAP = {
         type = "toggle",
@@ -1298,12 +1298,4 @@ end
 
 function Armory:GetConfigEnableSystemWarnings()
     return not self:Setting("General", "DisableSystemWarnings");
-end
-
-function Armory:SetConfigWeeklyReset(day)
-    self:Setting("General", "WeeklyReset", day);
-end
-
-function Armory:GetConfigWeeklyReset()
-    return self:Setting("General", "WeeklyReset") or self:GetWeeklyResetDay();
 end

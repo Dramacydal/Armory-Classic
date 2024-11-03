@@ -471,7 +471,7 @@ function Armory:Init()
         self.commands = {};
 
         self:SetCommand("ARMORY_CMD_HELP", function() return true end);
-        self:SetCommand("ARMORY_CMD_CONFIG", function() Armory:OpenConfigPanel() end);
+        self:SetCommand("ARMORY_CMD_CONFIG", function() ArmoryOptionsPanel:Open() end);
         self:SetCommand("ARMORY_CMD_DELETE_ALL", function(...) return Armory:ClearDb(...) end);
         self:SetCommand("ARMORY_CMD_DELETE_REALM", function(...) return Armory:ClearDb(...) end);
         self:SetCommand("ARMORY_CMD_DELETE_CHAR", function(...) return Armory:ClearDb(...) end);
@@ -797,7 +797,7 @@ function Armory:Reset(what, silent)
                 _G[frameName]:SetPoint("TOPLEFT", "UIParent", "TOPLEFT", 20, -110);
             end
             self:SetConfigFrameScale(1);
-            ArmoryOptionsPanelScaleSlider:SetValue(1);
+            ArmoryOptionsPanel.ScaleSlider:SetValue(1);
             if ( not silent ) then
                 self:Print(ARMORY_CMD_RESET_FRAME_SUCCESS);
             end
@@ -816,11 +816,12 @@ function Armory:Reset(what, silent)
     return invalidCommand;
 end
 
-function Armory:OpenConfigPanel()
-    if ( not InterfaceOptionsFrame:IsShown() ) then
-        InterfaceOptionsFrame:Show();
+function Armory:Close()
+    if ( ArmoryFrame:IsVisible() ) then
+        ArmoryCloseChildWindows();
+        self:Toggle();
     end
-    InterfaceOptionsFrame_OpenToCategory(ARMORY_TITLE);
+    self:HideSummary(true);
 end
 
 function Armory:Setting(key, subkey, ...)

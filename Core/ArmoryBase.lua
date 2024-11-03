@@ -26,6 +26,8 @@
         http://www.fsf.org/licensing/licenses/gpl-faq.html#InterpreterIncompat
 --]]
 
+ARMORY_ID = "Armory";
+
 ARMORY_MESSAGE_SEPARATOR = "\v";
 ARMORY_LOOKUP_SEPARATOR = "\n";
 ARMORY_LOOKUP_FIELD_SEPARATOR = "\r";

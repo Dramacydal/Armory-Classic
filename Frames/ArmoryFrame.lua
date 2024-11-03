@@ -34,7 +34,6 @@ ARMORYFRAME_MAINFRAMES = { "ArmoryFrame", "ArmoryLookupFrame", "ArmoryFindFrame"
 ARMORYFRAME_SUBFRAMES = { "ArmoryPaperDollFrame", "ArmoryPetFrame", "ArmoryTalentFrame", "ArmoryPVPFrame", "ArmoryOtherFrame" };
 ARMORYFRAME_CHILDFRAMES = { "ArmoryTradeSkillFrame", "ArmoryInventoryFrame", "ArmoryQuestLogFrame", "ArmorySpellBookFrame", "ArmorySocialFrame" };
 
-ARMORY_ID = "Armory";
 ARMORYFRAME_SUBFRAME = "ArmoryPaperDollFrame";
 
 local tabWidthCache = {};

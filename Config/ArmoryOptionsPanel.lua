@@ -180,6 +180,12 @@ function ArmoryOptionsPanelSetClassColorsMixin:GetKey()
     return "ARMORY_CMD_SET_USECLASSCOLORS";
 end
 
+ArmoryOptionsPanelSetRaceIconsMixin = CreateFromMixins(ArmoryOptionsCheckButtonTemplateMixin);
+
+function ArmoryOptionsPanelSetRaceIconsMixin:GetKey()
+    return "ARMORY_CMD_SET_USERACEICONS";
+end
+
 ArmoryOptionsPanelResetScreenMixin = CreateFromMixins(ArmoryOptionsPanelButtonTemplateMixin);
 
 function ArmoryOptionsPanelResetScreenMixin:OnLoad()

@@ -476,6 +476,12 @@ Armory.options = {
         get = function() return Armory:GetConfigUseClassColors(); end,
         default = false
     },
+    ARMORY_CMD_SET_USERACEICONS = {
+        type = "toggle",
+        set = function(value) Armory:SetConfigUseRaceIcons(value and value ~= "0"); end,
+        get = function() return Armory:GetConfigUseRaceIcons(); end,
+        default = false
+    },
 };
 
 function Armory:SetConfigShowEnhancedTips(on)
@@ -1271,6 +1277,14 @@ end
 
 function Armory:GetConfigUseClassColors()
     return self:Setting("General", "UseClassColors");
+end
+
+function Armory:SetConfigUseRaceIcons(on)
+    self:Setting("General", "UseRaceIcons", on);
+end
+
+function Armory:GetConfigUseRaceIcons()
+    return self:Setting("General", "UseRaceIcons");
 end
 
 function Armory:SetConfigCharacterEnabled(on)

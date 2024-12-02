@@ -645,9 +645,14 @@ function Armory:BuildSummary()
                 local class, classEn = self:UnitClass(unit);
                 characterInfo.Class = class;
                 characterInfo.ClassDisplay = "|c"..self:ClassColor(classEn, true)..class..FONT_COLOR_CODE_CLOSE;
-            elseif ( self:GetConfigUseClassColors() ) then
-                local _, classEn = self:UnitClass(unit);
-                characterInfo.DisplayName = "|c"..self:ClassColor(classEn, true)..character..FONT_COLOR_CODE_CLOSE;
+            else
+                if ( self:GetConfigUseClassColors() ) then
+                    local _, classEn = self:UnitClass(unit);
+                    characterInfo.DisplayName = "|c"..self:ClassColor(classEn, true)..character..FONT_COLOR_CODE_CLOSE;
+                    if ( self:GetConfigUseRaceIcons() ) then
+                        characterInfo.DisplayName = self:GetIconTexture(unit) .. ' ' .. characterInfo.DisplayName
+                    end
+                end
             end
             if ( self:GetConfigSummaryLevel() ) then
                 characterInfo.Level = self:UnitLevel(unit);

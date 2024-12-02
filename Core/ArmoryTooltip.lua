@@ -236,31 +236,33 @@ local function EnhanceItemTooltip(tooltip, id, link)
 
     if ( itemCount and #itemCount > 0 ) then
         spaceAdded = spaceAdded or AddSpacer(tooltip);
-        local count, bagCount, bankCount, mailCount, auctionCount, equipCount = 0, 0, 0, 0, 0, 0;
+        local count = 0;
         local details;
         local numColor = Armory:HexColor(Armory:GetConfigItemCountNumberColor());
+
         for k, v in ipairs(itemCount) do
             count = count + v.count;
-            bagCount = bagCount + (v.bags or 0);
-            bankCount = bankCount + (v.bank or 0);
-            mailCount = mailCount + (v.mail or 0);
-            auctionCount = auctionCount + (v.auction or 0);
-            equipCount = equipCount + (v.equipped or 0);
-            details = v.details or Armory:GetCountDetails(v.bags, v.bank, v.mail, v.auction, nil, v.equipped, v.perSlot, numColor);
 
             local r, g, b = GetTableColor(v);
             if ( not r ) then
                 r, g, b = Armory:GetConfigItemCountColor();
             end
-            tooltip:AddDoubleLine(format(Armory:FormatCount("%s [%d]", v.numColor or numColor), v.name, v.count), details, r, g, b, r, g, b);
+
+            local totalColor = Armory:HexColor(r, g, b);
+            if Armory:GetConfigUseClassColors() then
+                totalColor = v.classColor
+            end
+
+            details = v.details or Armory:GetCountDetails(v.bags, v.bank, v.mail, v.auction, nil, v.equipped, v.perSlot, numColor, totalColor);
+
+            tooltip:AddDoubleLine(Armory:FormatCount(v.name, v.numColor or numColor), details, r, g, b, r, g, b);
         end
 
-        if ( Armory:HasInventory() and count > 0 and Armory:GetConfigShowItemCountTotals() ) then
+        if ( Armory:HasInventory() and count > 0 and Armory:GetConfigShowItemCountTotals() and #itemCount > 1) then
             local r, g, b = Armory:GetConfigItemCountTotalsColor();
             numColor = Armory:HexColor(Armory:GetConfigItemCountTotalsNumberColor());
-            details = Armory:GetCountDetails(bagCount, bankCount, mailCount, auctionCount, nil, equipCount, nil, numColor);
 
-            tooltip:AddDoubleLine(format(Armory:FormatCount(ARMORY_TOTAL, numColor), count), details, r, g, b, r, g, b);
+            tooltip:AddDoubleLine(format(Armory:FormatCount(ARMORY_TOTAL, numColor), count), "", r, g, b, r, g, b);
         end
     end
 

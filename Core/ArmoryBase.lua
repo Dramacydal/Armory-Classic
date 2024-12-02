@@ -396,6 +396,7 @@ function Armory:InitializeMenu()
         Armory:MenuAddButton("ARMORY_CMD_SET_PAUSEINCOMBAT");
         Armory:MenuAddButton("ARMORY_CMD_SET_USEFACTIONFILTER");
         Armory:MenuAddButton("ARMORY_CMD_SET_USECLASSCOLORS");
+        Armory:MenuAddButton("ARMORY_CMD_SET_USERACEICONS");
         Armory:MenuAddButton("ARMORY_CMD_CONFIG", true);
         Armory:MenuAddButton("ARMORY_CMD_CHECK");
         Armory:MenuAddButton("ARMORY_CMD_FIND", true);
@@ -1172,14 +1173,18 @@ function Armory:GetQualifiedCharacterName(showRealm)
     if ( showRealm ) then
         name = name .. "-" .. realm;
     end
+    local class, classEn = self:UnitClass("player");
+    local classColor = self:ClassColor(classEn, true);
     if ( self:GetConfigUseClassColors() ) then
-        local class, classEn = self:UnitClass("player");
-        name = "|c"..self:ClassColor(classEn, true)..name..FONT_COLOR_CODE_CLOSE;
+        name = "|c"..classColor..name..FONT_COLOR_CODE_CLOSE;
+        if ( self:GetConfigUseRaceIcons() ) then
+            name = self:GetIconTexture("player") .. ' ' .. name
+        end
     end
     if ( showRealm and self:IsConnectedRealm(realm, true) ) then
         name = name .. "|TInterface\\FriendsFrame\\UI-FriendsFrame-Link.blp:0|t";
     end
-    return name;
+    return name, "|c" .. classColor;
 end
 
 function Armory:RealmList()
@@ -1341,7 +1346,7 @@ function Armory:GetItemCount(link)
                 if ( (self:GetConfigGlobalItemCount() or self:IsConnectedRealm(profile.realm)) and (self:GetConfigCrossFactionItemCount() or _G.UnitFactionGroup("player") == self:UnitFactionGroup("player")) ) then
                     local mine = self:IsPlayerSelected();
                     local suspended = mine and self.commandHandler:IsPaused();
-                    local name = self:GetQualifiedCharacterName(self:GetConfigGlobalItemCount());
+                    local name, classColor = self:GetQualifiedCharacterName(self:GetConfigGlobalItemCount());
 
                     local count, bagCount, bankCount, mailCount, auctionCount = 0, 0, 0, 0, 0;
                     local perSlotCount;
@@ -1355,10 +1360,10 @@ function Armory:GetItemCount(link)
                     count = count + equipCount;
                     if ( count == 0 ) then
                         if ( suspended ) then
-                            table.insert(itemCounts, {name=name, count=0});
+                            table.insert(itemCounts, {name=name, classColor=classColor, count=0});
                         end
                     else
-                        table.insert(itemCounts, {name=name, count=count, bags=bagCount, bank=bankCount, mail=mailCount, auction=auctionCount, equipped=equipCount, perSlot=perSlotCount, mine=mine});
+                        table.insert(itemCounts, {name=name, classColor = classColor, count=count, bags=bagCount, bank=bankCount, mail=mailCount, auction=auctionCount, equipped=equipCount, perSlot=perSlotCount, mine=mine});
                     end
                 end
             end
@@ -1418,48 +1423,60 @@ function Armory:FormatCount(value, color)
     return color .. value .. FONT_COLOR_CODE_CLOSE;
 end
 
-function Armory:FormatCountDetail(label, count, color)
-    return label .. " " .. self:FormatCount(count, color);
+function Armory:FormatCountDetail(label, count)
+    return count .. (Armory:getIcon(label) or label);
 end
 
 local detailCounts = {};
-function Armory:GetCountDetails(bagCount, bankCount, mailCount, auctionCount, altCount, equipCount, perSlotCount, color)
+function Armory:GetCountDetails(bagCount, bankCount, mailCount, auctionCount, altCount, equipCount, perSlotCount, color, totalColor)
     local details = "";
+    local total = 0;
     table.wipe(detailCounts);
+    if ( (equipCount or 0) > 0 ) then
+        table.insert(detailCounts, self:FormatCountDetail('inv', equipCount));
+        total = total + equipCount
+    end
     if ( (bagCount or 0) > 0 ) then
         if ( perSlotCount and perSlotCount.bags ) then
             for k, v in pairs(perSlotCount.bags) do
-                table.insert(detailCounts, self:FormatCountDetail(BAGSLOT.." "..k, v, color));
+                table.insert(detailCounts, self:FormatCountDetail(BAGSLOT.." "..k, v));
             end
         else
-            table.insert(detailCounts, self:FormatCountDetail(ARMORY_BAGS, bagCount, color));
+            table.insert(detailCounts, self:FormatCountDetail('bags', bagCount));
         end
+        total = total + bagCount
     end
     if ( (bankCount or 0) > 0 ) then
         if ( perSlotCount and perSlotCount.bank ) then
             for k, v in pairs(perSlotCount.bank) do
-                table.insert(detailCounts, self:FormatCountDetail(ARMORY_BANK_CONTAINER_NAME.." "..k, v, color));
+                table.insert(detailCounts, self:FormatCountDetail(ARMORY_BANK_CONTAINER_NAME.." "..k, v));
             end
         else
-            table.insert(detailCounts, self:FormatCountDetail(ARMORY_BANK_CONTAINER_NAME, bankCount, color));
+            table.insert(detailCounts, self:FormatCountDetail('bank', bankCount));
         end
+        total = total + bankCount
     end
     if ( (mailCount or 0) > 0 ) then
-        table.insert(detailCounts, self:FormatCountDetail(MAIL_LABEL, mailCount, color));
+        table.insert(detailCounts, self:FormatCountDetail('mail', mailCount));
+        total = total + mailCount
     end
     if ( (auctionCount or 0) > 0 ) then
-        table.insert(detailCounts, self:FormatCountDetail(AUCTIONS, auctionCount, color));
+        table.insert(detailCounts, self:FormatCountDetail('auc', auctionCount));
+        total = total + auctionCount
     end
     if ( (altCount or 0) > 0 ) then
-        table.insert(detailCounts, self:FormatCountDetail(ARMORY_ALTS, altCount, color));
-    end
-    if ( (equipCount or 0) > 0 ) then
-        table.insert(detailCounts, self:FormatCountDetail(ARMORY_EQUIPPED, equipCount, color));
+        table.insert(detailCounts, self:FormatCountDetail(ARMORY_ALTS, altCount));
+        total = total + altCount
     end
     if ( #detailCounts > 0 ) then
-        table.sort(detailCounts);
-        details = "("..table.concat(detailCounts, ", ")..")";
+        details = table.concat(detailCounts, " +");
     end
+    if ( #detailCounts > 1 ) then
+        details = self:FormatCount(total, totalColor) .. self:FormatCount(' = ' .. details, color);
+    else
+        details = self:FormatCount(details, totalColor);
+    end
+
     table.wipe(detailCounts);
     return details;
 end

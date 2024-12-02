@@ -72,6 +72,11 @@
           <Anchor point="TOPLEFT" relativeKey="$parent.FactionFilter" relativePoint="BOTTOMLEFT" y="-8" />
         </Anchors>
       </CheckButton>
+      <CheckButton parentKey="RaceIcons" inherits="ArmoryOptionsCheckButtonTemplate" mixin="ArmoryOptionsPanelSetRaceIconsMixin">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeKey="$parent.ClassColors" relativePoint="BOTTOMLEFT" y="-8" />
+        </Anchors>
+      </CheckButton>
 
       <Button parentKey="ResetScreen" inherits="ArmoryOptionsPanelButtonTemplate" text="ARMORY_CMD_RESET_FRAME_MENUTEXT" mixin="ArmoryOptionsPanelResetScreenMixin">
         <Anchors>

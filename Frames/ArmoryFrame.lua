@@ -484,6 +484,9 @@ function ArmorySelectCharacter_Update(characterList)
                 if ( Armory:GetConfigUseClassColors() ) then
 					local class, classEn = Armory:UnitClass(unit);
 					character = "|c"..Armory:ClassColor(classEn, true)..character..FONT_COLOR_CODE_CLOSE;
+                    if ( Armory:GetConfigUseRaceIcons() ) then
+                        character = Armory:GetIconTexture(unit) .. ' ' .. character
+                    end
 				end
 
                 myColumn = column; index, column = characterList:SetCell(index, myColumn, character, GameFontHighlightSmallLeft);

@@ -776,7 +776,7 @@ L["ARMORY_TOOLTIP1"] = "Character:"
 --[[Translation missing --]]
 L["ARMORY_TOOLTIP2"] = "Realm:"
 --[[Translation missing --]]
-L["ARMORY_TOTAL"] = "Total: %d"
+L["ARMORY_TOTAL"] = "Total:"
 L["ARMORY_TRADE_ALCHEMY"] = "鍊金術"
 L["ARMORY_TRADE_BLACKSMITHING"] = "鍛造"
 L["ARMORY_TRADE_COOKING"] = "烹飪"

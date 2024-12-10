@@ -628,7 +628,7 @@ L["ARMORY_TOOLTIP_TITLE"] = "Tooltip de encantamiento"
 L["ARMORY_TOOLTIP1"] = "Personaje:"
 L["ARMORY_TOOLTIP2"] = "Reino:"
 --[[Translation missing --]]
-L["ARMORY_TOTAL"] = "Total: %d"
+L["ARMORY_TOTAL"] = "Total:"
 L["ARMORY_TRADE_ALCHEMY"] = "Alquimia"
 L["ARMORY_TRADE_BLACKSMITHING"] = "Herrería"
 L["ARMORY_TRADE_COOKING"] = "Cocina"

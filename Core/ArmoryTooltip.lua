@@ -262,7 +262,7 @@ local function EnhanceItemTooltip(tooltip, id, link)
             local r, g, b = Armory:GetConfigItemCountTotalsColor();
             numColor = Armory:HexColor(Armory:GetConfigItemCountTotalsNumberColor());
 
-            tooltip:AddDoubleLine(Armory:FormatCount(ARMORY_TOTAL, numColor), Armory:FormatCount(count, numColor), r, g, b, r, g, b);
+            tooltip:AddDoubleLine(ARMORY_TOTAL, Armory:FormatCount(count, numColor), r, g, b, r, g, b);
         end
     end
 

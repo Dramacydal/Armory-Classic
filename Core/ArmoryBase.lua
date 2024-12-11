@@ -1424,7 +1424,7 @@ function Armory:FormatCount(value, color)
 end
 
 function Armory:FormatCountDetail(label, count)
-    return count .. (Armory:getIcon(label) or label);
+    return (Armory:getIcon(label) or label) .. '  ' .. count;
 end
 
 local detailCounts = {};
@@ -1472,7 +1472,7 @@ function Armory:GetCountDetails(bagCount, bankCount, mailCount, auctionCount, al
         details = table.concat(detailCounts, " +");
     end
     if ( #detailCounts > 1 ) then
-        details = self:FormatCount(total, totalColor) .. self:FormatCount(' = ' .. details, color);
+        details = self:FormatCount(details .. ' = ', color) .. self:FormatCount(total, totalColor);
     else
         details = self:FormatCount(details, totalColor);
     end
